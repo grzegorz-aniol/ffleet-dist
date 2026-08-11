@@ -1,0 +1,51 @@
+# Forge Fleet — Go development image (variant).
+#
+# A superset of the default base image
+# (ghcr.io/grzegorz-aniol/forge-fleet-python): it carries the identical
+# agent/orchestration toolbox (git, docker CLI, tmux, gh, node, the claude/codex
+# CLIs, uv/python) and adds the Go toolchain on top, for developing the Go port.
+# Built as an overlay (FROM the base) rather than a duplicated standalone image
+# so the shared toolbox is defined in exactly one place.
+#
+# Published by the `publish-images` workflow (base first, then this overlay via
+# --build-arg BASE_IMAGE=ghcr.io/grzegorz-aniol/forge-fleet-python:latest).
+#
+# Opt in per project by setting in ffleet.toml:
+#   image = "ghcr.io/grzegorz-aniol/forge-fleet-go:latest"
+
+ARG BASE_IMAGE=ghcr.io/grzegorz-aniol/forge-fleet-python:latest
+FROM ${BASE_IMAGE}
+
+# The base image ends as USER buddy; installing Go under /usr/local needs root.
+USER root
+
+# Go from the official tarball — Debian bookworm's apt Go is too old. Arch-mapped
+# so the same file builds on amd64 and arm64 hosts. gofmt and go vet ship inside
+# the toolchain, so no separate install is needed for those.
+ARG GO_VERSION=1.25.0
+RUN case "$(uname -m)" in \
+        x86_64) goarch=amd64 ;; \
+        aarch64|arm64) goarch=arm64 ;; \
+        *) echo "unsupported arch $(uname -m)" >&2; exit 1 ;; \
+    esac \
+    && curl -fsSL "https://go.dev/dl/go${GO_VERSION}.linux-${goarch}.tar.gz" -o /tmp/go.tgz \
+    && tar -C /usr/local -xzf /tmp/go.tgz \
+    && rm /tmp/go.tgz
+
+# System-wide toolchain on PATH; per-user module/build cache under $HOME (which
+# buddy can write). GOTOOLCHAIN=auto lets `go` fetch a newer toolchain on demand
+# when a module's go.mod requires one, so the pinned version above is just a floor.
+ENV GOPATH="/home/buddy/go"
+ENV PATH="/usr/local/go/bin:/home/buddy/go/bin:${PATH}"
+ENV GOTOOLCHAIN=auto
+
+USER buddy
+
+# Optional lint/debug tooling — uncomment to bake into the image (adds build time
+# and pulls from the network at build). golangci-lint catches a large class of
+# AI-generated mistakes before runtime; dlv is the interactive debugger.
+# RUN go install github.com/golangci/golangci-lint/v2/cmd/golangci-lint@latest \
+#     && go install github.com/go-delve/delve/cmd/dlv@latest
+
+WORKDIR /workspace
+CMD ["sleep", "infinity"]

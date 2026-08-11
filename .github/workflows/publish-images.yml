@@ -1,0 +1,57 @@
+name: publish-images
+
+# Manual-only: run by hand from the Actions tab ("Run workflow"). Publishing the
+# container images is deliberately a standalone, on-demand action.
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  packages: write
+
+env:
+  PYTHON_IMAGE: ghcr.io/grzegorz-aniol/forge-fleet-python
+  GO_IMAGE: ghcr.io/grzegorz-aniol/forge-fleet-go
+  IMAGE_TAG: latest
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Log in to GHCR
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      # Base image first — the Go overlay is built FROM it, so it must exist
+      # (and be pushed) before the variant build runs.
+      - name: Build and push base (python) image
+        run: |
+          docker build \
+            --label app=forge-fleet \
+            --label org.opencontainers.image.description="Forge Fleet base agent image (Python/uv + Node/TypeScript + agent toolbox)." \
+            --label org.opencontainers.image.url=https://ffleet.app/ \
+            -t "$PYTHON_IMAGE:$IMAGE_TAG" \
+            .
+          docker push "$PYTHON_IMAGE:$IMAGE_TAG"
+
+      - name: Build and push Go overlay image
+        run: |
+          docker build \
+            --label app=forge-fleet \
+            --label org.opencontainers.image.description="Forge Fleet Go-dev agent image (base toolbox + Go toolchain)." \
+            --label org.opencontainers.image.url=https://ffleet.app/ \
+            -f Dockerfile.godev \
+            --build-arg BASE_IMAGE="$PYTHON_IMAGE:$IMAGE_TAG" \
+            -t "$GO_IMAGE:$IMAGE_TAG" \
+            .
+          docker push "$GO_IMAGE:$IMAGE_TAG"
+
+      # One-time manual step (NOT automated): after the very first publish, an
+      # admin must flip both packages — forge-fleet-python and forge-fleet-go —
+      # to Public in their GHCR package settings, otherwise `docker pull` needs
+      # authentication. See README "Published images".
