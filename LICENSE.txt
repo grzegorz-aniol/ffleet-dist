@@ -1,0 +1,68 @@
+Forge Fleet (ffleet) — End User License Agreement
+Copyright (c) 2026 AppGA. All rights reserved.
+
+This software is proprietary and is made available free of charge ("freeware").
+It is licensed, not sold. By installing, copying, or using the Software you
+agree to the terms below. If you do not agree, do not install or use it.
+
+1. DEFINITIONS
+   "AppGA" (the "Licensor") is the copyright holder of the Software and the
+   party granting this licence. References below to the copyright holder mean
+   AppGA.
+   "Software" means the ffleet executable and any accompanying files
+   distributed by the copyright holder, in binary form.
+
+2. GRANT OF LICENSE
+   You are granted a non-exclusive, worldwide, royalty-free, perpetual licence
+   to install and use the Software for any purpose, including commercial use,
+   on any number of machines.
+
+3. REDISTRIBUTION
+   You may copy and redistribute the Software, and host mirrors of it,
+   provided that:
+     (a) it is distributed complete and unmodified, including this licence
+         and the accompanying THIRD_PARTY_NOTICES.txt;
+     (b) you charge no fee for the Software itself; and
+     (c) you do not represent the redistribution as official or endorsed.
+
+4. RESTRICTIONS
+   Except to the extent that applicable law expressly permits it
+   notwithstanding this limitation, you may not:
+     (a) modify, adapt, or create derivative works of the Software;
+     (b) reverse engineer, decompile, or disassemble the Software;
+     (c) sell, rent, lease, or sublicense the Software; or
+     (d) remove or alter any copyright or proprietary notice.
+
+5. OWNERSHIP
+   The Software is licensed, not sold. All title, ownership rights, and
+   intellectual property rights in and to the Software remain with the
+   copyright holder. No rights are granted to the Software's source code.
+
+6. THIRD-PARTY COMPONENTS
+   The Software incorporates open-source components licensed under their own
+   terms, reproduced in THIRD_PARTY_NOTICES.txt. Those terms govern those
+   components and, where they conflict with this licence, take precedence for
+   the component concerned.
+
+7. NO WARRANTY
+   THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+   IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+   FITNESS FOR A PARTICULAR PURPOSE, AND NONINFRINGEMENT.
+
+8. LIMITATION OF LIABILITY
+   TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, IN NO EVENT SHALL THE
+   COPYRIGHT HOLDER BE LIABLE FOR ANY CLAIM, DAMAGES, OR OTHER LIABILITY,
+   WHETHER IN AN ACTION OF CONTRACT, TORT, OR OTHERWISE, ARISING FROM, OUT OF,
+   OR IN CONNECTION WITH THE SOFTWARE OR ITS USE.
+
+   The Software automates Docker containers, git worktrees, and git branches,
+   and can delete them. You are solely responsible for your data and for
+   maintaining backups.
+
+9. TERMINATION
+   This licence terminates automatically if you breach any of its terms. On
+   termination you must cease all use and destroy all copies of the Software.
+
+10. NO SUPPORT
+    The Software is provided without any obligation of support, maintenance,
+    updates, or future availability.
