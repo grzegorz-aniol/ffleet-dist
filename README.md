@@ -1,7 +1,7 @@
 # Forge Fleet
 
 <p align="center">
-  <img src="https://ffleet.app/assets/forge-fleet-splash-1.png" alt="Forge Fleet" width="640">
+  <img src="docs/assets/forge-fleet-splash-1.png" alt="Forge Fleet" width="640">
 </p>
 
 Forge a fleet of AI coding agents. Each sealed in its own container. Local-first,
