@@ -46,6 +46,16 @@ RUN curl -fsSL "https://download.docker.com/linux/static/stable/$(uname -m)/dock
     && install -m 0755 /tmp/docker/docker /usr/local/bin/docker \
     && rm -rf /tmp/docker /tmp/docker.tgz
 
+# Docker Compose v2+ is a CLI plugin, NOT part of the engine or the static
+# docker CLI tarball above, so `docker compose` is unavailable until it is
+# dropped into a cli-plugins dir the CLI scans. Installed system-wide so the
+# buddy user picks it up too.
+ARG DOCKER_COMPOSE_VERSION=v5.4.0
+RUN install -d -m 0755 /usr/local/lib/docker/cli-plugins \
+    && curl -fsSL "https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-linux-$(uname -m)" \
+        -o /usr/local/lib/docker/cli-plugins/docker-compose \
+    && chmod 0755 /usr/local/lib/docker/cli-plugins/docker-compose
+
 # GitHub CLI from GitHub's official apt repo — bookworm's packaged gh is far
 # behind upstream. The stable channel here tracks the latest release.
 RUN install -d -m 0755 /etc/apt/keyrings \
