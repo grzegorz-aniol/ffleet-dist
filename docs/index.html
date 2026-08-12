@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Forge Fleet — Forge a fleet of AI coding agents</title>
+  <meta
+    name="description"
+    content="Forge Fleet is the only agent fleet manager that runs each AI coding agent in its own Docker container — locally, on your own machine."
+  />
+
+  <!-- Favicon / touch icon -->
+  <link rel="icon" type="image/png" href="assets/forge-fleet-favicon-1.png" />
+  <link rel="apple-touch-icon" href="assets/forge-fleet-logo-1.png" />
+
+  <!--
+    Social share (Open Graph / Twitter). og:image / twitter:image use ABSOLUTE
+    URLs (https://ffleet.app/…) — crawlers require them to render link previews.
+  -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://ffleet.app/" />
+  <meta property="og:title" content="Forge Fleet — Forge a fleet of AI coding agents" />
+  <meta property="og:description" content="Each sealed in its own container. Local-first, free for everyone — no cloud VMs, no agent with a shell on your host." />
+  <meta property="og:image" content="https://ffleet.app/assets/forge-fleet-splash-1.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:site" content="@greg_appga" />
+  <meta name="twitter:title" content="Forge Fleet — Forge a fleet of AI coding agents" />
+  <meta name="twitter:description" content="Each sealed in its own container. Local-first, free for everyone — no cloud VMs, no agent with a shell on your host." />
+  <meta name="twitter:image" content="https://ffleet.app/assets/forge-fleet-splash-1.png" />
+
+  <!--
+    Optional web font for the terminal aesthetic. It is a progressive
+    enhancement only: the CSS font stacks list system monospace/sans fonts
+    first as fallbacks, so the page stays fully readable offline (file://) and
+    never has a hard network dependency.
+  -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap"
+  />
+
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <!-- ===================== Header ===================== -->
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <div class="brand">
+        <img class="logo" src="assets/forge-fleet-logo-1.png" alt="Forge Fleet logo" width="32" height="32" />
+        <span class="brand-name">Forge&nbsp;Fleet</span>
+      </div>
+      <nav class="site-nav" aria-label="Primary">
+        <a class="nav-link" href="https://github.com/grzegorz-aniol/ffleet-dist/wiki" target="_blank" rel="noopener">Docs</a>
+        <a class="btn btn-ghost" href="#get-started">Get&nbsp;started</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <!-- ===================== Hero ===================== -->
+    <section class="hero">
+      <div class="wrap hero-grid">
+        <div class="hero-copy">
+          <p class="eyebrow">// isolated agent fleets</p>
+          <h1>Forge a fleet of AI coding agents.</h1>
+          <p class="tagline">
+            Each sealed in its own container. Local-first, free for everyone —
+            no cloud VMs, no agent with a shell on your host.
+          </p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="#get-started">
+              <span class="prompt-glyph">$</span> Get started
+            </a>
+            <a class="btn btn-ghost" href="#why">Why Forge Fleet</a>
+          </div>
+        </div>
+
+        <!-- Terminal / code-block motif -->
+        <div class="terminal" role="img"
+             aria-label="Terminal showing 'ffleet up feature-login' creating an isolated worktree, container, and agent.">
+          <div class="terminal-bar">
+            <span class="dot dot-r"></span>
+            <span class="dot dot-y"></span>
+            <span class="dot dot-g"></span>
+            <span class="terminal-title">ffleet — up</span>
+          </div>
+          <pre class="terminal-body"><code><span class="c-prompt">$</span> <span class="c-cmd">ffleet up</span> feature-login
+<span class="c-step">▸ worktree </span>  creator-ai/creator-ai-feature-login
+<span class="c-step">▸ container</span>  creator-ai-feature-login  <span class="c-dim">(forge-fleet:latest)</span>
+<span class="c-step">▸ agent    </span>  claude <span class="c-flag">--dangerously-skip-permissions</span>
+<span class="c-ok">✔ up</span> — boxed &amp; isolated. attaching…
+<span class="c-prompt">$</span> <span class="c-cursor">▋</span></code></pre>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== Differentiators ===================== -->
+    <section id="why" class="section">
+      <div class="wrap">
+        <h2 class="section-title">Real isolation, not just parallelism.</h2>
+        <p class="section-lede">
+          Every rival fans out agents into parallel git worktrees — and runs
+          them straight on your host. Forge Fleet adds the one layer none of
+          them do locally: a container around each agent.
+        </p>
+
+        <ul class="feature-grid">
+          <li class="card card-primary">
+            <span class="tag">Primary</span>
+            <h3><span class="prompt-glyph">#</span> Real isolation, per agent</h3>
+            <p>
+              Every agent runs in its own Docker container — the one thing no
+              competitor does locally. Give agents full autonomy (e.g.
+              <code>--dangerously-skip-permissions</code>) safely; a mistake
+              stays in the box, never on your host.
+            </p>
+          </li>
+
+          <li class="card">
+            <h3><span class="prompt-glyph">#</span> Local-first, no cloud lock-in</h3>
+            <p>
+              Runs entirely on your own hardware. No cloud VMs, no code leaving
+              your machine, no vendor account required.
+            </p>
+          </li>
+
+          <li class="card">
+            <span class="tag tag-muted">Secondary</span>
+            <h3><span class="prompt-glyph">#</span> Scriptable &amp; agent-drivable</h3>
+            <p>
+              Forge Fleet ships an MCP server, so a lead agent can spawn and
+              drive isolated worker agents — the safe sandbox substrate under
+              multi-agent systems.
+            </p>
+          </li>
+
+          <li class="card">
+            <h3><span class="prompt-glyph">#</span> Parallel worktrees + containers</h3>
+            <p>
+              One isolated git worktree and one container per task, managed
+              through a single <code>up</code>-driven lifecycle in your terminal
+              (tmux panes).
+            </p>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ===================== Get started ===================== -->
+    <section id="get-started" class="section section-alt">
+      <div class="wrap get-started-grid">
+        <div>
+          <h2 class="section-title">Get started</h2>
+          <p class="section-lede">
+            Forge Fleet is Docker-native by design. You need three things on your
+            host before the first <code>up</code>:
+          </p>
+          <ul class="req-list">
+            <li><code>git</code></li>
+            <li><code>docker</code></li>
+            <li>
+              the <code>forge-fleet:latest</code> image — bundles
+              <code>claude</code>, <code>codex</code>, and <code>tmux</code>
+            </li>
+          </ul>
+          <p class="note">
+            macOS and Linux. Docker is a hard prerequisite — that container is
+            what makes the isolation real.
+          </p>
+        </div>
+
+        <div class="terminal">
+          <div class="terminal-bar">
+            <span class="dot dot-r"></span>
+            <span class="dot dot-y"></span>
+            <span class="dot dot-g"></span>
+            <span class="terminal-title">install</span>
+          </div>
+          <pre class="terminal-body"><code><span class="c-dim"># 1 — install the CLI</span>
+<span class="c-prompt">$</span> <span class="c-cmd">brew install</span> grzegorz-aniol/tap/ffleet
+
+<span class="c-dim"># 2 — launch an isolated agent</span>
+<span class="c-prompt">$</span> <span class="c-cmd">ffleet up</span> feature-login</code></pre>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ===================== Footer ===================== -->
+  <footer class="site-footer">
+    <div class="wrap footer-grid">
+      <div class="footer-brand">
+        <span class="brand-name">Forge&nbsp;Fleet</span>
+        <p class="footer-tagline">Forge a fleet of AI coding agents.</p>
+        <p class="copyright">© 2026 AppGA</p>
+        <p class="license">
+          Proprietary freeware — licensed, not sold.
+          <a href="https://github.com/grzegorz-aniol/ffleet-dist/blob/main/LICENSE.txt" target="_blank" rel="noopener">Read the licence terms →</a>
+        </p>
+      </div>
+
+      <div class="footer-links">
+        <h4>Links</h4>
+        <ul>
+          <li><a href="https://github.com/grzegorz-aniol/ffleet-dist/wiki" target="_blank" rel="noopener">Documentation</a></li>
+          <li><a href="https://www.linkedin.com/showcase/forgefleet/" target="_blank" rel="noopener">LinkedIn</a></li>
+          <li><a href="https://x.com/greg_appga" target="_blank" rel="noopener">X</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-support">
+        <h4>Support</h4>
+        <p class="footer-tagline">Forge Fleet is free. If it saves you time, you can buy us a coffee — entirely optional. ☕</p>
+        <!--
+          Buy Me a Coffee button (data-slug="appga"). Themed to the page accent
+          (data-color="#40DCA5") rather than the native #FFDD00. The widget
+          self-loads its "Cookie" font, so no extra Google Fonts <link> is needed.
+        -->
+        <script type="text/javascript" src="https://cdnjs.buymeacoffee.com/1.0.0/button.prod.min.js" data-name="bmc-button" data-slug="appga" data-color="#40DCA5" data-emoji="☕"  data-font="Cookie" data-text="Buy me a coffee" data-outline-color="#000000" data-font-color="#ffffff" data-coffee-color="#FFDD00" ></script>
+        <noscript>
+          <a href="https://www.buymeacoffee.com/appga">Buy me a coffee → buymeacoffee.com/appga</a>
+        </noscript>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>
