@@ -163,7 +163,9 @@ code {
    Hero
    ============================================================ */
 .hero {
-  padding-block: clamp(3rem, 8vw, 6rem);
+  /* Less above than below: the sticky header already provides separation at
+     the top, so full section padding there just reads as a gap. */
+  padding-block: clamp(1.75rem, 4vw, 3rem) clamp(3rem, 8vw, 6rem);
   border-bottom: 1px solid var(--border);
   background:
     radial-gradient(60% 120% at 85% 0%, rgba(74, 222, 128, 0.06), transparent 60%),
@@ -172,7 +174,9 @@ code {
 
 .hero-grid {
   display: grid;
-  grid-template-columns: 1.05fr 0.95fr;
+  /* Terminal column is the wider one: its longest line is fixed-width content
+     that must not scroll at the 1080px design width. */
+  grid-template-columns: 1fr 1.15fr;
   gap: clamp(2rem, 5vw, 3.5rem);
   align-items: center;
 }
@@ -203,6 +207,33 @@ code {
   display: flex;
   gap: 0.85rem;
   flex-wrap: wrap;
+}
+
+/* ============================================================
+   Splash — cropped band in the content column, edges faded
+   into --bg. Sizing and asset rules: style guide §8.
+   ============================================================ */
+/* Override the neighbours' section-to-section padding, which leaves a dead
+   gap around an image. Both rules disappear if the band is removed. */
+.hero:has(+ .splash) {
+  border-bottom: 0;
+  padding-bottom: clamp(1.25rem, 3vw, 2rem);
+}
+.splash + .section { padding-top: clamp(1.25rem, 3vw, 2rem); }
+
+.splash {
+  line-height: 0; /* drop the inline-image descender gap */
+}
+
+.splash-img {
+  display: block;
+  width: 100%;
+  height: clamp(170px, 30vw, 400px);
+  object-fit: cover;
+  object-position: 50% 28%; /* biased up: keeps the galaxy and ships in frame */
+  opacity: 0.85;
+  -webkit-mask-image: linear-gradient(to bottom, transparent, #000 10%, #000 88%, transparent);
+  mask-image: linear-gradient(to bottom, transparent, #000 10%, #000 88%, transparent);
 }
 
 /* ============================================================
@@ -244,9 +275,9 @@ code {
 
 .terminal-body {
   margin: 0;
-  padding: 1.25rem 1.35rem;
+  padding: 1.25rem 1.1rem;
   font-family: var(--font-mono);
-  font-size: 0.86rem;
+  font-size: 0.82rem;
   line-height: 1.7;
   color: var(--text);
   overflow-x: auto; /* long lines scroll inside the panel, not the page */
@@ -339,6 +370,13 @@ code {
 }
 
 /* ---- Get started ---- */
+/* Same trim as the hero: the tinted band and its top hairline already mark the
+   section boundary, so full top padding on top of that reads as a gap. The gap
+   is the sum of both sides of the boundary, so the preceding section's bottom
+   padding has to come down too — trimming only one side barely shows. */
+#get-started { padding-top: clamp(1rem, 2.5vw, 1.5rem); }
+.section:has(+ #get-started) { padding-bottom: clamp(1.75rem, 4vw, 3rem); }
+
 .get-started-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;

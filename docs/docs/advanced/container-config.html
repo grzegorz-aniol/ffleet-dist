@@ -1,0 +1,1296 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://ffleet.app/docs/advanced/container-config.html">
+      
+      
+        <link rel="prev" href="config-precedence.html">
+      
+      
+        <link rel="next" href="docker-dood.html">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/favicon.ico">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>Advanced: how the container is configured - Forge Fleet User Guide</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.ec1eaa64.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#advanced-how-the-container-is-configured" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../index.html" title="Forge Fleet User Guide" class="md-header__button md-logo" aria-label="Forge Fleet User Guide" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Forge Fleet User Guide
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Advanced: how the container is configured
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../index.html" title="Forge Fleet User Guide" class="md-nav__button md-logo" aria-label="Forge Fleet User Guide" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Forge Fleet User Guide
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../index.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Forge Fleet
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../00-install.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    0. Prerequisites &amp; install
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../01-basic-flow.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1. Basic flow
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../02-concepts.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2. Concepts
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../troubleshooting.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Troubleshooting &amp; recovery
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Advanced
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Advanced
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="config-precedence.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Advanced: config precedence
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Advanced: how the container is configured
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="container-config.html" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Advanced: how the container is configured
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#image" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Image
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Image">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#how-the-published-images-are-built" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How the published images are built
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#volumes-mounts" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Volumes &amp; mounts
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#credential-directories-authenticating-the-agent-inside" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Credential directories — authenticating the agent inside
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#extra_hosts" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        extra_hosts
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="extra_hosts">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#reaching-a-service-on-your-host-eg-an-mcp-server" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Reaching a service on your host (e.g. an MCP server)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#host-docker-access" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Host Docker access
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#git-identity" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Git identity
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#putting-it-together" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Putting it together
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#related" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Related
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="docker-dood.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Advanced: Docker outside Docker (DooD)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="secrets.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Advanced: secrets &amp; keys
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="templates.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Advanced: templates
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    How to
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    How to
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../how-to/completing.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    How-to: completing &amp; cleanup
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../how-to/starting.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    How-to: starting an environment
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../how-to/working.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    How-to: working with a running environment
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8" >
+        
+          
+          <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Reference
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Reference
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference/commands.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Commands
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference/config.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Config reference (ffleet.toml)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#image" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Image
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Image">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#how-the-published-images-are-built" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How the published images are built
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#volumes-mounts" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Volumes &amp; mounts
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#credential-directories-authenticating-the-agent-inside" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Credential directories — authenticating the agent inside
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#extra_hosts" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        extra_hosts
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="extra_hosts">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#reaching-a-service-on-your-host-eg-an-mcp-server" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Reaching a service on your host (e.g. an MCP server)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#host-docker-access" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Host Docker access
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#git-identity" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Git identity
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#putting-it-together" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Putting it together
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#related" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Related
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="advanced-how-the-container-is-configured">Advanced: how the container is configured</h1>
+<p>Each environment is a Docker container that Forge Fleet assembles from your
+<code>ffleet.toml</code> and flags. This page explains the pieces so you can tune them.</p>
+<h2 id="image">Image</h2>
+<p><code>image</code> (or <code>--image</code>) selects the Docker image the agent runs in. Default:
+<code>ghcr.io/grzegorz-aniol/forge-fleet-python:latest</code> (pulled from GHCR on first
+use — no local build required). A Go-dev variant
+(<code>ghcr.io/grzegorz-aniol/forge-fleet-go:latest</code>, also published to GHCR) overlays
+a Go toolchain for developing the Go port. Pick or build an image that carries the
+language runtimes and tools your project needs — the agent can only use what's in
+the image (plus what it installs at runtime).</p>
+<p>Because <code>image</code> is a config-derived setting, you can change it and pick it up on
+the next revive: <code>ffleet stop SLUG</code> then <code>ffleet up SLUG</code> (see
+<a href="../how-to/working.html#what-can-and-cant-change-mid-life">what can change mid-life</a>).</p>
+<h3 id="how-the-published-images-are-built">How the published images are built</h3>
+<p>The two default images are built and pushed to GHCR from the public
+<a href="https://github.com/grzegorz-aniol/ffleet-dist"><code>ffleet-dist</code></a> repo (its
+<code>publish-images</code> workflow), where the <code>Dockerfile</code>s live:</p>
+<ul>
+<li><strong><code>ghcr.io/grzegorz-aniol/forge-fleet-python:latest</code></strong> — the base image
+  (Debian bookworm-slim). It carries the agent toolbox: the <strong>Claude Code</strong> and
+  <strong>Codex</strong> CLIs, <strong>Python 3</strong> + <strong>uv</strong>, <strong>Node 22</strong> (with corepack for
+  pnpm/yarn), plus <code>git</code>, <code>gh</code> (GitHub CLI), the <code>docker</code> CLI (client only, for
+  <a href="docker-dood.html">DooD</a>), <code>tmux</code>, <code>jq</code>, <code>make</code>, and a C build toolchain.</li>
+<li><strong><code>ghcr.io/grzegorz-aniol/forge-fleet-go:latest</code></strong> — a superset overlay of the
+  base that adds the <strong>Go toolchain</strong> (for developing the Go port); the rest of
+  the toolbox is identical.</li>
+</ul>
+<p>Both run as a <strong>non-root user <code>buddy</code> (uid/gid <code>1000</code>)</strong> with home
+<code>/home/buddy</code>, and the workspace directory is owned by <code>buddy</code>. That is why credential and
+cache mounts land under <code>/home/buddy/...</code> (e.g. <code>~/.claude</code> →
+<code>/home/buddy/.claude</code>), why <code>extra_mounts</code> into the container home use that
+path, and why host Docker access adds <code>buddy</code> to the host <code>docker</code> group so it
+can reach the socket (see <a href="docker-dood.html">DooD</a>). If you build a custom image,
+matching the <code>buddy</code> uid/gid <code>1000</code> keeps mounted-file ownership aligned with
+your host user.</p>
+<h2 id="volumes-mounts">Volumes &amp; mounts</h2>
+<p>Several things get mounted into the container:</p>
+<ul>
+<li><strong>The workspace</strong> — the git worktree (or, in <code>--here</code>/<code>off</code> mode, your current
+  directory) is mounted into the container at its <strong>host-identical absolute
+  path</strong> (e.g. <code>/srv/worktrees/creator-ai/creator-ai-feat1</code>), not a fixed
+  <code>/workspace</code>. This is where the agent does its work; it also gives every
+  environment a unique container cwd, which matters for Codex session resume
+  (see below).</li>
+<li><strong><code>uv_cache_dir</code></strong> — a shared uv cache (default <code>~/.cache/uv</code>) for faster
+  Python installs across environments.</li>
+<li><strong><code>extra_mounts</code></strong> — your own bind mounts, <code>source:target[:ro|:rw]</code> (the only
+  accepted modes are <code>ro</code> and <code>rw</code>, default read-write); target is an absolute
+  container path, a relative source resolves against the repo root, <code>~</code> expands
+  to the host home. Use these for shared caches, SSH keys, etc. See
+  <a href="secrets.html">secrets</a> for when to mount vs. copy vs. env-file.</li>
+</ul>
+<h2 id="credential-directories-authenticating-the-agent-inside">Credential directories — authenticating the agent inside</h2>
+<p>The agent must be logged in <em>inside</em> the container. Forge Fleet handles this by
+mounting the agent's host credential/config directory:</p>
+<ul>
+<li><strong>Claude Code</strong> — <code>[claude].dir</code> (default <code>~/.claude</code>), plus a credential
+  <code>auth</code> source (<code>auto</code> / <code>keychain</code> / <code>token</code> / <code>api-key</code> / <code>credentials-file</code> /
+  <code>external</code>) that decides <em>which</em> credential ffleet injects. See the
+  <a href="../reference/config.html#claudeauth-values"><code>[claude].auth</code> table</a>.</li>
+<li><strong>Codex</strong> — <code>[codex].dir</code> (default <code>~/.codex</code>).</li>
+</ul>
+<p>Override the mounts per run with <code>--claude-dir</code> / <code>--codex-dir</code>, and the Claude
+source with <code>--claude-auth</code>. The upshot: because your host login is mounted in,
+you don't re-authenticate per environment.</p>
+<blockquote>
+<p><strong>Codex resumes the most recently used session within its cwd filter, not by
+ID.</strong> Unlike Claude, the Codex CLI has no way to resume a specific session by
+an externally chosen ID — <code>ffleet up</code> on a stopped Codex environment runs
+<code>codex resume --last</code>, which (per Codex's own documentation for its <code>--all</code>
+flag) filters candidate sessions down to the ones started from the same
+working directory. Because each environment's container workspace is always
+mounted at its own host-identical path (see "Volumes &amp; mounts" above),
+concurrent Codex environments get distinct cwds even though they share
+<code>[codex].dir</code> by default — so <code>--last</code> resolves to the right environment's
+session in the common case. This isn't an absolute guarantee for every
+possible setup, so if you ever see a Codex environment resume the wrong
+session, giving that environment its own <code>--codex-dir</code> removes the ambiguity
+entirely.</p>
+</blockquote>
+<h2 id="extra_hosts"><code>extra_hosts</code></h2>
+<p><code>extra_hosts</code> maps hostnames to addresses via <code>docker run --add-host</code>, letting
+processes inside resolve names to the host or to arbitrary addresses. Each entry
+is <code>host:address</code>; the special value <code>host-gateway</code> resolves to the host itself —
+handy for reaching a service running on your machine:</p>
+<div class="highlight"><pre><span></span><code><span class="n">extra_hosts</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;host.docker.internal:host-gateway&quot;</span><span class="p">]</span>
+</code></pre></div>
+<h3 id="reaching-a-service-on-your-host-eg-an-mcp-server">Reaching a service on your host (e.g. an MCP server)</h3>
+<p>A common case: the agent needs to reach something running on your <strong>host</strong> — an
+MCP server, a local API, a dev database. Two pieces must line up:</p>
+<ol>
+<li><strong>Give the container a name for the host.</strong> Map <code>host.docker.internal</code> to the
+   host gateway:</li>
+</ol>
+<div class="highlight"><pre><span></span><code><span class="n">extra_hosts</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;host.docker.internal:host-gateway&quot;</span><span class="p">]</span>
+</code></pre></div>
+<p>Then point the agent at <code>host.docker.internal:&lt;port&gt;</code> (e.g. in your Claude MCP
+   config under the mounted <code>~/.claude</code>).
+2. <strong>Bind the host service so the container can reach it.</strong> <code>host-gateway</code>
+   reaches your host on its <strong>bridge</strong> interface, not its loopback — a service
+   bound only to <code>127.0.0.1</code> on the host is unreachable from the container. Bind
+   it to <code>0.0.0.0</code> (or the docker bridge address) instead.</p>
+<p>Editing your <strong>host's</strong> <code>/etc/hosts</code> doesn't help here: it only changes name
+resolution on the host, not inside the container (which has its own
+<code>/etc/hosts</code>). The container-side mapping is exactly what <code>extra_hosts</code> provides.</p>
+<h2 id="host-docker-access">Host Docker access</h2>
+<p><code>docker_host_bind = true</code> (or <code>--docker-host-bind</code>) binds the host Docker socket
+so the agent can drive the host daemon — this is the Docker-outside-Docker setup;
+see <a href="docker-dood.html">DooD</a>.</p>
+<h2 id="git-identity">Git identity</h2>
+<p>Commits made inside the container use the <code>[git]</code> identity (<code>user_name</code> /
+<code>user_email</code>) if both are set; otherwise identity falls back to your host git
+config. Set both together or neither.</p>
+<h2 id="putting-it-together">Putting it together</h2>
+<div class="highlight"><pre><span></span><code><span class="n">image</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;ghcr.io/grzegorz-aniol/forge-fleet-python:latest&quot;</span>
+<span class="n">uv_cache_dir</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;~/.cache/uv&quot;</span>
+<span class="n">extra_mounts</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;~/.ssh:/home/buddy/.ssh&quot;</span><span class="p">]</span>
+<span class="n">extra_hosts</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;host.docker.internal:host-gateway&quot;</span><span class="p">]</span>
+
+<span class="k">[claude]</span>
+<span class="n">dir</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;~/.claude&quot;</span>
+<span class="c1"># auth = &quot;auto&quot;</span>
+
+<span class="k">[git]</span>
+<span class="n">user_name</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;Jane Developer&quot;</span>
+<span class="n">user_email</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;jane@example.com&quot;</span>
+</code></pre></div>
+<h2 id="related">Related</h2>
+<ul>
+<li><a href="secrets.html">Secrets &amp; keys</a> · <a href="docker-dood.html">DooD</a> ·
+  <a href="../reference/config.html">Config reference</a>.</li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": [], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+    
+  </body>
+</html>

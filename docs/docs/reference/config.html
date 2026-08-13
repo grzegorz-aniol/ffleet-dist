@@ -1,0 +1,1505 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://ffleet.app/docs/reference/config.html">
+      
+      
+        <link rel="prev" href="commands.html">
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/favicon.ico">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>Config reference (ffleet.toml) - Forge Fleet User Guide</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.ec1eaa64.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#config-reference-ffleettoml" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../index.html" title="Forge Fleet User Guide" class="md-header__button md-logo" aria-label="Forge Fleet User Guide" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Forge Fleet User Guide
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Config reference (ffleet.toml)
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../index.html" title="Forge Fleet User Guide" class="md-nav__button md-logo" aria-label="Forge Fleet User Guide" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Forge Fleet User Guide
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../index.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Forge Fleet
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../00-install.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    0. Prerequisites &amp; install
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../01-basic-flow.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1. Basic flow
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../02-concepts.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2. Concepts
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../troubleshooting.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Troubleshooting &amp; recovery
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Advanced
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Advanced
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../advanced/config-precedence.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Advanced: config precedence
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../advanced/container-config.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Advanced: how the container is configured
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../advanced/docker-dood.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Advanced: Docker outside Docker (DooD)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../advanced/secrets.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Advanced: secrets &amp; keys
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../advanced/templates.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Advanced: templates
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    How to
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    How to
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../how-to/completing.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    How-to: completing &amp; cleanup
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../how-to/starting.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    How-to: starting an environment
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../how-to/working.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    How-to: working with a running environment
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Reference
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_8">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Reference
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="commands.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Commands
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Config reference (ffleet.toml)
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="config.html" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Config reference (ffleet.toml)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#what-init-sets-and-everything-else" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What init sets, and everything else
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#global-keys" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Global keys
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#git-identity-injected-into-the-container" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        [git] — identity injected into the container
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#claude-codex-per-coding-agent-config" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        [claude] / [codex] — per-coding-agent config
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="[claude] / [codex] — per-coding-agent config">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#claudeauth-values" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        [claude].auth values
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#templatesid-prompt-templates" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        [templates.&lt;id&gt;] — prompt templates
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#environment-variables-and-dotenv" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Environment variables and dotenv
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#config-discovery-order" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Config discovery order
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#related" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Related
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#what-init-sets-and-everything-else" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What init sets, and everything else
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#global-keys" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Global keys
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#git-identity-injected-into-the-container" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        [git] — identity injected into the container
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#claude-codex-per-coding-agent-config" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        [claude] / [codex] — per-coding-agent config
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="[claude] / [codex] — per-coding-agent config">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#claudeauth-values" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        [claude].auth values
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#templatesid-prompt-templates" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        [templates.&lt;id&gt;] — prompt templates
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#environment-variables-and-dotenv" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Environment variables and dotenv
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#config-discovery-order" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Config discovery order
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#related" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Related
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="config-reference-ffleettoml">Config reference (<code>ffleet.toml</code>)</h1>
+<p>Every <code>ffleet.toml</code> setting. This file is a <strong>per-project, personal dev-tool
+preference</strong> — not team config. <code>ffleet init</code> writes it by default under
+<code>~/.forge-fleet/{project-id}/ffleet.toml</code> ("home mode"), so nothing needs to be
+committed into the repo it configures. In-repo ("local mode") is supported as an
+explicit opt-in.</p>
+<p>Most CLI flags mirror a key here; where they overlap the flag wins for that run
+(see <a href="../advanced/config-precedence.html">config precedence</a>). The canonical,
+fully-commented template is <a href="../../../ffleet.toml.example"><code>ffleet.toml.example</code></a> at
+the repo root.</p>
+<h2 id="what-init-sets-and-everything-else">What <code>init</code> sets, and everything else</h2>
+<p><code>ffleet init</code> runs a short wizard for the settings most worth choosing up front —
+the <strong>default coding agent</strong>, the <strong>base image</strong> (python or go variant),
+the <strong>git mode</strong>, and whether sandboxes get <strong>host Docker access (DooD)</strong>. Each
+question is pre-selected at its default, so pressing enter through them keeps
+today's behavior; your choices are written as <strong>active</strong> keys. Every other
+setting is written <strong>commented-out at its default</strong>, so the generated file
+doubles as a menu — uncomment and edit what you need.</p>
+<p><code>init -y</code> accepts every default without prompting. Non-default values for any
+other setting are configured by editing the generated <code>ffleet.toml</code>.</p>
+<p><code>init</code> is <strong>create-only</strong>: it never overwrites an existing config. To change
+settings later, <strong>edit the <code>ffleet.toml</code> directly</strong> — <code>init</code> prints its path when
+it writes it, and re-running <code>init</code> on a configured project just points you back
+at that file.</p>
+<h2 id="global-keys">Global keys</h2>
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Type</th>
+<th>Default</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>project_name</code></td>
+<td>string</td>
+<td>— (required)</td>
+<td>Logical project name; used to name containers and worktrees.</td>
+</tr>
+<tr>
+<td><code>source_dir</code></td>
+<td>string</td>
+<td>—</td>
+<td>Absolute path to the source repo. Required in home mode; in local mode it's derived from where this file lives (set it only if the file isn't colocated with the repo).</td>
+</tr>
+<tr>
+<td><code>worktree_root</code></td>
+<td>string</td>
+<td>— (required)</td>
+<td>Where per-environment worktrees are created (absolute, or relative to the repo root). Inside the checkout (e.g. <code>.forge-fleet/worktrees</code>) or a separate folder under <code>$HOME</code>.</td>
+</tr>
+<tr>
+<td><code>image</code></td>
+<td>string</td>
+<td><code>ghcr.io/grzegorz-aniol/forge-fleet-python:latest</code></td>
+<td>Docker image the agent container runs. Use <code>ghcr.io/grzegorz-aniol/forge-fleet-go:latest</code> for the Go-dev variant.</td>
+</tr>
+<tr>
+<td><code>git_mode</code></td>
+<td>string</td>
+<td><code>auto</code></td>
+<td>Git integration: <code>auto</code> | <code>off</code> | <code>worktree</code> | <code>clone</code>. See <a href="../how-to/starting.html#git-modes">git modes</a>.</td>
+</tr>
+<tr>
+<td><code>git_local_main</code></td>
+<td>bool</td>
+<td><code>false</code></td>
+<td>Base the worktree on the local <code>main</code> branch and keep completion local-only (no push/PR).</td>
+</tr>
+<tr>
+<td><code>docker_host_bind</code></td>
+<td>bool</td>
+<td><code>false</code></td>
+<td>Let the agent inside the container drive the host Docker daemon (binds the host docker socket; agent-started containers become siblings). See <a href="../advanced/docker-dood.html">DooD</a>.</td>
+</tr>
+<tr>
+<td><code>uv_cache_dir</code></td>
+<td>string</td>
+<td><code>~/.cache/uv</code></td>
+<td>Shared uv cache mounted into the container for faster installs.</td>
+</tr>
+<tr>
+<td><code>extra_mounts</code></td>
+<td>list</td>
+<td>—</td>
+<td>Extra bind mounts as <code>source:target[:ro\|:rw]</code>. Target must be an absolute container path; a relative source resolves against the repo root; <code>~</code> expands to the host home. An optional <code>:ro</code>/<code>:rw</code> suffix sets the mode (default read-write).</td>
+</tr>
+<tr>
+<td><code>extra_hosts</code></td>
+<td>list</td>
+<td>— (may be omitted)</td>
+<td>Host-to-address mappings passed to <code>docker run --add-host</code>, each <code>host:address</code>. <code>host-gateway</code> resolves to the host itself.</td>
+</tr>
+<tr>
+<td><code>docker_env_file</code></td>
+<td>string</td>
+<td>—</td>
+<td>Additional env file passed to <code>docker run --env-file</code> (runtime secrets/keys). A relative path resolves against this config file's own directory.</td>
+</tr>
+<tr>
+<td><code>copy_files</code></td>
+<td>list</td>
+<td>—</td>
+<td>Gitignored files to snapshot from the main repo into each <strong>new</strong> worktree (globs allowed), so e.g. <code>.env</code> appears at the same relative path inside. One-time copy at creation, not a live link.</td>
+</tr>
+<tr>
+<td><code>default</code></td>
+<td>string</td>
+<td>—</td>
+<td>Which coding-agent <code>ffleet up</code> runs when none is named on the CLI. Must be one of the <code>[section]</code> names below (e.g. <code>claude</code>, <code>codex</code>).</td>
+</tr>
+<tr>
+<td><code>pm</code></td>
+<td>string</td>
+<td><code>github</code></td>
+<td>Issue tracker for <code>-t</code> templates: <code>github</code> (via <code>gh</code> CLI) | <code>linear</code> (needs <code>LINEAR_API_KEY</code>) | <code>none</code> (don't fetch; raw ref exposed as <code>{id}</code>). On any fetch failure ffleet warns and continues as <code>pm=none</code>.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="git-identity-injected-into-the-container"><code>[git]</code> — identity injected into the container</h2>
+<p>Both keys must be set together; otherwise identity resolves from host git config.</p>
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Type</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>user_name</code></td>
+<td>string</td>
+<td>Git author/committer name inside the container.</td>
+</tr>
+<tr>
+<td><code>user_email</code></td>
+<td>string</td>
+<td>Git author/committer email inside the container.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="claude-codex-per-coding-agent-config"><code>[claude]</code> / <code>[codex]</code> — per-coding-agent config</h2>
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Type</th>
+<th>Default</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>dir</code></td>
+<td>string</td>
+<td><code>~/.claude</code> / <code>~/.codex</code></td>
+<td>Host directory mounted as the agent's config/credentials, so it's authenticated inside the container.</td>
+</tr>
+<tr>
+<td><code>auth</code></td>
+<td>string</td>
+<td><code>auto</code></td>
+<td><em>(Claude)</em> Credential source ffleet injects. See the table below.</td>
+</tr>
+<tr>
+<td><code>cmd</code></td>
+<td>string</td>
+<td>the section name</td>
+<td>Override the binary invoked in the container (e.g. <code>claude</code>).</td>
+</tr>
+<tr>
+<td><code>extra_args</code></td>
+<td>list</td>
+<td>—</td>
+<td>Flags appended to the agent's launch command, after ffleet's own flags (e.g. <code>["--agent", "myagent"]</code>).</td>
+</tr>
+</tbody>
+</table>
+<h3 id="claudeauth-values"><code>[claude].auth</code> values</h3>
+<table>
+<thead>
+<tr>
+<th>Value</th>
+<th>Behaviour</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>auto</code></td>
+<td>Try keychain, then token, then api-key, then credentials-file; first available wins (default).</td>
+</tr>
+<tr>
+<td><code>keychain</code></td>
+<td>macOS only; pin the Keychain-derived credential (fails fast if the lookup fails).</td>
+</tr>
+<tr>
+<td><code>token</code></td>
+<td>Pin <code>CLAUDE_CODE_OAUTH_TOKEN</code> (from <code>claude setup-token</code>).</td>
+</tr>
+<tr>
+<td><code>api-key</code></td>
+<td>Pin <code>ANTHROPIC_API_KEY</code> (API billing, not subscription).</td>
+</tr>
+<tr>
+<td><code>credentials-file</code></td>
+<td>Pin the <code>~/.claude</code> mount's <code>.credentials.json</code> (Linux only).</td>
+</tr>
+<tr>
+<td><code>external</code></td>
+<td>Skip the auth preflight entirely — you provide credentials another way (e.g. <code>docker_env_file</code>).</td>
+</tr>
+</tbody>
+</table>
+<p>See <a href="../advanced/container-config.html">container configuration</a> for how these
+mounts and credentials fit together.</p>
+<h2 id="templatesid-prompt-templates"><code>[templates.&lt;id&gt;]</code> — prompt templates</h2>
+<p>Looked up by <code>ffleet up -t &lt;id&gt; &lt;ref&gt;</code>: ffleet fetches issue <code>&lt;ref&gt;</code> from the
+configured <code>pm</code> source, derives the slug from the issue title, and renders
+<code>prompt_template</code> with the issue's fields.</p>
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Type</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>prompt_template</code></td>
+<td>string</td>
+<td>Template rendered with <code>{number}</code>, <code>{title}</code>, <code>{body}</code>, <code>{url}</code>, <code>{id}</code> (raw ref), plus any extra <code>key=value</code> tokens passed on the CLI.</td>
+</tr>
+<tr>
+<td><code>subagent</code></td>
+<td>string</td>
+<td>Optional subagent for envs seeded from this template. Translated to the agent's own subagent flag (Claude only: <code>--agent &lt;name&gt;</code>; using it with another agent errors).</td>
+</tr>
+</tbody>
+</table>
+<p>Full walkthrough: <a href="../advanced/templates.html">advanced/templates.md</a>.</p>
+<h2 id="environment-variables-and-dotenv">Environment variables and dotenv</h2>
+<p>Most <code>ffleet.toml</code> keys have an environment-variable equivalent, and Forge Fleet
+also loads a dotenv file from the current working directory if present. An env var
+(or dotenv entry) overrides the matching <code>ffleet.toml</code> key; a CLI flag overrides
+both (see <a href="../advanced/config-precedence.html">config precedence</a>).</p>
+<p>Dotenv discovery order in the current working directory (only the <strong>first</strong>
+existing file is loaded):</p>
+<ol>
+<li><code>.env.forge-fleet</code></li>
+<li><code>.forge-fleet/.env</code></li>
+</ol>
+<p>Env var mapping:</p>
+<p>Identity (<code>project_name</code>, <code>source_dir</code>, <code>worktree_root</code>) is <strong>config-only</strong>: it is
+read straight from <code>ffleet.toml</code> and has no env-var or CLI-flag override. Run
+<code>ffleet init</code> to create the config; without it, the env commands fail with a
+<code>no ffleet config found — run 'ffleet init'</code> error.</p>
+<table>
+<thead>
+<tr>
+<th>Env var</th>
+<th>Maps to</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>SLUG</code></td>
+<td><code>slug</code> positional argument</td>
+</tr>
+<tr>
+<td><code>IMAGE_NAME</code></td>
+<td><code>--image</code></td>
+</tr>
+<tr>
+<td><code>CODING_AGENT</code></td>
+<td><code>--coding-agent</code> (on <code>up</code>; set only when first creating an env). The legacy <code>AGENT</code> / <code>--agent</code> names still work, each with a one-time deprecation notice.</td>
+</tr>
+<tr>
+<td><code>CLAUDE_DIR</code></td>
+<td><code>--claude-dir</code></td>
+</tr>
+<tr>
+<td><code>CLAUDE_AUTH</code></td>
+<td><code>--claude-auth</code> (<code>auto</code>, <code>keychain</code>, <code>token</code>, <code>api-key</code>, <code>credentials-file</code>, <code>external</code>)</td>
+</tr>
+<tr>
+<td><code>CODEX_DIR</code></td>
+<td><code>--codex-dir</code></td>
+</tr>
+<tr>
+<td><code>UV_CACHE_DIR</code></td>
+<td><code>--uv-cache-dir</code></td>
+</tr>
+<tr>
+<td><code>EXTRA_MOUNTS</code></td>
+<td><code>--extra-mounts</code> (<code>source:target,source:target</code>)</td>
+</tr>
+<tr>
+<td><code>EXTRA_HOSTS</code></td>
+<td><code>--extra-hosts</code> (<code>host:address,host:address</code>; each becomes a <code>docker run --add-host</code>, e.g. <code>host.docker.internal:host-gateway</code>)</td>
+</tr>
+<tr>
+<td><code>DOCKER_ENV_FILE</code></td>
+<td><code>--docker-env-file</code></td>
+</tr>
+<tr>
+<td><code>GIT_MODE</code></td>
+<td><code>--git-mode</code> (<code>auto</code>, <code>off</code>, <code>worktree</code>, <code>clone</code>)</td>
+</tr>
+<tr>
+<td><code>GIT_LOCAL_MAIN</code></td>
+<td>local-branch mode when first creating an env (<code>true</code>/<code>false</code>)</td>
+</tr>
+<tr>
+<td><code>DOCKER_HOST_BIND</code></td>
+<td><code>--docker-host-bind</code> (<code>true</code>/<code>false</code>)</td>
+</tr>
+<tr>
+<td><code>FORGE_FLEET_GIT_USER_NAME</code></td>
+<td>explicit git identity name override</td>
+</tr>
+<tr>
+<td><code>FORGE_FLEET_GIT_USER_EMAIL</code></td>
+<td>explicit git identity email override</td>
+</tr>
+<tr>
+<td><code>LINEAR_API_KEY</code></td>
+<td>Linear personal API key, read directly when <code>pm = "linear"</code>; no CLI flag equivalent</td>
+</tr>
+</tbody>
+</table>
+<p>Example <code>.env.forge-fleet</code>:</p>
+<div class="highlight"><pre><span></span><code>IMAGE_NAME=forge-fleet:latest
+CODING_AGENT=claude
+CLAUDE_DIR=~/.claude
+CODEX_DIR=~/.codex
+UV_CACHE_DIR=~/.cache/uv
+EXTRA_MOUNTS=~/.agents:/home/buddy/.agents,~/.ssh:/home/buddy/.ssh:ro
+DOCKER_ENV_FILE=/path/to/docker.env
+GIT_MODE=auto
+DOCKER_HOST_BIND=false
+FORGE_FLEET_GIT_USER_NAME=Jane Developer
+FORGE_FLEET_GIT_USER_EMAIL=jane@example.com
+# Only needed when pm = &quot;linear&quot;:
+LINEAR_API_KEY=lin_api_xxxxxxxx
+</code></pre></div>
+<p><code>EXTRA_MOUNTS</code> format rules:</p>
+<ul>
+<li>comma-separated entries: <code>&lt;source&gt;:&lt;target&gt;[:ro|:rw]</code></li>
+<li><code>source</code> supports <code>~</code> expansion</li>
+<li>relative <code>source</code> is resolved from the current working directory</li>
+<li><code>target</code> must be an absolute container path (start with <code>/</code>)</li>
+<li>an optional trailing <code>:ro</code> or <code>:rw</code> sets the mount mode (default is read-write);
+  any other trailing segment is rejected</li>
+<li>entries are bind-mounted as <code>-v &lt;source&gt;:&lt;target&gt;</code> (read-write) or
+  <code>-v &lt;source&gt;:&lt;target&gt;:ro</code> (read-only)</li>
+<li>if an extra mount uses the same target as an existing mount, the later extra mount can shadow the earlier one</li>
+</ul>
+<h2 id="config-discovery-order">Config discovery order</h2>
+<p>For a given directory, Forge Fleet locates the <code>ffleet.toml</code> to use in this order:</p>
+<ol>
+<li>an explicit config path (<code>FFLEET_CONFIG</code> env var)</li>
+<li>an explicit project config dir (<code>FFLEET_PROJECT_DIR</code> env var)</li>
+<li>the <code>~/.forge-fleet/registry.json</code> lookup by the directory's <strong>project id</strong></li>
+<li>legacy in-repo search: <code>ffleet.toml</code>, then <code>.forge-fleet/ffleet.toml</code></li>
+</ol>
+<p>The <strong>project id</strong> is derived from git structure — the main checkout's
+<code>git rev-parse --git-common-dir</code> plus its <code>origin</code> remote, or a path hash when there
+is no remote — never from the current directory's name. That's why every worktree of
+a project resolves to the same config.</p>
+<h2 id="related">Related</h2>
+<ul>
+<li>Full command/flag list: <a href="commands.html">command reference</a>.</li>
+<li>Why some keys only apply after <code>remove</code>: <a href="../advanced/config-precedence.html">config precedence</a>.</li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": [], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+    
+  </body>
+</html>

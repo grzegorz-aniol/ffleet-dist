@@ -1,0 +1,1144 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://ffleet.app/docs/02-concepts.html">
+      
+      
+        <link rel="prev" href="01-basic-flow.html">
+      
+      
+        <link rel="next" href="troubleshooting.html">
+      
+      
+        
+      
+      
+      <link rel="icon" href="assets/favicon.ico">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>2. Concepts - Forge Fleet User Guide</title>
+      
+    
+    
+      <link rel="stylesheet" href="assets/stylesheets/main.ec1eaa64.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL(".",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#2-concepts" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="index.html" title="Forge Fleet User Guide" class="md-header__button md-logo" aria-label="Forge Fleet User Guide" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Forge Fleet User Guide
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              2. Concepts
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="index.html" title="Forge Fleet User Guide" class="md-nav__button md-logo" aria-label="Forge Fleet User Guide" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Forge Fleet User Guide
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="index.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Forge Fleet
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="00-install.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    0. Prerequisites &amp; install
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="01-basic-flow.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1. Basic flow
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2. Concepts
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="02-concepts.html" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2. Concepts
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#the-workdir-config-file" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The workdir &amp; config file
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-slug" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The slug
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#up-is-state-driven-not-flag-driven" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        up is state-driven, not flag-driven
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-container-state-machine" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The container state machine
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#lifecycle-at-a-glance" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Lifecycle at a glance
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="troubleshooting.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Troubleshooting &amp; recovery
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Advanced
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Advanced
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="advanced/config-precedence.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Advanced: config precedence
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="advanced/container-config.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Advanced: how the container is configured
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="advanced/docker-dood.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Advanced: Docker outside Docker (DooD)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="advanced/secrets.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Advanced: secrets &amp; keys
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="advanced/templates.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Advanced: templates
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    How to
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    How to
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="how-to/completing.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    How-to: completing &amp; cleanup
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="how-to/starting.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    How-to: starting an environment
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="how-to/working.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    How-to: working with a running environment
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8" >
+        
+          
+          <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Reference
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Reference
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="reference/commands.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Commands
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="reference/config.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Config reference (ffleet.toml)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#the-workdir-config-file" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The workdir &amp; config file
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-slug" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The slug
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#up-is-state-driven-not-flag-driven" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        up is state-driven, not flag-driven
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-container-state-machine" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The container state machine
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#lifecycle-at-a-glance" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Lifecycle at a glance
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="2-concepts">2. Concepts</h1>
+<p>A short shared vocabulary. Everything in the how-to guides builds on these two
+ideas — the <strong>slug</strong> and the fact that <strong><code>up</code> is state-driven, not
+flag-driven</strong> — plus the state machine below.</p>
+<h2 id="the-workdir-config-file">The workdir &amp; config file</h2>
+<p>Forge Fleet keeps its per-project state under a <strong>workdir</strong>, <code>~/.forge-fleet</code> by
+default. Each project gets its own <code>ffleet.toml</code> there, written once by
+<code>ffleet init</code>, so your settings persist and you don't re-pass CLI flags on every
+run. Full details: <a href="reference/config.html">config reference</a>.</p>
+<h2 id="the-slug">The slug</h2>
+<p>Every environment has a <strong>slug</strong>: a short name you choose (e.g. <code>my-feature</code>,
+<code>bugfix-login</code>). It's how the environment is named and referenced — the worktree
+directory, the branch, and the container all derive from it, and <strong>every command
+takes the slug</strong> as its argument:</p>
+<div class="highlight"><pre><span></span><code><span class="gp">$ </span>ffleet<span class="w"> </span>up<span class="w"> </span>my-feature<span class="w">      </span><span class="c1"># start / resume it</span>
+<span class="gp">$ </span>ffleet<span class="w"> </span>status<span class="w"> </span>my-feature<span class="w">  </span><span class="c1"># inspect it</span>
+<span class="gp">$ </span>ffleet<span class="w"> </span>tail<span class="w"> </span>my-feature<span class="w">    </span><span class="c1"># read its transcript</span>
+<span class="gp">$ </span>ffleet<span class="w"> </span>remove<span class="w"> </span>my-feature<span class="w">  </span><span class="c1"># tear it down</span>
+</code></pre></div>
+<p>List the slugs you already have with <code>ffleet ls</code>. Pick something short and
+descriptive; it's the handle you'll type all day.</p>
+<p>The branch and container are both named <strong><code>&lt;project&gt;-&lt;slug&gt;</code></strong> (e.g. project
+<code>my-project</code> + slug <code>my-feature</code> → <code>my-project-my-feature</code>) — that's the branch
+you push when the work is done.</p>
+<p><strong>Naming rules.</strong> Forge Fleet normalizes the slug (and the project name) so it's
+safe to use in branch, worktree, and container names:</p>
+<ul>
+<li>trims surrounding spaces</li>
+<li>trims leading/trailing <code>-</code> and <code>_</code></li>
+<li>allows only lowercase letters, digits, <code>-</code>, and <code>_</code></li>
+<li>must start and end with an alphanumeric character</li>
+</ul>
+<p>If you type something that doesn't fit (e.g. mixed case or a trailing dash), it's
+normalized to the nearest valid form.</p>
+<h2 id="up-is-state-driven-not-flag-driven"><code>up</code> is state-driven, not flag-driven</h2>
+<p>This is the core mental model. <strong>The <em>same</em> command — <code>ffleet up SLUG</code> — does
+whatever the current state needs</strong>, rather than you choosing a different verb for
+each situation:</p>
+<ul>
+<li>No environment yet → it <strong>creates</strong> one (worktree, branch, container, agent).</li>
+<li>A live agent session → it <strong>attaches</strong> you to it.</li>
+<li>A stopped container or a dead/exited agent → it <strong>rebuilds</strong> from the current
+  config and <strong>resumes</strong> the session — without losing your work.</li>
+</ul>
+<p>You don't have to remember "did I stop this? did it crash?" — you just run
+<code>ffleet up SLUG</code> and Forge Fleet reconciles reality to "running and attached".
+<code>--no-attach</code> starts it in the background; <code>--peek</code> is the strict, side-effect-
+free variant that attaches only if the agent is already live and never relaunches
+anything.</p>
+<p>One consequence worth internalizing: on a rebuild, <strong>config-derived settings</strong>
+(image, mounts, hosts, env-file, auth, credential dirs, agent command/args)
+refresh from your current config, while <strong>identity/continuity settings</strong> (branch,
+worktree, git-mode, which agent, the session) stay fixed at create time. That's
+why some things only change after a <code>remove</code> — see
+<a href="advanced/config-precedence.html">config precedence</a>.</p>
+<h2 id="the-container-state-machine">The container state machine</h2>
+<p>An environment moves between a handful of states. Note especially that
+<strong>stopped</strong> (container gone, but worktree + branch + metadata kept — revivable)
+is <em>distinct</em> from <strong>removed</strong> (worktree deleted — gone for good).</p>
+<pre class="mermaid"><code>stateDiagram-v2
+    [*] --&gt; Absent
+    Absent: Absent (nothing created yet — also where ffleet remove lands)
+    Running: Running (container up, agent live)
+    Stopped: Stopped (container removed on purpose; worktree+branch+metadata kept)
+    Interrupted: Interrupted (agent exited, setup failed, or container vanished — worktree kept)
+
+    Absent --&gt; Running: ffleet up SLUG
+    Running --&gt; Running: ffleet up (re-attach) · detach Ctrl-B D
+    Running --&gt; Stopped: ffleet stop
+    Running --&gt; Interrupted: agent exits · setup fails · host reboot · docker rm
+    Stopped --&gt; Running: ffleet up (revive)
+    Interrupted --&gt; Running: ffleet up (rebuild &amp; resume)
+    Running --&gt; Absent: ffleet remove (worktree deleted — back to start)
+    Stopped --&gt; Absent: ffleet remove
+    Interrupted --&gt; Absent: ffleet remove</code></pre>
+<p>In prose:</p>
+<ul>
+<li><strong>Absent</strong> — nothing exists yet. <code>ffleet up SLUG</code> creates the environment.
+  It's also where you land again after <code>ffleet remove</code>.</li>
+<li><strong>Running</strong> — the container is up and the agent session is live. You're either
+  attached to it or detached (it keeps running either way).</li>
+<li><strong>Stopped</strong> — you ran <code>ffleet stop</code>. Because containers run with <code>--rm</code>, "stop"
+  means the container is <em>removed</em>, but the worktree, branch, and metadata are
+  deliberately kept. <code>ffleet up</code> revives it with no data loss. This is the state
+  to leave things in when you want a container out of the way without discarding
+  work.</li>
+<li><strong>Interrupted</strong> — the environment isn't running but its worktree is intact,
+  whether because the agent process exited, setup failed, or the container
+  vanished unexpectedly (host reboot, a stray <code>docker rm</code>, a crash). Recovery is
+  the same in every case: <code>ffleet up</code> rebuilds the agent from saved metadata and
+  resumes — no work lost.</li>
+<li><strong><code>ffleet remove</code></strong> — deletes the worktree (and the branch, if Forge Fleet
+  created it). Nothing is left to revive, so the environment is back to
+  <strong>Absent</strong>: a later <code>ffleet up SLUG</code> starts fresh.</li>
+</ul>
+<p>The single takeaway: <strong><code>stop</code> is reversible, <code>remove</code> is not.</strong> When in doubt,
+<code>stop</code>.</p>
+<h2 id="lifecycle-at-a-glance">Lifecycle at a glance</h2>
+<p>The everyday actions across an environment's life:</p>
+<pre class="mermaid"><code>flowchart LR
+    start([no environment]) --&gt;|ffleet up SLUG -p '...'| attached[attached to agent]
+    attached --&gt;|detach: Ctrl-B D| detached[running, detached]
+    detached --&gt;|re-attach: ffleet up SLUG| attached
+    start --&gt;|background: ffleet up SLUG --no-attach| detached
+    attached --&gt;|ffleet remove SLUG| gone([removed])
+    detached --&gt;|ffleet remove SLUG| gone</code></pre>
+<ul>
+<li><strong>Start:</strong> <code>ffleet up SLUG</code> (optionally <code>-p</code> to seed a prompt) — creates and
+  attaches.</li>
+<li><strong>Detach:</strong> tmux <code>Ctrl-B</code> then <code>D</code> — leaves the agent running.</li>
+<li><strong>Re-attach:</strong> <code>ffleet up SLUG</code> again — same command.</li>
+<li><strong>Background start:</strong> <code>ffleet up SLUG --no-attach</code> — start without attaching.</li>
+<li><strong>Tear down:</strong> <code>ffleet remove SLUG</code>.</li>
+</ul>
+<p>From here the how-to guides zoom into each stage:
+<a href="how-to/starting.html">Starting</a> · <a href="how-to/working.html">Working</a> ·
+<a href="how-to/completing.html">Completing</a>.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": ".", "features": [], "search": "assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+    
+  </body>
+</html>

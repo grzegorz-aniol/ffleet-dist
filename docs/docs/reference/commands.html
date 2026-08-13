@@ -1,0 +1,1454 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://ffleet.app/docs/reference/commands.html">
+      
+      
+        <link rel="prev" href="../how-to/working.html">
+      
+      
+        <link rel="next" href="config.html">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/favicon.ico">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>Commands - Forge Fleet User Guide</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.ec1eaa64.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#command-reference" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../index.html" title="Forge Fleet User Guide" class="md-header__button md-logo" aria-label="Forge Fleet User Guide" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Forge Fleet User Guide
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Commands
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../index.html" title="Forge Fleet User Guide" class="md-nav__button md-logo" aria-label="Forge Fleet User Guide" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Forge Fleet User Guide
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../index.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Forge Fleet
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../00-install.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    0. Prerequisites &amp; install
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../01-basic-flow.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1. Basic flow
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../02-concepts.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2. Concepts
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../troubleshooting.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Troubleshooting &amp; recovery
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Advanced
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Advanced
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../advanced/config-precedence.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Advanced: config precedence
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../advanced/container-config.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Advanced: how the container is configured
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../advanced/docker-dood.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Advanced: Docker outside Docker (DooD)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../advanced/secrets.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Advanced: secrets &amp; keys
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../advanced/templates.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Advanced: templates
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    How to
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    How to
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../how-to/completing.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    How-to: completing &amp; cleanup
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../how-to/starting.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    How-to: starting an environment
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../how-to/working.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    How-to: working with a running environment
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Reference
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_8">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Reference
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Commands
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="commands.html" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Commands
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#ffleet" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ffleet
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ffleet-up" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ffleet up
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ffleet-remove" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ffleet remove
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ffleet-stop" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ffleet stop
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ffleet-tail" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ffleet tail
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ffleet-ls" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ffleet ls
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ffleet-status" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ffleet status
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ffleet-path" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ffleet path
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ffleet-goto" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ffleet goto
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ffleet-init" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ffleet init
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ffleet-project" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ffleet project
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ffleet-project-ls" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ffleet project ls
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ffleet-project-prune" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ffleet project prune
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ffleet-project-rm" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ffleet project rm
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ffleet-version" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ffleet version
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="config.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Config reference (ffleet.toml)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#ffleet" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ffleet
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ffleet-up" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ffleet up
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ffleet-remove" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ffleet remove
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ffleet-stop" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ffleet stop
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ffleet-tail" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ffleet tail
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ffleet-ls" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ffleet ls
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ffleet-status" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ffleet status
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ffleet-path" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ffleet path
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ffleet-goto" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ffleet goto
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ffleet-init" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ffleet init
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ffleet-project" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ffleet project
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ffleet-project-ls" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ffleet project ls
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ffleet-project-prune" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ffleet project prune
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ffleet-project-rm" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ffleet project rm
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ffleet-version" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ffleet version
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<!-- GENERATED — do not edit by hand, run scripts/gen-command-reference.sh to regenerate. -->
+
+<h1 id="command-reference">Command reference</h1>
+<p>The complete command index, generated from <code>ffleet --help</code>. For task-oriented
+guidance see the <a href="../how-to/starting.html">how-to guides</a>; for the <code>ffleet.toml</code>
+settings see <a href="config.html">config reference</a>.</p>
+<h2 id="ffleet"><code>ffleet</code></h2>
+<div class="highlight"><pre><span></span><code>Forge Fleet — spin up isolated, containerized coding-agent environments.
+
+Usage:
+  ffleet [command]
+
+Available Commands:
+  completion  Generate the autocompletion script for the specified shell
+  goto        Open a shell in an environment&#39;s worktree. Leave it with `exit`.
+  help        Help about any command
+  init        Set up ffleet.toml for the current project (home-based by default, specs/017).
+  ls          List all environments for the project (add --json for machine-readable output).
+  path        Print the worktree/working directory path for an environment (for cd &quot;$(ffleet path)&quot;).
+  project     Inspect and manage the projects known to the ~/.forge-fleet registry.
+  remove      Tear down an environment: stop the container, delete the worktree and (if ffleet created it) the branch.
+  status      Show the live status of an environment (container, agent and blocked state).
+  stop        Stop an environment&#39;s container, keeping the worktree, branch and metadata.
+  tail        Print the last lines of an agent&#39;s transcript for an environment.
+  up          Start or resume an environment. State — not flags — decides what happens.
+  version     Print the ffleet version and build metadata
+
+Flags:
+  -h, --help      help for ffleet
+  -v, --version   version for ffleet
+
+Use &quot;ffleet [command] --help&quot; for more information about a command.
+</code></pre></div>
+<h2 id="ffleet-up"><code>ffleet up</code></h2>
+<div class="highlight"><pre><span></span><code>Start or resume an environment. State — not flags — decides what happens.
+
+Absent env -&gt; create it; a live session -&gt; attach; a stopped container or dead
+agent -&gt; rebuild from the current config and resume. On that rebuild, config-
+derived settings (image, mounts, hosts, env-file, auth, dirs, agent cmd/args)
+refresh from the current config and are saved back; identity/continuity settings
+(branch, worktree, mode, git-mode, agent, session) stay fixed at create.
+
+Your shell&#39;s directory is never changed — use &#39;ffleet goto&#39; to enter a worktree.
+
+Usage:
+  ffleet up [SLUG] [flags]
+
+Flags:
+      --claude-auth string       Claude credential source: auto, keychain, token, api-key, credentials-file, or external. (default &quot;auto&quot;)
+      --claude-dir string        Host ~/.claude dir to mount for credentials/config. (default &quot;~/.claude&quot;)
+      --codex-dir string         Host ~/.codex dir to mount for credentials/config. (default &quot;~/.codex&quot;)
+      --coding-agent string      Coding assistant to launch inside the container (e.g. claude, codex). (default &quot;claude&quot;)
+      --copy-files string        Gitignored files to snapshot from the main repo into a new worktree, comma-separated relative paths.
+      --docker-env-file string   Env file passed to the container (docker --env-file).
+      --docker-host-bind         Mount the host Docker socket so the agent can drive the host&#39;s Docker daemon (Docker-outside-of-Docker).
+      --extra-hosts string       Extra host mappings passed to docker --add-host, comma-separated &#39;host:address&#39;.
+      --extra-mounts string      Additional docker mounts, comma-separated &#39;host:container[:ro|:rw]&#39;.
+      --from string              Base a first-time worktree on an existing branch (ignored once the env exists).
+      --git-local-main           Base the worktree on the local main branch instead of the remote.
+      --git-mode string          How git is set up in the container: auto, worktree, clone, or off. (default &quot;auto&quot;)
+  -h, --help                     help for up
+      --here                     In-place mode: start/revive an agent over the current directory (no worktree).
+      --image string             Docker image to run the agent in. (default &quot;ghcr.io/grzegorz-aniol/forge-fleet-python:latest&quot;)
+      --no-attach                Do not attach to the agent session afterwards.
+      --peek                     Strict, side-effect-free peek: attach only if the agent is live, never relaunch.
+  -p, --prompt string            Message: seeds a fresh session, otherwise sent to the live/revived one.
+      --prompt-file string       Read the prompt from a file instead of --prompt.
+  -t, --template string          Seed a fresh env from a templates.&lt;id&gt; table in ffleet.toml; SLUG is the template ref.
+      --uv-cache-dir string      Host uv cache dir to mount for faster installs. (default &quot;~/.cache/uv&quot;)
+      --wait-timeout int         Seconds to wait for the container/agent to become ready. (default 300)
+</code></pre></div>
+<h2 id="ffleet-remove"><code>ffleet remove</code></h2>
+<div class="highlight"><pre><span></span><code>Tear down an environment: stop the container, delete the worktree and (if ffleet created it) the branch.
+
+Usage:
+  ffleet remove [SLUG] [flags]
+
+Flags:
+  -h, --help   help for remove
+  -y, --yes    Skip the confirmation prompt.
+</code></pre></div>
+<h2 id="ffleet-stop"><code>ffleet stop</code></h2>
+<div class="highlight"><pre><span></span><code>Stop an environment&#39;s container, keeping the worktree, branch and metadata.
+
+Usage:
+  ffleet stop [SLUG] [flags]
+
+Flags:
+  -h, --help   help for stop
+</code></pre></div>
+<h2 id="ffleet-tail"><code>ffleet tail</code></h2>
+<div class="highlight"><pre><span></span><code>Print the last lines of an agent&#39;s transcript for an environment.
+
+Usage:
+  ffleet tail [SLUG] [flags]
+
+Flags:
+  -h, --help        help for tail
+      --lines int   Number of trailing transcript lines to print. (default 100)
+</code></pre></div>
+<h2 id="ffleet-ls"><code>ffleet ls</code></h2>
+<div class="highlight"><pre><span></span><code>List all environments for the project (add --json for machine-readable output).
+
+Usage:
+  ffleet ls [flags]
+
+Flags:
+  -h, --help   help for ls
+      --json   Emit machine-readable JSON.
+</code></pre></div>
+<h2 id="ffleet-status"><code>ffleet status</code></h2>
+<div class="highlight"><pre><span></span><code>Show the live status of an environment (container, agent and blocked state).
+
+Usage:
+  ffleet status [SLUG] [flags]
+
+Flags:
+  -h, --help   help for status
+</code></pre></div>
+<h2 id="ffleet-path"><code>ffleet path</code></h2>
+<div class="highlight"><pre><span></span><code>Print the worktree/working directory path for an environment (for cd &quot;$(ffleet path)&quot;).
+
+Usage:
+  ffleet path [SLUG] [flags]
+
+Flags:
+  -h, --help   help for path
+</code></pre></div>
+<h2 id="ffleet-goto"><code>ffleet goto</code></h2>
+<div class="highlight"><pre><span></span><code>Open a shell in an environment&#39;s worktree. Leave it with `exit`.
+
+Usage:
+  ffleet goto [SLUG] [flags]
+
+Flags:
+  -h, --help   help for goto
+</code></pre></div>
+<h2 id="ffleet-init"><code>ffleet init</code></h2>
+<div class="highlight"><pre><span></span><code>Set up ffleet.toml for the current project (home-based by default, specs/017).
+
+Usage:
+  ffleet init [flags]
+
+Flags:
+  -h, --help                   help for init
+      --location string        &#39;home&#39; or &#39;local&#39;; skips the prompt.
+      --project string         Explicit project id override.
+      --worktree-root string   Override the proposed worktree root.
+  -y, --yes                    Accept defaults without prompting.
+</code></pre></div>
+<h2 id="ffleet-project"><code>ffleet project</code></h2>
+<div class="highlight"><pre><span></span><code>Inspect and manage the projects known to the ~/.forge-fleet registry.
+
+Usage:
+  ffleet project [command]
+
+Available Commands:
+  ls          List all projects known to the ~/.forge-fleet/registry.json cache.
+  prune       Remove stale registry entries and delete their ~/.forge-fleet home dirs.
+  rm          Permanently delete a project&#39;s ~/.forge-fleet/{id} directory and registry entry.
+
+Flags:
+  -h, --help   help for project
+
+Use &quot;ffleet project [command] --help&quot; for more information about a command.
+</code></pre></div>
+<h2 id="ffleet-project-ls"><code>ffleet project ls</code></h2>
+<div class="highlight"><pre><span></span><code>List all projects known to the ~/.forge-fleet/registry.json cache.
+
+Usage:
+  ffleet project ls [flags]
+
+Flags:
+  -h, --help   help for ls
+      --json   Emit machine-readable JSON.
+</code></pre></div>
+<h2 id="ffleet-project-prune"><code>ffleet project prune</code></h2>
+<div class="highlight"><pre><span></span><code>Remove stale registry entries and delete their ~/.forge-fleet home dirs.
+
+Usage:
+  ffleet project prune [flags]
+
+Flags:
+  -h, --help   help for prune
+  -y, --yes    Skip the confirmation prompt.
+</code></pre></div>
+<h2 id="ffleet-project-rm"><code>ffleet project rm</code></h2>
+<div class="highlight"><pre><span></span><code>Permanently delete a project&#39;s ~/.forge-fleet/{id} directory and registry entry.
+
+Usage:
+  ffleet project rm PROJECT_ID [flags]
+
+Flags:
+  -h, --help   help for rm
+  -y, --yes    Skip the confirmation prompt.
+</code></pre></div>
+<h2 id="ffleet-version"><code>ffleet version</code></h2>
+<div class="highlight"><pre><span></span><code>Print the ffleet version and build metadata
+
+Usage:
+  ffleet version [flags]
+
+Flags:
+  -h, --help   help for version
+</code></pre></div>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": [], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+    
+  </body>
+</html>

@@ -8,25 +8,28 @@
     name="description"
     content="Forge Fleet is the only agent fleet manager that runs each AI coding agent in its own Docker container — locally, on your own machine."
   />
+  <meta name="author" content="AppGA" />
+  <meta property="article:published_time" content="2026-08-11T22:35:05+02:00" />
 
   <!-- Favicon / touch icon -->
-  <link rel="icon" type="image/png" href="assets/forge-fleet-favicon-1.png" />
+  <link rel="icon" href="favicon.ico" sizes="any" />
   <link rel="apple-touch-icon" href="assets/forge-fleet-logo-1.png" />
 
-  <!--
-    Social share (Open Graph / Twitter). og:image / twitter:image use ABSOLUTE
-    URLs (https://ffleet.app/…) — crawlers require them to render link previews.
-  -->
+  <!-- Social share (Open Graph / Twitter). Card image rules: style guide §8. -->
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://ffleet.app/" />
   <meta property="og:title" content="Forge Fleet — Forge a fleet of AI coding agents" />
   <meta property="og:description" content="Each sealed in its own container. Local-first, free for everyone — no cloud VMs, no agent with a shell on your host." />
-  <meta property="og:image" content="https://ffleet.app/assets/forge-fleet-splash-1.png" />
+  <meta property="og:image" content="https://ffleet.app/assets/forge-fleet-og.jpg" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="A fleet of glowing cargo containers in formation, each sealed and lit from within, stretching toward a distant galaxy." />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:site" content="@greg_appga" />
   <meta name="twitter:title" content="Forge Fleet — Forge a fleet of AI coding agents" />
   <meta name="twitter:description" content="Each sealed in its own container. Local-first, free for everyone — no cloud VMs, no agent with a shell on your host." />
-  <meta name="twitter:image" content="https://ffleet.app/assets/forge-fleet-splash-1.png" />
+  <meta name="twitter:image" content="https://ffleet.app/assets/forge-fleet-og.jpg" />
+  <meta name="twitter:image:alt" content="A fleet of glowing cargo containers in formation, each sealed and lit from within, stretching toward a distant galaxy." />
 
   <!--
     Optional web font for the terminal aesthetic. It is a progressive
@@ -52,7 +55,7 @@
         <span class="brand-name">Forge&nbsp;Fleet</span>
       </div>
       <nav class="site-nav" aria-label="Primary">
-        <a class="nav-link" href="https://github.com/grzegorz-aniol/ffleet-dist/wiki" target="_blank" rel="noopener">Docs</a>
+        <a class="nav-link" href="https://ffleet.app/docs/" target="_blank" rel="noopener">Docs</a>
         <a class="btn btn-ghost" href="#get-started">Get&nbsp;started</a>
       </nav>
     </div>
@@ -93,6 +96,17 @@
 <span class="c-ok">✔ up</span> — boxed &amp; isolated. attaching…
 <span class="c-prompt">$</span> <span class="c-cursor">▋</span></code></pre>
         </div>
+      </div>
+    </section>
+
+    <!-- ===================== Splash (decorative) ===================== -->
+    <section class="splash" aria-hidden="true">
+      <div class="wrap">
+        <picture>
+          <source media="(max-width: 700px)" srcset="assets/forge-fleet-splash-1000.webp" />
+          <img class="splash-img" src="assets/forge-fleet-splash-1600.webp" alt=""
+               width="1600" height="900" loading="lazy" decoding="async" />
+        </picture>
       </div>
     </section>
 
@@ -204,7 +218,7 @@
       <div class="footer-links">
         <h4>Links</h4>
         <ul>
-          <li><a href="https://github.com/grzegorz-aniol/ffleet-dist/wiki" target="_blank" rel="noopener">Documentation</a></li>
+          <li><a href="https://ffleet.app/docs/" target="_blank" rel="noopener">Documentation</a></li>
           <li><a href="https://www.linkedin.com/company/appga" target="_blank" rel="noopener">LinkedIn</a></li>
           <li><a href="https://x.com/greg_appga" target="_blank" rel="noopener">X</a></li>
         </ul>
