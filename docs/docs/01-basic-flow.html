@@ -987,7 +987,7 @@ is create-only and won't overwrite an existing config, so change settings later
 by editing the <code>ffleet.toml</code> it points you at (see the
 <a href="reference/config.html">config reference</a>).</p>
 <h2 id="2-start-an-environment">2. Start an environment</h2>
-<div class="highlight"><pre><span></span><code><span class="gp">$ </span>ffleet<span class="w"> </span>up<span class="w"> </span>my-feature<span class="w"> </span>-p<span class="w"> </span><span class="s2">&quot;Add a --verbose flag to the CLI and cover it with tests&quot;</span>
+<div class="highlight"><pre><span></span><code><span class="gp">$ </span>ffleet<span class="w"> </span>up<span class="w"> </span>my-feature<span class="w"> </span>-p<span class="w"> </span><span class="s2">"Add a --verbose flag to the CLI and cover it with tests"</span>
 </code></pre></div>
 <p>This creates an isolated environment named by its <strong>slug</strong> (<code>my-feature</code>): a git
 worktree on a fresh branch, a container, and a coding-agent session seeded with
@@ -997,13 +997,13 @@ can watch and steer it.</p>
 <li><code>-p</code> / <code>--prompt</code> seeds the session with an initial message.</li>
 <li>Prefer to let it run in the background? Add <code>--no-attach</code>:</li>
 </ul>
-<div class="highlight"><pre><span></span><code><span class="gp">$ </span>ffleet<span class="w"> </span>up<span class="w"> </span>my-feature<span class="w"> </span>--no-attach<span class="w"> </span>-p<span class="w"> </span><span class="s2">&quot;…&quot;</span>
+<div class="highlight"><pre><span></span><code><span class="gp">$ </span>ffleet<span class="w"> </span>up<span class="w"> </span>my-feature<span class="w"> </span>--no-attach<span class="w"> </span>-p<span class="w"> </span><span class="s2">"…"</span>
 </code></pre></div>
 <p>Detach from an attached session any time with tmux's <strong><code>Ctrl-B</code> then <code>D</code></strong> — the
 agent keeps running.</p>
 <h2 id="3-check-on-it">3. Check on it</h2>
 <div class="highlight"><pre><span></span><code><span class="gp">$ </span>ffleet<span class="w"> </span>status<span class="w"> </span>my-feature<span class="w">   </span><span class="c1"># is the container up? is the agent live or done?</span>
-<span class="gp">$ </span>ffleet<span class="w"> </span>tail<span class="w"> </span>my-feature<span class="w">     </span><span class="c1"># last lines of the agent&#39;s transcript</span>
+<span class="gp">$ </span>ffleet<span class="w"> </span>tail<span class="w"> </span>my-feature<span class="w">     </span><span class="c1"># last lines of the agent's transcript</span>
 <span class="gp">$ </span>ffleet<span class="w"> </span>ls<span class="w">                  </span><span class="c1"># all environments for this project</span>
 </code></pre></div>
 <p>Re-attach whenever you like by running <code>ffleet up my-feature</code> again — same

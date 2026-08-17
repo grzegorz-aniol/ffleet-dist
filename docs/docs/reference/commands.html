@@ -1204,16 +1204,16 @@ Usage:
 
 Available Commands:
   completion  Generate the autocompletion script for the specified shell
-  goto        Open a shell in an environment&#39;s worktree. Leave it with `exit`.
+  goto        Open a shell in an environment's worktree. Leave it with `exit`.
   help        Help about any command
   init        Set up ffleet.toml for the current project (home-based by default, specs/017).
   ls          List all environments for the project (add --json for machine-readable output).
-  path        Print the worktree/working directory path for an environment (for cd &quot;$(ffleet path)&quot;).
+  path        Print the worktree/working directory path for an environment (for cd "$(ffleet path)").
   project     Inspect and manage the projects known to the ~/.forge-fleet registry.
   remove      Tear down an environment: stop the container, delete the worktree and (if ffleet created it) the branch.
   status      Show the live status of an environment (container, agent and blocked state).
-  stop        Stop an environment&#39;s container, keeping the worktree, branch and metadata.
-  tail        Print the last lines of an agent&#39;s transcript for an environment.
+  stop        Stop an environment's container, keeping the worktree, branch and metadata.
+  tail        Print the last lines of an agent's transcript for an environment.
   up          Start or resume an environment. State — not flags — decides what happens.
   version     Print the ffleet version and build metadata
 
@@ -1221,7 +1221,7 @@ Flags:
   -h, --help      help for ffleet
   -v, --version   version for ffleet
 
-Use &quot;ffleet [command] --help&quot; for more information about a command.
+Use "ffleet [command] --help" for more information about a command.
 </code></pre></div>
 <h2 id="ffleet-up"><code>ffleet up</code></h2>
 <div class="highlight"><pre><span></span><code>Start or resume an environment. State — not flags — decides what happens.
@@ -1232,33 +1232,33 @@ derived settings (image, mounts, hosts, env-file, auth, dirs, agent cmd/args)
 refresh from the current config and are saved back; identity/continuity settings
 (branch, worktree, mode, git-mode, agent, session) stay fixed at create.
 
-Your shell&#39;s directory is never changed — use &#39;ffleet goto&#39; to enter a worktree.
+Your shell's directory is never changed — use 'ffleet goto' to enter a worktree.
 
 Usage:
   ffleet up [SLUG] [flags]
 
 Flags:
-      --claude-auth string       Claude credential source: auto, keychain, token, api-key, credentials-file, or external. (default &quot;auto&quot;)
-      --claude-dir string        Host ~/.claude dir to mount for credentials/config. (default &quot;~/.claude&quot;)
-      --codex-dir string         Host ~/.codex dir to mount for credentials/config. (default &quot;~/.codex&quot;)
-      --coding-agent string      Coding assistant to launch inside the container (e.g. claude, codex). (default &quot;claude&quot;)
+      --claude-auth string       Claude credential source: auto, keychain, token, api-key, credentials-file, or external. (default "auto")
+      --claude-dir string        Host ~/.claude dir to mount for credentials/config. (default "~/.claude")
+      --codex-dir string         Host ~/.codex dir to mount for credentials/config. (default "~/.codex")
+      --coding-agent string      Coding assistant to launch inside the container (e.g. claude, codex). (default "claude")
       --copy-files string        Gitignored files to snapshot from the main repo into a new worktree, comma-separated relative paths.
       --docker-env-file string   Env file passed to the container (docker --env-file).
-      --docker-host-bind         Mount the host Docker socket so the agent can drive the host&#39;s Docker daemon (Docker-outside-of-Docker).
-      --extra-hosts string       Extra host mappings passed to docker --add-host, comma-separated &#39;host:address&#39;.
-      --extra-mounts string      Additional docker mounts, comma-separated &#39;host:container[:ro|:rw]&#39;.
+      --docker-host-bind         Mount the host Docker socket so the agent can drive the host's Docker daemon (Docker-outside-of-Docker).
+      --extra-hosts string       Extra host mappings passed to docker --add-host, comma-separated 'host:address'.
+      --extra-mounts string      Additional docker mounts, comma-separated 'host:container[:ro|:rw]'.
       --from string              Base a first-time worktree on an existing branch (ignored once the env exists).
       --git-local-main           Base the worktree on the local main branch instead of the remote.
-      --git-mode string          How git is set up in the container: auto, worktree, clone, or off. (default &quot;auto&quot;)
+      --git-mode string          How git is set up in the container: auto, worktree, clone, or off. (default "auto")
   -h, --help                     help for up
       --here                     In-place mode: start/revive an agent over the current directory (no worktree).
-      --image string             Docker image to run the agent in. (default &quot;ghcr.io/grzegorz-aniol/forge-fleet-python:latest&quot;)
+      --image string             Docker image to run the agent in. (default "ghcr.io/grzegorz-aniol/forge-fleet-python:latest")
       --no-attach                Do not attach to the agent session afterwards.
       --peek                     Strict, side-effect-free peek: attach only if the agent is live, never relaunch.
   -p, --prompt string            Message: seeds a fresh session, otherwise sent to the live/revived one.
       --prompt-file string       Read the prompt from a file instead of --prompt.
   -t, --template string          Seed a fresh env from a templates.&lt;id&gt; table in ffleet.toml; SLUG is the template ref.
-      --uv-cache-dir string      Host uv cache dir to mount for faster installs. (default &quot;~/.cache/uv&quot;)
+      --uv-cache-dir string      Host uv cache dir to mount for faster installs. (default "~/.cache/uv")
       --wait-timeout int         Seconds to wait for the container/agent to become ready. (default 300)
 </code></pre></div>
 <h2 id="ffleet-remove"><code>ffleet remove</code></h2>
@@ -1272,7 +1272,7 @@ Flags:
   -y, --yes    Skip the confirmation prompt.
 </code></pre></div>
 <h2 id="ffleet-stop"><code>ffleet stop</code></h2>
-<div class="highlight"><pre><span></span><code>Stop an environment&#39;s container, keeping the worktree, branch and metadata.
+<div class="highlight"><pre><span></span><code>Stop an environment's container, keeping the worktree, branch and metadata.
 
 Usage:
   ffleet stop [SLUG] [flags]
@@ -1281,7 +1281,7 @@ Flags:
   -h, --help   help for stop
 </code></pre></div>
 <h2 id="ffleet-tail"><code>ffleet tail</code></h2>
-<div class="highlight"><pre><span></span><code>Print the last lines of an agent&#39;s transcript for an environment.
+<div class="highlight"><pre><span></span><code>Print the last lines of an agent's transcript for an environment.
 
 Usage:
   ffleet tail [SLUG] [flags]
@@ -1310,7 +1310,7 @@ Flags:
   -h, --help   help for status
 </code></pre></div>
 <h2 id="ffleet-path"><code>ffleet path</code></h2>
-<div class="highlight"><pre><span></span><code>Print the worktree/working directory path for an environment (for cd &quot;$(ffleet path)&quot;).
+<div class="highlight"><pre><span></span><code>Print the worktree/working directory path for an environment (for cd "$(ffleet path)").
 
 Usage:
   ffleet path [SLUG] [flags]
@@ -1319,7 +1319,7 @@ Flags:
   -h, --help   help for path
 </code></pre></div>
 <h2 id="ffleet-goto"><code>ffleet goto</code></h2>
-<div class="highlight"><pre><span></span><code>Open a shell in an environment&#39;s worktree. Leave it with `exit`.
+<div class="highlight"><pre><span></span><code>Open a shell in an environment's worktree. Leave it with `exit`.
 
 Usage:
   ffleet goto [SLUG] [flags]
@@ -1335,7 +1335,7 @@ Usage:
 
 Flags:
   -h, --help                   help for init
-      --location string        &#39;home&#39; or &#39;local&#39;; skips the prompt.
+      --location string        'home' or 'local'; skips the prompt.
       --project string         Explicit project id override.
       --worktree-root string   Override the proposed worktree root.
   -y, --yes                    Accept defaults without prompting.
@@ -1349,12 +1349,12 @@ Usage:
 Available Commands:
   ls          List all projects known to the ~/.forge-fleet/registry.json cache.
   prune       Remove stale registry entries and delete their ~/.forge-fleet home dirs.
-  rm          Permanently delete a project&#39;s ~/.forge-fleet/{id} directory and registry entry.
+  rm          Permanently delete a project's ~/.forge-fleet/{id} directory and registry entry.
 
 Flags:
   -h, --help   help for project
 
-Use &quot;ffleet project [command] --help&quot; for more information about a command.
+Use "ffleet project [command] --help" for more information about a command.
 </code></pre></div>
 <h2 id="ffleet-project-ls"><code>ffleet project ls</code></h2>
 <div class="highlight"><pre><span></span><code>List all projects known to the ~/.forge-fleet/registry.json cache.
@@ -1377,7 +1377,7 @@ Flags:
   -y, --yes    Skip the confirmation prompt.
 </code></pre></div>
 <h2 id="ffleet-project-rm"><code>ffleet project rm</code></h2>
-<div class="highlight"><pre><span></span><code>Permanently delete a project&#39;s ~/.forge-fleet/{id} directory and registry entry.
+<div class="highlight"><pre><span></span><code>Permanently delete a project's ~/.forge-fleet/{id} directory and registry entry.
 
 Usage:
   ffleet project rm PROJECT_ID [flags]

@@ -1047,18 +1047,18 @@ fields. It's the fastest way to say "go work on ticket 123".</p>
 <p>A template is a <code>[templates.&lt;id&gt;]</code> table in <code>ffleet.toml</code> plus a <code>pm</code> setting
 that says where issues come from.</p>
 <div class="highlight"><pre><span></span><code><span class="c1"># Where -t templates fetch issues from: github | linear | none</span>
-<span class="n">pm</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;github&quot;</span>
+<span class="n">pm</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"github"</span>
 
 <span class="k">[templates.task]</span>
-<span class="n">prompt_template</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;&quot;&quot;</span>
+<span class="n">prompt_template</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"""</span>
 <span class="s2">Work on issue #{number}: {title}</span>
 
 <span class="s2">{body}</span>
 
 <span class="s2">Issue URL: {url}</span>
-<span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">"""</span>
 <span class="c1"># Optional: run a specific subagent for envs seeded from this template.</span>
-<span class="c1"># subagent = &quot;code-reviewer&quot;</span>
+<span class="c1"># subagent = "code-reviewer"</span>
 </code></pre></div>
 <h3 id="available-fields">Available fields</h3>
 <p><code>prompt_template</code> is rendered with the fetched issue's fields:</p>
@@ -1137,26 +1137,26 @@ only</strong> (<code>--agent &lt;name&gt;</code>); using it with another agent e
 transient outage won't block you — you just get the raw ref instead of the issue
 fields.</p>
 <h3 id="github-example">GitHub example</h3>
-<div class="highlight"><pre><span></span><code><span class="n">pm</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;github&quot;</span>
+<div class="highlight"><pre><span></span><code><span class="n">pm</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"github"</span>
 
 <span class="k">[templates.bug]</span>
-<span class="n">prompt_template</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;&quot;&quot;</span>
+<span class="n">prompt_template</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"""</span>
 <span class="s2">Fix bug #{number}: {title}</span>
 
 <span class="s2">{body}</span>
 
 <span class="s2">{url}</span>
-<span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">"""</span>
 </code></pre></div>
 <div class="highlight"><pre><span></span><code><span class="gp">$ </span>ffleet<span class="w"> </span>up<span class="w"> </span>-t<span class="w"> </span>bug<span class="w"> </span><span class="m">456</span>
 </code></pre></div>
 <h3 id="linear-example">Linear example</h3>
 <p>Put <code>LINEAR_API_KEY</code> in your project's env file (see
 <a href="secrets.html">secrets</a>), then:</p>
-<div class="highlight"><pre><span></span><code><span class="n">pm</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;linear&quot;</span>
+<div class="highlight"><pre><span></span><code><span class="n">pm</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"linear"</span>
 
 <span class="k">[templates.task]</span>
-<span class="n">prompt_template</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;Implement {title} ({id}):</span><span class="se">\n\n</span><span class="s2">{body}</span><span class="se">\n\n</span><span class="s2">{url}&quot;</span>
+<span class="n">prompt_template</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"Implement {title} ({id}):</span><span class="se">\n\n</span><span class="s2">{body}</span><span class="se">\n\n</span><span class="s2">{url}"</span>
 </code></pre></div>
 <div class="highlight"><pre><span></span><code><span class="gp">$ </span>ffleet<span class="w"> </span>up<span class="w"> </span>-t<span class="w"> </span>task<span class="w"> </span>ENG-123
 </code></pre></div>

@@ -983,7 +983,7 @@ do it yourself from the worktree:</p>
 <p><strong>Push credentials are not mounted by default.</strong> The container knows your
 <code>origin</code> URL but has <strong>no push auth</strong> — no <code>~/.ssh</code>, no <code>gh</code>/git token, no host
 git config. Provide credentials yourself, e.g. mount your SSH key:</p>
-<div class="highlight"><pre><span></span><code><span class="n">extra_mounts</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;~/.ssh:/home/buddy/.ssh:ro&quot;</span><span class="p">]</span>
+<div class="highlight"><pre><span></span><code><span class="n">extra_mounts</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s2">"~/.ssh:/home/buddy/.ssh:ro"</span><span class="p">]</span>
 </code></pre></div>
 <p>or supply a token via <a href="../advanced/secrets.html"><code>docker_env_file</code></a>. Your commit
 <strong>identity</strong> (name/email) is forwarded automatically from <code>[git]</code> or your host

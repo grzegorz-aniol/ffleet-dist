@@ -1118,7 +1118,7 @@ keys see the <a href="../reference/config.html">config reference</a>.</p>
 <li><strong><code>--prompt-file PATH</code></strong> — read the prompt from a file (handy for long or
   multi-line instructions) instead of <code>--prompt</code>.</li>
 </ul>
-<div class="highlight"><pre><span></span><code><span class="gp">$ </span>ffleet<span class="w"> </span>up<span class="w"> </span>my-feature<span class="w"> </span>-p<span class="w"> </span><span class="s2">&quot;Refactor the auth module and add tests&quot;</span>
+<div class="highlight"><pre><span></span><code><span class="gp">$ </span>ffleet<span class="w"> </span>up<span class="w"> </span>my-feature<span class="w"> </span>-p<span class="w"> </span><span class="s2">"Refactor the auth module and add tests"</span>
 <span class="gp">$ </span>ffleet<span class="w"> </span>up<span class="w"> </span>my-feature<span class="w"> </span>--prompt-file<span class="w"> </span>./task.md
 </code></pre></div>
 <h2 id="attach-behaviour">Attach behaviour</h2>
@@ -1138,7 +1138,7 @@ keys see the <a href="../reference/config.html">config reference</a>.</p>
 worktree, no branch. This is the "not only programming / works without git" case:
 point an agent at any folder.</p>
 <div class="highlight"><pre><span></span><code><span class="gp">$ </span><span class="nb">cd</span><span class="w"> </span>~/notes
-<span class="gp">$ </span>ffleet<span class="w"> </span>up<span class="w"> </span>braindump<span class="w"> </span>--here<span class="w"> </span>-p<span class="w"> </span><span class="s2">&quot;Organise these notes into a coherent outline&quot;</span>
+<span class="gp">$ </span>ffleet<span class="w"> </span>up<span class="w"> </span>braindump<span class="w"> </span>--here<span class="w"> </span>-p<span class="w"> </span><span class="s2">"Organise these notes into a coherent outline"</span>
 </code></pre></div>
 <p>Because there's no worktree isolation, the agent works directly in that
 directory. It's still a registered environment (shows in <code>ls</code>, revivable with
@@ -1154,7 +1154,7 @@ It's the no-worktree, no-git case — closely related to running with
   binary (<code>cmd</code>), and <code>extra_args</code> appended to its launch command. See the
   <a href="../reference/config.html">config reference</a>.</li>
 </ul>
-<div class="highlight"><pre><span></span><code><span class="gp">$ </span>ffleet<span class="w"> </span>up<span class="w"> </span>my-feature<span class="w"> </span>--coding-agent<span class="w"> </span>codex<span class="w"> </span>-p<span class="w"> </span><span class="s2">&quot;…&quot;</span>
+<div class="highlight"><pre><span></span><code><span class="gp">$ </span>ffleet<span class="w"> </span>up<span class="w"> </span>my-feature<span class="w"> </span>--coding-agent<span class="w"> </span>codex<span class="w"> </span>-p<span class="w"> </span><span class="s2">"…"</span>
 </code></pre></div>
 <p>The chosen agent is fixed at create time — switching agents means a new
 environment.</p>
@@ -1176,7 +1176,7 @@ up inside the container:</p>
 <li><strong><code>--git-local-main</code></strong> — base the worktree on your <strong>local</strong> <code>main</code> and keep
   completion local-only (no push/PR). Pairs with <code>git_local_main</code> in config.</li>
 </ul>
-<div class="highlight"><pre><span></span><code><span class="gp">$ </span>ffleet<span class="w"> </span>up<span class="w"> </span>hotfix<span class="w"> </span>--from<span class="w"> </span>release-2.3<span class="w"> </span>-p<span class="w"> </span><span class="s2">&quot;Cherry-pick the logging fix&quot;</span>
+<div class="highlight"><pre><span></span><code><span class="gp">$ </span>ffleet<span class="w"> </span>up<span class="w"> </span>hotfix<span class="w"> </span>--from<span class="w"> </span>release-2.3<span class="w"> </span>-p<span class="w"> </span><span class="s2">"Cherry-pick the logging fix"</span>
 </code></pre></div>
 <p>New to git worktrees? They let multiple branches be checked out at once in
 separate directories — see Git's own
