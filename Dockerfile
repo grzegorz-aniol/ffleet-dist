@@ -87,6 +87,17 @@ RUN groupadd --gid 1000 buddy \
     && mkdir -p /workspace /logs \
     && chown buddy:buddy /workspace /logs
 
+# XDG roots, pre-created as buddy. Docker fabricates a missing bind-mount parent
+# as root:root, so a nested user-space mount (e.g. ~/.cache/uv ->
+# /home/buddy/.cache/uv) would otherwise leave /home/buddy/.cache owned by root
+# and unwritable for the non-root agent — breaking every other write under it.
+RUN mkdir -p /home/buddy/.cache /home/buddy/.config /home/buddy/.local/state \
+    && chown buddy:buddy \
+        /home/buddy/.cache \
+        /home/buddy/.config \
+        /home/buddy/.local \
+        /home/buddy/.local/state
+
 USER buddy
 ENV HOME="/home/buddy"
 ENV NPM_CONFIG_PREFIX="/home/buddy/.local"
