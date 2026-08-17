@@ -711,6 +711,23 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="goto — a shell in the worktree (not the agent)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#environment-metadata-where-it-lives" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Environment metadata — where it lives
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -968,6 +985,23 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="goto — a shell in the worktree (not the agent)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#environment-metadata-where-it-lives" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Environment metadata — where it lives
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -1101,6 +1135,26 @@ or make a manual edit alongside the agent. Leave it with <code>exit</code>.</p>
 </code></pre></div>
 <p>Related: <code>ffleet path SLUG</code> just <strong>prints</strong> the worktree path, so you can
 <code>cd "$(ffleet path my-feature)"</code> from your own shell.</p>
+<h3 id="environment-metadata-where-it-lives">Environment metadata — where it lives</h3>
+<p>Each environment has a small metadata directory (<code>session.json</code>,
+<code>container.git</code>, <code>claude.json</code>) recording its live state — which container it
+maps to, the agent session to resume, and git bookkeeping. Forge Fleet reads it
+for <code>ffleet ls</code> / <code>status</code> and to resume your session on the next <code>up</code>.</p>
+<p><strong>New environments keep this outside the checkout</strong>, under
+<code>~/.forge-fleet/{project-id}/worktree-meta/{env-name}/</code>. This keeps it outside
+the reach of even aggressive in-worktree cleanup — <code>git clean -fdx</code>,
+<code>git stash --all</code> — which can't delete it or orphan the container. You never need
+to tiptoe around a <code>.forge-fleet/</code> directory in your worktree.</p>
+<p><strong>Older environments</strong> (created before this change) still keep the directory
+in-worktree at <code>&lt;worktree&gt;/.forge-fleet/</code>. There's no migration — they keep
+working. For those, deleting the directory by hand still orphans the
+environment, so use <code>ffleet stop</code> / <code>ffleet remove</code> to tear one down rather than
+removing files. Forge Fleet marks that in-worktree directory as ignored (via the
+worktree's <code>info/exclude</code>) so routine <code>git stash -u</code> / <code>git clean -fd</code> won't
+touch it, but <code>git clean -fdx</code> / <code>git stash --all</code> / <code>rm -rf .forge-fleet</code> still
+would.</p>
+<p>Either way: to tear an environment down, use <code>ffleet stop</code> or <code>ffleet remove</code> —
+never delete metadata by hand.</p>
 <h2 id="inspecting">Inspecting</h2>
 <p>None of these change state:</p>
 <ul>
