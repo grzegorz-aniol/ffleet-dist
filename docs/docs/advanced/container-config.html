@@ -1132,6 +1132,8 @@ the next revive: <code>ffleet stop SLUG</code> then <code>ffleet up SLUG</code> 
   base that adds the <strong>Go toolchain</strong> (for developing the Go port); the rest of
   the toolbox is identical.</li>
 </ul>
+<p>Each is published <strong>multi-arch</strong> (<code>linux/amd64</code> + <code>linux/arm64</code>), so Apple
+Silicon Macs pull and run a native image without emulation.</p>
 <p>Both run as a <strong>non-root user <code>buddy</code> (uid/gid <code>1000</code>)</strong> with home
 <code>/home/buddy</code>, and the workspace directory is owned by <code>buddy</code>. That is why credential and
 cache mounts land under <code>/home/buddy/...</code> (e.g. <code>~/.claude</code> →

@@ -1145,6 +1145,10 @@ directory. It's still a registered environment (shows in <code>ls</code>, reviva
 <code>up</code>), and <code>remove</code> cleans up its metadata <strong>without touching your directory</strong>.
 It's the no-worktree, no-git case — closely related to running with
 <a href="#git-modes"><code>--git-mode off</code></a>.</p>
+<p>Setting <strong><code>git_mode = "off"</code></strong> in <code>ffleet.toml</code> makes this the default for the
+project: <code>ffleet up SLUG</code> then runs in-place over the <strong>project root</strong> (from any
+subdirectory) with no worktree and no git repo required — you don't need to pass
+<code>--here</code> each time. This is the way to run Forge Fleet on a plain, non-git folder.</p>
 <h2 id="choosing-the-coding-assistant">Choosing the coding assistant</h2>
 <ul>
 <li><strong><code>--coding-agent claude|codex</code></strong> — which assistant to launch (default
@@ -1166,7 +1170,9 @@ up inside the container:</p>
   isolated default; <code>auto</code> resolves to this in a normal repo).</li>
 <li><strong><code>clone</code></strong> — a fresh clone instead of a worktree.</li>
 <li><strong><code>off</code></strong> — no git integration; the agent works directly in the mounted
-  directory (the same "works without git" case as <a href="#in-place-mode---here-works-without-git"><code>--here</code></a>).</li>
+  directory (the same "works without git" case as <a href="#in-place-mode---here-works-without-git"><code>--here</code></a>).
+  Set as <code>git_mode = "off"</code> in <code>ffleet.toml</code>, plain <code>ffleet up SLUG</code> runs in-place
+  over the project root — no worktree, no git repo, and no <code>--here</code> needed.</li>
 <li><strong><code>auto</code></strong> — pick the sensible mode for the repo.</li>
 </ul>
 <h3 id="basing-a-worktree-on-an-existing-branch">Basing a worktree on an existing branch</h3>
