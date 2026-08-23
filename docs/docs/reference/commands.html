@@ -1260,6 +1260,7 @@ Flags:
   -t, --template string          Seed a fresh env from a templates.&lt;id&gt; table in ffleet.toml; SLUG is the template ref.
       --uv-cache-dir string      Host uv cache dir to mount for faster installs. (default "~/.cache/uv")
       --wait-timeout int         Seconds to wait for the container/agent to become ready. (default 300)
+  -y, --yes                      Assume yes: skip the image-freshness pull prompt (warn only, never pull).
 </code></pre></div>
 <h2 id="ffleet-remove"><code>ffleet remove</code></h2>
 <div class="highlight"><pre><span></span><code>Tear down an environment: stop the container, delete the worktree and (if ffleet created it) the branch.

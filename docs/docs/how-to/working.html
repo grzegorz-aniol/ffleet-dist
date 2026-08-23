@@ -692,6 +692,17 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#selecting-an-environment" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Selecting an environment
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#attach-detach" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -966,6 +977,17 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#selecting-an-environment" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Selecting an environment
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#attach-detach" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1116,6 +1138,20 @@ flag detail see the <a href="../reference/commands.html">command reference</a>.<
     R --&gt;|ffleet ls / status / tail / path| I[Inspect: no state change]
     R --&gt;|ffleet stop SLUG| P[Stopped: container gone, worktree+branch+metadata kept]
     P --&gt;|ffleet up SLUG| A</code></pre>
+<h2 id="selecting-an-environment">Selecting an environment</h2>
+<p>Every environment command (<code>up</code>, <code>remove</code>, <code>goto</code>, <code>stop</code>, <code>tail</code>, <code>status</code>,
+<code>path</code>, <code>continue</code>) takes an optional <code>SLUG</code>. <strong>Omit it</strong> and Forge Fleet first
+tries to resolve the environment from your current directory; if that doesn't
+match, it opens an interactive picker:</p>
+<ul>
+<li>On a capable terminal you get an <strong>arrow-key highlight bar</strong> — move with <code>↑</code>/<code>↓</code>
+  and press <code>Enter</code> to choose. For <code>ffleet up</code>, the list ends with a
+  <em>"create a new environment"</em> entry.</li>
+<li>On a plain terminal (<code>TERM=dumb</code>, <code>NO_COLOR</code>, or no ANSI support) it degrades to
+  a <strong>numbered <code>1) 2) 3)</code> menu</strong> — type a number and press <code>Enter</code>.</li>
+</ul>
+<p>When stdin isn't a terminal (a pipe or CI), no picker is shown: pass <code>SLUG</code>
+explicitly, or you'll get a <em>"SLUG is required…"</em> error.</p>
 <h2 id="attach-detach">Attach &amp; detach</h2>
 <ul>
 <li><strong>Attach:</strong> <code>ffleet up SLUG</code> drops you into the agent's session (when it's

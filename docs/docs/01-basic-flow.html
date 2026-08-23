@@ -987,20 +987,36 @@ is create-only and won't overwrite an existing config, so change settings later
 by editing the <code>ffleet.toml</code> it points you at (see the
 <a href="reference/config.html">config reference</a>).</p>
 <h2 id="2-start-an-environment">2. Start an environment</h2>
+<div class="highlight"><pre><span></span><code><span class="gp">$ </span>ffleet<span class="w"> </span>up
+</code></pre></div>
+<p>Bare <code>up</code> creates one isolated environment — a git worktree on a fresh branch, a
+container, and a coding-agent session — and then <strong>attaches</strong> you to that session
+so you can watch and steer it. Once attached you're at a normal terminal: you
+type your first message to the agent yourself.</p>
+<p>With no slug, <code>up</code> is interactive (it needs a terminal). If you already have
+environments, it lists them and asks whether to reattach to one or create a new
+one. If you have none, it tells you so — <em>"No environments found; creating a new
+one"</em> — and prompts for a <strong>slug</strong> to name it. It never auto-creates one
+silently. Say the slug you pick here is <code>my-feature</code> — that's the environment the
+rest of this walkthrough follows.</p>
+<p>Passing <code>-p</code> is a variation on that same start: instead of typing your first
+message once attached, <code>-p "…"</code> / <code>--prompt</code> (or <code>--prompt-file &lt;path&gt;</code>)
+pre-types it for you, so the agent begins working as soon as the session comes
+up:</p>
 <div class="highlight"><pre><span></span><code><span class="gp">$ </span>ffleet<span class="w"> </span>up<span class="w"> </span>my-feature<span class="w"> </span>-p<span class="w"> </span><span class="s2">"Add a --verbose flag to the CLI and cover it with tests"</span>
 </code></pre></div>
-<p>This creates an isolated environment named by its <strong>slug</strong> (<code>my-feature</code>): a git
-worktree on a fresh branch, a container, and a coding-agent session seeded with
-your prompt. By default it then <strong>attaches</strong> you to the agent's session so you
-can watch and steer it.</p>
+<p>You can also skip the prompts by passing things up front:</p>
 <ul>
-<li><code>-p</code> / <code>--prompt</code> seeds the session with an initial message.</li>
-<li>Prefer to let it run in the background? Add <code>--no-attach</code>:</li>
+<li>Give the slug on the command line: <code>ffleet up my-feature</code>.</li>
+<li><code>--no-attach</code> leaves the environment running in the background instead of
+  attaching.</li>
+<li><code>-y</code> / <code>--yes</code> skips only the image-freshness pull prompt (it warns about a
+  stale image but never pulls) — it is not a general "do everything unattended"
+  switch.</li>
 </ul>
-<div class="highlight"><pre><span></span><code><span class="gp">$ </span>ffleet<span class="w"> </span>up<span class="w"> </span>my-feature<span class="w"> </span>--no-attach<span class="w"> </span>-p<span class="w"> </span><span class="s2">"…"</span>
-</code></pre></div>
 <p>Detach from an attached session any time with tmux's <strong><code>Ctrl-B</code> then <code>D</code></strong> — the
-agent keeps running.</p>
+agent keeps running. For the full set of flags, see
+<a href="how-to/starting.html">how-to/starting.md</a>.</p>
 <h2 id="3-check-on-it">3. Check on it</h2>
 <div class="highlight"><pre><span></span><code><span class="gp">$ </span>ffleet<span class="w"> </span>status<span class="w"> </span>my-feature<span class="w">   </span><span class="c1"># is the container up? is the agent live or done?</span>
 <span class="gp">$ </span>ffleet<span class="w"> </span>tail<span class="w"> </span>my-feature<span class="w">     </span><span class="c1"># last lines of the agent's transcript</span>

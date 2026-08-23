@@ -822,6 +822,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#image-freshness-check-check_image_period_days" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Image freshness check (check_image_period_days)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#git-identity-injected-into-the-container" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -962,6 +973,17 @@
     <span class="md-ellipsis">
       
         Global keys
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#image-freshness-check-check_image_period_days" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Image freshness check (check_image_period_days)
       
     </span>
   </a>
@@ -1187,8 +1209,33 @@ at that file.</p>
 <td><code>github</code></td>
 <td>Issue tracker for <code>-t</code> templates: <code>github</code> (via <code>gh</code> CLI) | <code>linear</code> (needs <code>LINEAR_API_KEY</code>) | <code>none</code> (don't fetch; raw ref exposed as <code>{id}</code>). On any fetch failure ffleet warns and continues as <code>pm=none</code>.</td>
 </tr>
+<tr>
+<td><code>check_image_period_days</code></td>
+<td>int or <code>"off"</code></td>
+<td><code>30</code></td>
+<td>How often <code>ffleet up</code> checks whether a newer <code>image</code> exists in the registry (see <a href="#image-freshness-check-check_image_period_days">image freshness check</a>). Any positive integer sets the period in days; <code>"off"</code> disables the check entirely.</td>
+</tr>
 </tbody>
 </table>
+<h2 id="image-freshness-check-check_image_period_days">Image freshness check (<code>check_image_period_days</code>)</h2>
+<p>Whenever <code>ffleet up</code> actually builds or (re)starts a container, and at least
+<code>check_image_period_days</code> have elapsed since the last check for this project, it
+does a <strong>best-effort</strong> comparison of the configured <code>image</code> against its remote
+counterpart:</p>
+<ul>
+<li><strong>Interactive session</strong> — if a newer image is found, ffleet prompts before
+  pulling and pulls only on explicit approval, then starts the container from
+  the freshly pulled image.</li>
+<li><strong><code>ffleet up -y</code> / <code>--yes</code></strong> — warn-only: ffleet prints a notice that a newer
+  image exists but never prompts and never pulls. Pull it yourself with
+  <code>docker pull &lt;image&gt;</code> (or run <code>ffleet up</code> interactively).</li>
+</ul>
+<p>The check never blocks or fails <code>ffleet up</code>: if the registry is unreachable, the
+image was built locally, or the digest can't be determined, ffleet silently
+skips the comparison and starts the container as usual. The last-check timestamp
+is stored per project in <code>~/.forge-fleet/registry.json</code> (not in <code>ffleet.toml</code>),
+so a project that was never checked is treated as due on its next <code>up</code>. Set
+<code>check_image_period_days = "off"</code> to disable the whole flow.</p>
 <h2 id="git-identity-injected-into-the-container"><code>[git]</code> — identity injected into the container</h2>
 <p>Both keys must be set together; otherwise identity resolves from host git config.</p>
 <table>
