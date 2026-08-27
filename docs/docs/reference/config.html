@@ -1221,20 +1221,25 @@ at that file.</p>
 <p>Whenever <code>ffleet up</code> actually builds or (re)starts a container, and at least
 <code>check_image_period_days</code> have elapsed since the last check for this project, it
 does a <strong>best-effort</strong> comparison of the configured <code>image</code> against its remote
-counterpart:</p>
+counterpart. It compares two registry manifests: the one the tag resolves to
+right now, and the one behind the digest the local copy was pulled under. They
+differ only when the tag has actually moved, so the answer doesn't depend on
+which image store (classic or containerd) your Docker daemon uses:</p>
 <ul>
 <li><strong>Interactive session</strong> — if a newer image is found, ffleet prompts before
   pulling and pulls only on explicit approval, then starts the container from
-  the freshly pulled image.</li>
+  the freshly pulled image. The pull reports Docker's own outcome, so you can
+  see whether anything was downloaded or the local copy was already current.</li>
 <li><strong><code>ffleet up -y</code> / <code>--yes</code></strong> — warn-only: ffleet prints a notice that a newer
   image exists but never prompts and never pulls. Pull it yourself with
   <code>docker pull &lt;image&gt;</code> (or run <code>ffleet up</code> interactively).</li>
 </ul>
-<p>The check never blocks or fails <code>ffleet up</code>: if the registry is unreachable, the
-image was built locally, or the digest can't be determined, ffleet silently
-skips the comparison and starts the container as usual. The last-check timestamp
-is stored per project in <code>~/.forge-fleet/registry.json</code> (not in <code>ffleet.toml</code>),
-so a project that was never checked is treated as due on its next <code>up</code>. Set
+<p>The check never blocks or fails <code>ffleet up</code>: if the registry is unreachable, or
+the image was built locally and so has no registry digest to compare, ffleet
+silently skips the comparison and starts the container as usual. The last-check
+timestamp is stored per project in <code>~/.forge-fleet/registry.json</code> (not in
+<code>ffleet.toml</code>), so a project that was never checked is treated as due on its
+next <code>up</code>. Set
 <code>check_image_period_days = "off"</code> to disable the whole flow.</p>
 <h2 id="git-identity-injected-into-the-container"><code>[git]</code> — identity injected into the container</h2>
 <p>Both keys must be set together; otherwise identity resolves from host git config.</p>
@@ -1354,7 +1359,7 @@ configured <code>pm</code> source, derives the slug from the issue title, and re
 <tr>
 <td><code>subagent</code></td>
 <td>string</td>
-<td>Optional subagent for envs seeded from this template. Translated to the agent's own subagent flag (Claude only: <code>--agent &lt;name&gt;</code>; using it with another agent errors).</td>
+<td>Optional subagent for envs seeded from this template. Translated to the agent's own subagent flag (Claude only: <code>--agent &lt;name&gt;</code>; using it with another agent errors). The <code>up --subagent NAME</code> flag is the per-invocation, template-independent equivalent and overrides this key when both are set — see <a href="../how-to/starting.html#selecting-a-claude-code-subagent">starting</a>.</td>
 </tr>
 </tbody>
 </table>

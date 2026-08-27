@@ -1086,6 +1086,11 @@ worktree mode), a revive won't pick it up — you must recreate:</p>
 <div class="highlight"><pre><span></span><code><span class="gp">$ </span>ffleet<span class="w"> </span>remove<span class="w"> </span>my-feature<span class="w">      </span><span class="c1"># deletes worktree + ffleet-created branch — check for unpushed work!</span>
 <span class="gp">$ </span>ffleet<span class="w"> </span>up<span class="w"> </span>my-feature<span class="w"> </span>--git-mode<span class="w"> </span>…<span class="w"> </span>…
 </code></pre></div>
+<p><code>remove</code> warns when the worktree still holds uncommitted changes or untracked
+files, or commits that <strong>no remote branch</strong> contains. It reads only your local
+remote-tracking refs (<code>origin/…</code>) and never fetches, so it stays fast and works
+offline — but if those refs are stale, it can warn about commits you have
+already pushed. Run <code>git fetch --prune</code> and re-check when a warning looks wrong.</p>
 <p>See <a href="advanced/config-precedence.html">config precedence</a> for which bucket a setting
 is in.</p>
 <h3 id="container-wont-become-ready-in-time">Container won't become ready in time</h3>

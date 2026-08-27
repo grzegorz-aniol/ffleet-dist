@@ -705,6 +705,23 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Choosing the coding assistant">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#selecting-a-claude-code-subagent" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Selecting a Claude Code subagent
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -1001,6 +1018,23 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Choosing the coding assistant">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#selecting-a-claude-code-subagent" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Selecting a Claude Code subagent
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -1162,6 +1196,18 @@ subdirectory) with no worktree and no git repo required — you don't need to pa
 </code></pre></div>
 <p>The chosen agent is fixed at create time — switching agents means a new
 environment.</p>
+<h3 id="selecting-a-claude-code-subagent">Selecting a Claude Code subagent</h3>
+<ul>
+<li><strong><code>--subagent NAME</code></strong> — launch a specific Claude Code subagent (e.g.
+  <code>code-reviewer</code>), Claude-only. Works with or without <code>-t</code>/<code>--template</code>: it
+  no longer requires a template just to pick a subagent. If the template also
+  configures a <code>subagent</code>, <code>--subagent</code> wins and a warning is printed when the
+  two differ. See <a href="../advanced/templates.html">templates</a> for the
+  template-config equivalent.</li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="gp">$ </span>ffleet<span class="w"> </span>up<span class="w"> </span>my-feature<span class="w"> </span>--coding-agent<span class="w"> </span>claude<span class="w"> </span>--subagent<span class="w"> </span>code-reviewer<span class="w"> </span>-p<span class="w"> </span><span class="s2">"…"</span>
+</code></pre></div>
+<p>Like <code>--coding-agent</code>, the subagent is fixed at create time.</p>
 <h2 id="git-modes">Git modes</h2>
 <p><strong><code>--git-mode auto|worktree|clone|off</code></strong> (default <code>auto</code>) decides how git is set
 up inside the container:</p>

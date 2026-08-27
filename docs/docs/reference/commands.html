@@ -1257,6 +1257,7 @@ Flags:
       --peek                     Strict, side-effect-free peek: attach only if the agent is live, never relaunch.
   -p, --prompt string            Message: seeds a fresh session, otherwise sent to the live/revived one.
       --prompt-file string       Read the prompt from a file instead of --prompt.
+      --subagent string          Claude Code subagent to launch (e.g. code-reviewer); Claude-only. Overrides a template's configured subagent.
   -t, --template string          Seed a fresh env from a templates.&lt;id&gt; table in ffleet.toml; SLUG is the template ref.
       --uv-cache-dir string      Host uv cache dir to mount for faster installs. (default "~/.cache/uv")
       --wait-timeout int         Seconds to wait for the container/agent to become ready. (default 300)

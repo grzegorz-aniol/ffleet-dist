@@ -1105,6 +1105,12 @@ title, renders the prompt, and starts the environment just like a normal
 <p>The optional <code>subagent</code> key selects a subagent for these envs. It's translated to
 the coding-agent's own subagent flag and appended to its launch command — <strong>Claude
 only</strong> (<code>--agent &lt;name&gt;</code>); using it with another agent errors.</p>
+<p>The <code>--subagent NAME</code> CLI flag (see <a href="../how-to/starting.html#selecting-a-claude-code-subagent">starting</a>)
+is the per-invocation, template-independent equivalent — it works with or
+without <code>-t</code>. When both are set, <code>--subagent</code> always wins over the template's
+configured <code>subagent</code>; if the two differ, Forge Fleet prints a non-fatal
+warning and proceeds with the CLI value. Passing a matching value, or passing
+only one of the two, produces no warning.</p>
 <h2 id="pm-tool-integration">PM-tool integration</h2>
 <p>The <code>pm</code> setting controls fetching:</p>
 <table>

@@ -1282,9 +1282,12 @@ or phone <strong>without</strong> <code>ffleet up</code> or tmux at all:</p>
   Mentioned for completeness; it's a different execution model than Forge
   Fleet's containers.</li>
 </ul>
-<p>This is a <strong>Claude Code</strong> feature, configured inside the agent (not by Forge
-Fleet), and has no equivalent for other agents such as Codex. Forge Fleet's
+<p>Remote Control is a <strong>Claude Code</strong> feature, configured inside the agent (not by
+Forge Fleet), and has no equivalent for other agents such as Codex. Forge Fleet's
 tmux attach/detach above keeps working regardless.</p>
+<p>Forge Fleet does name each Claude session after its environment
+(<code>&lt;project&gt;-&lt;slug&gt;</code>) and gives the container a matching hostname, so entries in
+Remote Control and the <code>/resume</code> picker are identifiable at a glance.</p>
 <h2 id="what-can-and-cant-change-mid-life">What can and can't change mid-life</h2>
 <p>When <code>ffleet up</code> rebuilds a stopped/broken environment, it <strong>refreshes
 config-derived settings</strong> from your current <code>ffleet.toml</code>/flags and saves them
