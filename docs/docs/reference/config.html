@@ -856,6 +856,28 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
+  <a href="#git_allow_origin_writes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        git_allow_origin_writes
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#claudeextend_system_prompt" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        [claude].extend_system_prompt
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#claudeauth-values" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1014,6 +1036,28 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
+  <a href="#git_allow_origin_writes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        git_allow_origin_writes
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#claudeextend_system_prompt" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        [claude].extend_system_prompt
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#claudeauth-values" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1162,10 +1206,22 @@ at that file.</p>
 <td>Base the worktree on the local <code>main</code> branch and keep completion local-only (no push/PR).</td>
 </tr>
 <tr>
+<td><code>attach</code></td>
+<td>bool</td>
+<td><code>true</code></td>
+<td>Whether <code>ffleet up</code> attaches to the agent session after starting it. Set <code>false</code> for a project you normally drive in the background; <code>--attach</code> / <code>--no-attach</code> override it per run, and <code>ffleet up -y</code> never attaches unless <code>--attach</code> is given.</td>
+</tr>
+<tr>
 <td><code>docker_host_bind</code></td>
 <td>bool</td>
 <td><code>false</code></td>
 <td>Let the agent inside the container drive the host Docker daemon (binds the host docker socket; agent-started containers become siblings). See <a href="../advanced/docker-dood.html">DooD</a>.</td>
+</tr>
+<tr>
+<td><code>git_allow_origin_writes</code></td>
+<td>bool</td>
+<td><code>true</code></td>
+<td>When <code>false</code>, deny the agent the outward-facing commands (<code>git push</code>, <code>gh pr create</code>, <code>gh pr merge</code>, <code>gh release create</code>, <code>gh workflow run</code>, and <code>gh api</code> with a mutating method right after <code>api</code>). Sticky per environment. See <a href="#git_allow_origin_writes">denying remote writes</a>.</td>
 </tr>
 <tr>
 <td><code>uv_cache_dir</code></td>
@@ -1207,7 +1263,7 @@ at that file.</p>
 <td><code>pm</code></td>
 <td>string</td>
 <td><code>github</code></td>
-<td>Issue tracker for <code>-t</code> templates: <code>github</code> (via <code>gh</code> CLI) | <code>linear</code> (needs <code>LINEAR_API_KEY</code>) | <code>none</code> (don't fetch; raw ref exposed as <code>{id}</code>). On any fetch failure ffleet warns and continues as <code>pm=none</code>.</td>
+<td>Issue tracker for <code>-t</code> templates: <code>github</code> (via <code>gh</code> CLI) | <code>linear</code> (needs <code>LINEAR_API_KEY</code>) | <code>none</code> (don't fetch; raw ref exposed as <code>{id}</code>). On any fetch failure ffleet warns and continues as <code>pm=none</code>. Also gates the <a href="../how-to/completing.html#see-which-environments-have-landed"><code>PR</code> column in <code>ls</code> and the <code>remove --done</code> sweep</a>: only <code>github</code> consults the forge; <code>linear</code>/<code>none</code> leave the column blank and never invoke <code>gh</code>.</td>
 </tr>
 <tr>
 <td><code>check_image_period_days</code></td>
@@ -1299,8 +1355,65 @@ next <code>up</code>. Set
 <td>—</td>
 <td>Flags appended to the agent's launch command, after ffleet's own flags (e.g. <code>["--agent", "myagent"]</code>).</td>
 </tr>
+<tr>
+<td><code>extend_system_prompt</code></td>
+<td>bool</td>
+<td><code>true</code></td>
+<td><em>(Claude)</em> Let ffleet append short, factual notes about the environment to the agent's system prompt. See below.</td>
+</tr>
 </tbody>
 </table>
+<h3 id="git_allow_origin_writes"><code>git_allow_origin_writes</code></h3>
+<p>Agents run inside the container with their own approval prompts disabled, so
+once the container has push credentials nothing but the agent's judgement stops
+it from publishing work you have not reviewed. Setting <code>git_allow_origin_writes =
+false</code> mounts two small, ffleet-generated policy files read-only into the
+container — <code>/etc/claude-code/managed-settings.json</code> and
+<code>/etc/codex/requirements.toml</code> — which deny these command prefixes at the
+agent's own permission layer:</p>
+<p><code>git push</code> · <code>gh pr create</code> · <code>gh pr merge</code> · <code>gh release create</code> ·
+<code>gh workflow run</code> · <code>gh api</code> with a mutating method (<code>POST</code>, <code>PATCH</code>, <code>PUT</code>,
+<code>DELETE</code>)</p>
+<p>Each method is denied in the five spellings <code>gh</code> accepts <em>immediately after</em>
+<code>gh api</code>: <code>--method POST</code>, <code>--method=POST</code>, <code>-X POST</code>, <code>-X=POST</code> and <code>-XPOST</code>.</p>
+<p>The agent can still commit locally; it just cannot publish. With
+<a href="#claudeextend_system_prompt"><code>extend_system_prompt</code></a> on, Claude is also told
+<em>why</em> the commands fail, so a refusal reads as a known constraint rather than a
+mystery.</p>
+<p>Caveats worth knowing:</p>
+<ul>
+<li><strong>Both agents match by command prefix</strong>, so a command wrapped in another shell
+  (<code>sh -c "git push"</code>) is not caught. This layer raises the bar; it is not a
+  sandbox.</li>
+<li><strong>A <code>gh api</code> method flag placed after the resource path is not caught either</strong> —
+  <code>gh api repos/o/r/issues --method POST</code> slips through, for the same
+  prefix-matching reason. Nor are lowercase method tokens (<code>--method post</code>).</li>
+<li><strong>It is independent of <a href="#global-keys"><code>git_local_main</code></a></strong> — neither implies the
+  other. They pair naturally (a local-only base branch plus no way to publish),
+  so set both if that is what you want.</li>
+</ul>
+<p>Nothing is mounted for a brand-new environment when the key is absent or <code>true</code>,
+which is the default: remote writes are allowed unless you opt out.</p>
+<p><strong>The setting is sticky per environment.</strong> Once an environment has been created
+or started with a value, a later start with the key absent from your config keeps
+the persisted value rather than resetting it to the default — dropping
+<code>git_allow_origin_writes = false</code> from <code>ffleet.toml</code> does not quietly re-open
+remote writes. To re-enable them for an existing environment, set
+<code>git_allow_origin_writes = true</code> explicitly; an explicit value always wins.</p>
+<h3 id="claudeextend_system_prompt"><code>[claude].extend_system_prompt</code></h3>
+<p>With this on (the default), ffleet tells Claude a few facts about the
+environment it is running in, so it doesn't have to guess. Today there are two:
+when <a href="#global-keys"><code>docker_host_bind</code></a> is enabled, Claude is told that Docker
+runs in docker-outside-of-docker mode and that containers it starts are siblings
+of its own container — see <a href="../advanced/docker-dood.html">Docker outside Docker</a>;
+and when <a href="#git_allow_origin_writes"><code>git_allow_origin_writes</code></a> is <code>false</code>, Claude is told
+which outward-facing commands are denied and why. Nothing is added when both are
+at their defaults, and the key has no effect on Codex.</p>
+<p>The notes are merged with any <code>--append-system-prompt</code> you set in <code>extra_args</code>,
+never replacing it: both end up in a single flag, with ffleet's text first and
+yours last. They are recomputed at every launch and are not stored in the
+environment's <code>session.json</code>. Set <code>extend_system_prompt = false</code> to opt out
+entirely — the launch command is then exactly what you configured.</p>
 <h3 id="claudeauth-values"><code>[claude].auth</code> values</h3>
 <table>
 <thead>
@@ -1439,6 +1552,14 @@ read straight from <code>ffleet.toml</code> and has no env-var or CLI-flag overr
 <tr>
 <td><code>DOCKER_HOST_BIND</code></td>
 <td><code>--docker-host-bind</code> (<code>true</code>/<code>false</code>)</td>
+</tr>
+<tr>
+<td><code>GIT_ALLOW_ORIGIN_WRITES</code></td>
+<td>deny the agent outward-facing git/gh commands when <code>false</code> (<code>true</code>/<code>false</code>); no CLI flag equivalent</td>
+</tr>
+<tr>
+<td><code>ATTACH</code></td>
+<td><code>ffleet up</code>'s attach default (<code>true</code>/<code>false</code>); <code>--attach</code> / <code>--no-attach</code> override it, and <code>-y</code> forces no-attach unless <code>--attach</code> is given</td>
 </tr>
 <tr>
 <td><code>FORGE_FLEET_GIT_USER_NAME</code></td>

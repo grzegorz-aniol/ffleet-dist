@@ -818,6 +818,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#ffleet-restore" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ffleet restore
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#ffleet-tail" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1053,6 +1064,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#ffleet-restore" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ffleet restore
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#ffleet-tail" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1211,7 +1233,8 @@ Available Commands:
   path        Print the worktree/working directory path for an environment (for cd "$(ffleet path)").
   project     Inspect and manage the projects known to the ~/.forge-fleet registry.
   remove      Tear down an environment: stop the container, delete the worktree and (if ffleet created it) the branch.
-  status      Show the live status of an environment (container, agent and blocked state).
+  restore     Bring back every environment that should be running (after a host or Docker restart).
+  status      Show the live status of an environment (container, runtime and agent state).
   stop        Stop an environment's container, keeping the worktree, branch and metadata.
   tail        Print the last lines of an agent's transcript for an environment.
   up          Start or resume an environment. State — not flags — decides what happens.
@@ -1238,6 +1261,7 @@ Usage:
   ffleet up [SLUG] [flags]
 
 Flags:
+      --attach                   Attach to the agent session afterwards, overriding the 'attach' config key.
       --claude-auth string       Claude credential source: auto, keychain, token, api-key, credentials-file, or external. (default "auto")
       --claude-dir string        Host ~/.claude dir to mount for credentials/config. (default "~/.claude")
       --codex-dir string         Host ~/.codex dir to mount for credentials/config. (default "~/.codex")
@@ -1253,7 +1277,7 @@ Flags:
   -h, --help                     help for up
       --here                     In-place mode: start/revive an agent over the current directory (no worktree).
       --image string             Docker image to run the agent in. (default "ghcr.io/grzegorz-aniol/forge-fleet-python:latest")
-      --no-attach                Do not attach to the agent session afterwards.
+      --no-attach                Do not attach to the agent session afterwards, overriding the 'attach' config key.
       --peek                     Strict, side-effect-free peek: attach only if the agent is live, never relaunch.
   -p, --prompt string            Message: seeds a fresh session, otherwise sent to the live/revived one.
       --prompt-file string       Read the prompt from a file instead of --prompt.
@@ -1261,15 +1285,24 @@ Flags:
   -t, --template string          Seed a fresh env from a templates.&lt;id&gt; table in ffleet.toml; SLUG is the template ref.
       --uv-cache-dir string      Host uv cache dir to mount for faster installs. (default "~/.cache/uv")
       --wait-timeout int         Seconds to wait for the container/agent to become ready. (default 300)
-  -y, --yes                      Assume yes: skip the image-freshness pull prompt (warn only, never pull).
+  -y, --yes                      Unattended: skip the image-freshness pull prompt (warn only, never pull) and do not attach unless --attach is given.
 </code></pre></div>
 <h2 id="ffleet-remove"><code>ffleet remove</code></h2>
-<div class="highlight"><pre><span></span><code>Tear down an environment: stop the container, delete the worktree and (if ffleet created it) the branch.
+<div class="highlight"><pre><span></span><code>Tear down an environment: stop the container, delete the worktree and
+(if ffleet created it) the branch.
+
+With --done it sweeps instead of removing one: it refreshes the remote refs,
+then offers a multiselect of every environment whose branch has a merged pull
+request and no open one. Ticking an entry is the approval — there is no second
+prompt. An environment with unsaved work is listed with its reason but never
+pre-ticked. The pull-request lookup needs the 'gh' CLI and a 'pm = "github"'
+project; without either, nothing is offered and plain 'remove' still works.
 
 Usage:
   ffleet remove [SLUG] [flags]
 
 Flags:
+      --done   Sweep landed environments: pick from the ones whose pull request merged and remove them in one pass.
   -h, --help   help for remove
   -y, --yes    Skip the confirmation prompt.
 </code></pre></div>
@@ -1281,6 +1314,24 @@ Usage:
 
 Flags:
   -h, --help   help for stop
+</code></pre></div>
+<h2 id="ffleet-restore"><code>ffleet restore</code></h2>
+<div class="highlight"><pre><span></span><code>Bring back every environment that should be running.
+
+A host reboot or a Docker daemon restart destroys the containers while the
+worktrees, branches and session metadata survive. 'restore' revives each
+environment whose last recorded intent was 'running' and whose container is
+gone; environments you parked with 'ffleet stop' are left alone.
+
+No message is sent and nothing is attached — the agents come back idle.
+Use --all to sweep every project registered with 'ffleet init'.
+
+Usage:
+  ffleet restore [flags]
+
+Flags:
+      --all    Restore every registered project, not just the current one.
+  -h, --help   help for restore
 </code></pre></div>
 <h2 id="ffleet-tail"><code>ffleet tail</code></h2>
 <div class="highlight"><pre><span></span><code>Print the last lines of an agent's transcript for an environment.
@@ -1295,6 +1346,12 @@ Flags:
 <h2 id="ffleet-ls"><code>ffleet ls</code></h2>
 <div class="highlight"><pre><span></span><code>List all environments for the project (add --json for machine-readable output).
 
+The PR column shows what the pull requests whose head branch is the
+environment's branch say about it: 'merged #4', 'merged #4,#7', 'open #9',
+or '—' when nothing is known. It needs the 'gh' CLI and a 'pm = "github"'
+project; 'gh' handles its own auth ('gh auth login') and is optional —
+without it the column simply reads '—'.
+
 Usage:
   ffleet ls [flags]
 
@@ -1303,7 +1360,7 @@ Flags:
       --json   Emit machine-readable JSON.
 </code></pre></div>
 <h2 id="ffleet-status"><code>ffleet status</code></h2>
-<div class="highlight"><pre><span></span><code>Show the live status of an environment (container, agent and blocked state).
+<div class="highlight"><pre><span></span><code>Show the live status of an environment (container, runtime and agent state).
 
 Usage:
   ffleet status [SLUG] [flags]

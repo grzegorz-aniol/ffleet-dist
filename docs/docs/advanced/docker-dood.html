@@ -531,6 +531,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#what-the-agent-is-told" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What the agent is told
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#things-to-keep-in-mind" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -932,6 +943,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#what-the-agent-is-told" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What the agent is told
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#things-to-keep-in-mind" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1001,6 +1023,18 @@ container:</p>
 </ul>
 <p>With that on, <code>docker …</code> commands run by the agent are executed by the host
 daemon.</p>
+<h2 id="what-the-agent-is-told">What the agent is told</h2>
+<p>DooD is unusual enough that an agent can easily assume the wrong model — that
+its <code>docker run</code> nests containers inside its own, or resolves bind mounts
+against its own filesystem. So when the host bind is on and the agent is Claude,
+ffleet appends one short sentence to its system prompt: that this environment
+runs Docker in docker-outside-of-docker mode, where the docker CLI talks to the
+host daemon and started containers are siblings rather than nested.</p>
+<p>It is merged with any <code>--append-system-prompt</code> of your own in
+<code>[claude].extra_args</code> (yours is kept, and comes last), and recomputed at each
+launch. To turn it off, set
+<a href="../reference/config.html#claudeextend_system_prompt"><code>extend_system_prompt = false</code></a>
+in the <code>[claude]</code> section.</p>
 <h2 id="things-to-keep-in-mind">Things to keep in mind</h2>
 <ul>
 <li><strong>Shared daemon = shared blast radius.</strong> The agent can see and affect the

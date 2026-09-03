@@ -1014,9 +1014,10 @@ each situation:</p>
 </ul>
 <p>You don't have to remember "did I stop this? did it crash?" — you just run
 <code>ffleet up SLUG</code> and Forge Fleet reconciles reality to "running and attached".
-<code>--no-attach</code> starts it in the background; <code>--peek</code> is the strict, side-effect-
-free variant that attaches only if the agent is already live and never relaunches
-anything.</p>
+<code>--no-attach</code> starts it in the background (<code>attach = false</code> in <code>ffleet.toml</code>
+makes that the project's default, and <code>--attach</code> overrides it back); <code>--peek</code> is
+the strict, side-effect-free variant that attaches only if the agent is already
+live and never relaunches anything.</p>
 <p>One consequence worth internalizing: on a rebuild, <strong>config-derived settings</strong>
 (image, mounts, hosts, env-file, auth, credential dirs, agent command/args)
 refresh from your current config, while <strong>identity/continuity settings</strong> (branch,
@@ -1058,7 +1059,11 @@ is <em>distinct</em> from <strong>removed</strong> (worktree deleted — gone fo
   whether because the agent process exited, setup failed, or the container
   vanished unexpectedly (host reboot, a stray <code>docker rm</code>, a crash). Recovery is
   the same in every case: <code>ffleet up</code> rebuilds the agent from saved metadata and
-  resumes — no work lost.</li>
+  resumes — no work lost. For the one cause that hits everything at once — a host
+  or Docker restart, which takes every <em>container</em> with it — <code>ffleet restore</code>
+  does that for all of them in one command. It only covers that case: an
+  environment whose container is still up but whose agent died is left alone, and
+  <code>ffleet up SLUG</code> is what brings it back.</li>
 <li><strong><code>ffleet remove</code></strong> — deletes the worktree (and the branch, if Forge Fleet
   created it). Nothing is left to revive, so the environment is back to
   <strong>Absent</strong>: a later <code>ffleet up SLUG</code> starts fresh.</li>

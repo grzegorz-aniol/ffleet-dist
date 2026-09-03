@@ -400,10 +400,32 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#everything-is-gone-after-a-reboot-or-a-docker-restart" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Everything is gone after a reboot or a Docker restart
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#a-config-change-isnt-taking-effect" class="md-nav__link">
     <span class="md-ellipsis">
       
         A config change isn't taking effect
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#environment-shows-as-broken-worktree-registration-missing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Environment shows as broken (worktree registration missing)
       
     </span>
   </a>
@@ -970,10 +992,32 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#everything-is-gone-after-a-reboot-or-a-docker-restart" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Everything is gone after a reboot or a Docker restart
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#a-config-change-isnt-taking-effect" class="md-nav__link">
     <span class="md-ellipsis">
       
         A config change isn't taking effect
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#environment-shows-as-broken-worktree-registration-missing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Environment shows as broken (worktree registration missing)
       
     </span>
   </a>
@@ -1061,8 +1105,8 @@ rebuild a broken container without losing any work.</p>
     C --&gt; OK</code></pre>
 <h2 id="step-1-diagnose">Step 1: diagnose</h2>
 <ul>
-<li><strong><code>ffleet status SLUG</code></strong> — is the container up? is the agent live or exited? is
-  it blocked? This is the first look.</li>
+<li><strong><code>ffleet status SLUG</code></strong> — is the container up? is the agent live or exited?
+  is it still working or done with its turn? This is the first look.</li>
 <li><strong><code>ffleet tail SLUG</code></strong> — the last lines of the agent's transcript (<code>--lines N</code>
   for more). Shows what the agent was doing or the error it hit.</li>
 <li><strong><code>ffleet ls</code></strong> — confirm the environment exists and its overall state.</li>
@@ -1076,6 +1120,15 @@ rebuild a broken container without losing any work.</p>
 <p>Often you can skip straight to <code>ffleet up my-feature</code> — <code>up</code> detects a dead agent
 or a missing container and rebuilds. Use the explicit <code>stop</code> first when you want
 a guaranteed-clean container.</p>
+<h3 id="everything-is-gone-after-a-reboot-or-a-docker-restart">Everything is gone after a reboot or a Docker restart</h3>
+<p>Containers don't survive a host restart or a Docker daemon restart — but your
+worktrees, branches and saved sessions do. Bring the agents back in one go:</p>
+<div class="highlight"><pre><span></span><code><span class="gp">$ </span>ffleet<span class="w"> </span>restore<span class="w"> </span>--all<span class="w">     </span><span class="c1"># every project; drop --all for just this one</span>
+</code></pre></div>
+<p>It revives only the environments that were supposed to be running (anything you
+parked with <code>ffleet stop</code> stays parked), sends no message and attaches nothing,
+and is safe to re-run. See
+<a href="how-to/working.html#restore-bring-everything-back-after-a-reboot">Working / <code>restore</code></a>.</p>
 <h3 id="a-config-change-isnt-taking-effect">A config change isn't taking effect</h3>
 <p>If you changed <code>image</code>, a mount, hosts, or the env file and don't see it, revive
 to refresh config-derived settings:</p>
@@ -1093,6 +1146,42 @@ offline — but if those refs are stale, it can warn about commits you have
 already pushed. Run <code>git fetch --prune</code> and re-check when a warning looks wrong.</p>
 <p>See <a href="advanced/config-precedence.html">config precedence</a> for which bucket a setting
 is in.</p>
+<h3 id="environment-shows-as-broken-worktree-registration-missing">Environment shows as broken (worktree registration missing)</h3>
+<p><strong>Symptom.</strong> <code>ffleet ls</code> still lists the environment but prints a warning under
+the table, and <code>ffleet status SLUG</code> shows a <code>broken:</code> field:</p>
+<div class="highlight"><pre><span></span><code><span class="gp">$ </span>ffleet<span class="w"> </span>ls
+<span class="go">...</span>
+<span class="go">Warning: broken environment(s) — git inside them no longer works:</span>
+<span class="go">  - my-project-my-feature: worktree_registration_missing</span>
+<span class="go">  Never run `git worktree prune` inside a container; see the troubleshooting guide to recover.</span>
+</code></pre></div>
+<p>Inside the container, git commands fail with something like
+<code>fatal: not a git repository</code>.</p>
+<p><strong>Cause.</strong> Someone ran <strong><code>git worktree prune</code> inside a container</strong> (an agent
+"cleaning up" counts). In <code>worktree</code> git mode every environment mounts the <em>host
+repository's shared</em> <code>.git</code> directory, and that directory holds the registration
+of <strong>every</strong> worktree — your other environments included. From inside a
+container the sibling worktrees are not mounted, so git considers them gone and
+prunes their registrations: <code>&lt;repo&gt;/.git/worktrees/&lt;env&gt;/</code>. The worktree
+directories and your work are untouched; only the registrations are deleted.</p>
+<p><strong>Rule: never run <code>git worktree prune</code> (or <code>git worktree remove</code> for another
+environment) inside a container.</strong> Run worktree maintenance on the host, where
+git can see every worktree.</p>
+<p><strong>Recovery.</strong> The worktree's own <code>.git</code> pointer file survives the prune, so the
+registration can be rewritten by hand. For each broken environment:</p>
+<div class="highlight"><pre><span></span><code><span class="nv">n</span><span class="o">=</span>&lt;env-name&gt;<span class="w">                                   </span><span class="c1"># e.g. my-project-my-feature</span>
+<span class="nv">d</span><span class="o">=</span>&lt;main-repo&gt;/.git/worktrees/<span class="nv">$n</span>
+mkdir<span class="w"> </span>-p<span class="w"> </span><span class="s2">"</span><span class="nv">$d</span><span class="s2">"</span>
+<span class="nb">echo</span><span class="w"> </span><span class="s2">"&lt;worktree-root&gt;/</span><span class="nv">$n</span><span class="s2">/.git"</span><span class="w">  </span>&gt;<span class="w"> </span><span class="s2">"</span><span class="nv">$d</span><span class="s2">/gitdir"</span><span class="w">     </span><span class="c1"># bare path — no "gitdir: " prefix here</span>
+<span class="nb">echo</span><span class="w"> </span><span class="s2">"../.."</span><span class="w">                    </span>&gt;<span class="w"> </span><span class="s2">"</span><span class="nv">$d</span><span class="s2">/commondir"</span>
+<span class="nb">echo</span><span class="w"> </span><span class="s2">"ref: refs/heads/</span><span class="nv">$n</span><span class="s2">"</span><span class="w">       </span>&gt;<span class="w"> </span><span class="s2">"</span><span class="nv">$d</span><span class="s2">/HEAD"</span>
+<span class="o">(</span><span class="nb">cd</span><span class="w"> </span>&lt;worktree-root&gt;/<span class="nv">$n</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>git<span class="w"> </span>reset<span class="o">)</span><span class="w">   </span><span class="c1"># rebuild the index from HEAD; working tree untouched</span>
+</code></pre></div>
+<p>Then <code>git worktree list</code> on the host shows the environment again and the warning
+disappears. If the environment's branch is not named after the environment, put
+its real branch in <code>HEAD</code>.</p>
+<p>If you would rather start over, <code>ffleet remove SLUG</code> and recreate — but check for
+unpushed work first.</p>
 <h3 id="container-wont-become-ready-in-time">Container won't become ready in time</h3>
 <p>First-time image pulls or heavy setup can exceed the default readiness wait.
 Raise it:</p>

@@ -754,10 +754,10 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#is-the-agent-working-or-waiting-on-you" class="md-nav__link">
+  <a href="#is-the-agent-still-working" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Is the agent working, or waiting on you?
+        Is the agent still working?
       
     </span>
   </a>
@@ -774,6 +774,17 @@
     <span class="md-ellipsis">
       
         stop — park it without losing work
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#restore-bring-everything-back-after-a-reboot" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        restore — bring everything back after a reboot
       
     </span>
   </a>
@@ -1039,10 +1050,10 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#is-the-agent-working-or-waiting-on-you" class="md-nav__link">
+  <a href="#is-the-agent-still-working" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Is the agent working, or waiting on you?
+        Is the agent still working?
       
     </span>
   </a>
@@ -1059,6 +1070,17 @@
     <span class="md-ellipsis">
       
         stop — park it without losing work
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#restore-bring-everything-back-after-a-reboot" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        restore — bring everything back after a reboot
       
     </span>
   </a>
@@ -1196,25 +1218,52 @@ never delete metadata by hand.</p>
 <ul>
 <li><strong><code>ffleet ls</code></strong> — all environments for the project (add <code>--json</code> for scripts).</li>
 <li><strong><code>ffleet status SLUG</code></strong> — live status: container up?, agent live/exited,
-  blocked state.</li>
+  what the agent is doing and why we say so.</li>
 <li><strong><code>ffleet tail SLUG</code></strong> — the last lines of the agent's transcript (<code>--lines N</code>,
   default 100).</li>
 <li><strong><code>ffleet path SLUG</code></strong> — the worktree/working-directory path.</li>
 </ul>
-<h3 id="is-the-agent-working-or-waiting-on-you">Is the agent working, or waiting on you?</h3>
-<p>Forge Fleet watches the agent's terminal: if the screen is changing it's
-<strong>working</strong>; if it's sitting still at a prompt it's <strong>waiting for your input</strong>.
-Neither is an error — "waiting" just means the agent wants a reply. <code>ls</code> surfaces
-this in the <code>BLOCKED_REASON</code> column (<code>-</code> when nothing needs you;
-<code>waiting for input</code> when the agent is idle at a prompt):</p>
+<h3 id="is-the-agent-still-working">Is the agent still working?</h3>
+<p>Forge Fleet answers that from what the environment can actually show: whether the
+container is up, whether the agent's terminal pane is still alive, and the
+agent's own session transcript — the record each agent writes as it works. It
+reports one of four states in the <code>AGENT_STATE</code> column:</p>
+<table>
+<thead>
+<tr>
+<th>State</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>working</code></td>
+<td>mid-turn: thinking, or running a tool.</td>
+</tr>
+<tr>
+<td><code>idle</code></td>
+<td>it finished its turn; the next move is yours.</td>
+</tr>
+<tr>
+<td><code>exited</code></td>
+<td>the agent process is gone (the container may still be up).</td>
+</tr>
+<tr>
+<td><code>unknown</code></td>
+<td>there is no evidence to read — see the <code>probe reason</code> in <code>status</code>.</td>
+</tr>
+</tbody>
+</table>
 <div class="highlight"><pre><span></span><code><span class="gp">$ </span>ffleet<span class="w"> </span>ls
-<span class="go">SHORT        ENV                     AGENT   CONTAINER               CONTAINER_STATE  RUNTIME  LAST_ACTIVITY              BLOCKED_REASON</span>
-<span class="go">-----------  ----------------------  ------  ----------------------  ---------------  -------  -------------------------  -----------------</span>
-<span class="go">add-logging  my-project-add-logging  claude  my-project-add-logging  running          running  2026-08-12T09:14:22+00:00  waiting for input</span>
-<span class="go">fix-auth     my-project-fix-auth     claude  my-project-fix-auth     running          running  2026-08-12T09:12:03+00:00  -</span>
+<span class="go">SHORT        ENV                     AGENT   CONTAINER               CONTAINER_STATE  RUNTIME  LAST_ACTIVITY              AGENT_STATE</span>
+<span class="go">-----------  ----------------------  ------  ----------------------  ---------------  -------  -------------------------  -----------</span>
+<span class="go">add-logging  my-project-add-logging  claude  my-project-add-logging  running          running  2026-08-12T09:14:22+00:00  working</span>
+<span class="go">fix-auth     my-project-fix-auth     claude  my-project-fix-auth     running          running  2026-08-12T09:12:03+00:00  idle</span>
 </code></pre></div>
-<p><code>status</code> shows the same thing per-environment, split into the <code>semantic</code>
-state and <code>probe reason</code>:</p>
+<p><code>LAST_ACTIVITY</code> is when the <strong>agent</strong> last did something (its last transcript
+record), not when Forge Fleet last touched the environment.</p>
+<p><code>status</code> adds the <em>why</em>: the <code>probe reason</code> behind the state, and the raw
+evidence it was derived from.</p>
 <div class="highlight"><pre><span></span><code><span class="gp">$ </span>ffleet<span class="w"> </span>status<span class="w"> </span>add-logging
 <span class="go">Environment status</span>
 <span class="go">  name: my-project-add-logging</span>
@@ -1222,13 +1271,41 @@ state and <code>probe reason</code>:</p>
 <span class="go">  branch: my-project-add-logging</span>
 <span class="go">  agent: claude</span>
 <span class="go">  runtime: running</span>
-<span class="go">  semantic: waiting for input</span>
-<span class="go">  probe reason: waiting for input</span>
+<span class="go">  agent state: working</span>
+<span class="go">  probe reason: tool call pending</span>
+<span class="go">  last activity: 2026-08-12T09:14:22+00:00</span>
+<span class="go">  evidence: liveness=running, pane=alive, source=transcript, pending_tool=Bash</span>
 <span class="go">  container: my-project-add-logging</span>
 <span class="go">  session id: 6f1c…</span>
 <span class="go">  tmux session: main</span>
 <span class="go">  worktree: ~/.forge-fleet/my-project/worktrees/add-logging</span>
 </code></pre></div>
+<p>Two things worth knowing:</p>
+<ul>
+<li><strong>Both agents report real state.</strong> Claude Code is read from its per-session
+  transcript, Codex from the session rollout it writes under <code>--codex-dir</code>
+  (<code>~/.codex/sessions/…</code>), matched to the environment by the working directory
+  it was started in.</li>
+<li><strong><code>unknown</code> is never an error by itself.</strong> It says the evidence was missing —
+  a fresh environment whose agent has not written anything yet, a stopped
+  container, or a session whose transcript is gone. For Codex that also covers an
+  environment created by an older Forge Fleet, whose container works from
+  <code>/workspace</code> instead of the worktree path the rollout records. Runtime state,
+  <code>attach</code> and <code>tail</code> all work as usual either way.</li>
+</ul>
+<p>For scripts, <code>ffleet ls --json</code> carries <code>agent_state</code> plus the raw
+<code>probe_reason</code> token (<code>turn_ended</code>, <code>tool_call_pending</code>, <code>agent_thinking</code>,
+<code>agent_exited</code>, <code>runtime_not_running</code>, <code>tmux_session_missing</code>,
+<code>transcript_absent</code>, <code>transcript_unreadable</code>, <code>adapter_not_supported</code>).</p>
+<p>It also carries <code>broken_reason</code> — empty for a healthy environment, and
+<code>worktree_registration_missing</code> for one whose git registration was deleted (see
+<a href="../troubleshooting.html#environment-shows-as-broken-worktree-registration-missing">Troubleshooting</a>).
+The table prints the same information as a warning under the rows.</p>
+<p><strong>Changed in this release.</strong> Agent state used to be inferred by diffing the
+terminal 400 ms apart, and an unchanging screen was reported as
+<code>waiting for input</code>. That guess is gone, along with the <code>BLOCKED_REASON</code> column
+and the <code>blocked_reason</code> JSON field — read <code>agent_state</code> / <code>probe_reason</code>
+instead.</p>
 <h2 id="stop-park-it-without-losing-work"><code>stop</code> — park it without losing work</h2>
 <p><strong><code>ffleet stop SLUG</code></strong> removes the container but <strong>keeps the worktree, branch,
 and metadata</strong>. It's the safe "get this out of the way" move — reversible, unlike
@@ -1248,6 +1325,41 @@ correctly for concurrent environments in the common case even though they
 share <code>--codex-dir</code> by default — see the
 <a href="../advanced/container-config.html#credential-directories-authenticating-the-agent-inside">container-config note</a>
 for the mechanism and the fallback if you ever hit a mismatch.</p>
+<h2 id="restore-bring-everything-back-after-a-reboot"><code>restore</code> — bring everything back after a reboot</h2>
+<p>A host restart — or restarting the Docker daemon — takes every container with
+it. Your worktrees, branches and saved sessions are untouched, but the agents
+are gone. <strong><code>ffleet restore</code></strong> brings back, in one go, every environment that
+was supposed to be running:</p>
+<div class="highlight"><pre><span></span><code><span class="gp">$ </span>ffleet<span class="w"> </span>restore<span class="w">          </span><span class="c1"># this project</span>
+<span class="gp">$ </span>ffleet<span class="w"> </span>restore<span class="w"> </span>--all<span class="w">    </span><span class="c1"># every project you've run `ffleet init` in</span>
+<span class="go">project my-app</span>
+<span class="go">  my-feature: restored</span>
+<span class="go">  spike: skipped (parked)</span>
+<span class="go">  review: skipped (already running)</span>
+
+<span class="go">restored 1, skipped 2, failed 0</span>
+</code></pre></div>
+<ul>
+<li><strong>It respects what you asked for.</strong> Only environments whose last recorded
+  intent was "running" come back. Anything you parked with <code>ffleet stop</code> stays
+  parked. Environments that predate this feature have no recorded intent at all,
+  so they are left alone too — restore never guesses. Your first restore after
+  upgrading may therefore do nothing; one <code>ffleet up</code> (or <code>ffleet stop</code>) per
+  environment records the intent, and restore picks it up from then on.</li>
+<li><strong>It brings back containers, not dead agents.</strong> Restore is for the case where
+  the containers are gone. An environment whose container is still up is reported
+  "already running" and left as-is, even if the agent inside it exited — use
+  <code>ffleet up SLUG</code> for that one.</li>
+<li><strong>Nothing is sent, nothing is attached.</strong> The agents come back idle, exactly
+  where they left off; attach with <code>ffleet up SLUG</code> when you want one.</li>
+<li><strong>Safe to re-run.</strong> An environment that is already up is reported as such and
+  left alone.</li>
+<li><strong>One failure doesn't stop the rest.</strong> Each environment is reported on its own
+  line; the command exits non-zero if any of them failed.</li>
+</ul>
+<p><code>--all</code> works from any directory — it walks the projects you've registered with
+<code>ffleet init</code>, so you don't have to visit each repo. A project you never ran
+<code>ffleet init</code> in has nothing recorded to restore.</p>
 <h2 id="working-inside-tmux">Working inside tmux</h2>
 <p>When you attach, you're inside a <strong>tmux</strong> session running the agent. You mostly
 just type at the agent, but a few tmux things are worth knowing:</p>

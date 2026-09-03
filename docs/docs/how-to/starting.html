@@ -1142,8 +1142,8 @@ keys see the <a href="../reference/config.html">config reference</a>.</p>
     E --&gt;|no prompt| G[fresh agent session, empty]
     F --&gt; H{attach?}
     G --&gt; H
-    H --&gt;|default| I[attached — steer the agent live]
-    H --&gt;|--no-attach| J[running in the background]
+    H --&gt;|default, or --attach| I[attached — steer the agent live]
+    H --&gt;|--no-attach, -y, or attach = false| J[running in the background]
     H --&gt;|--peek| K[attach only if already live; never launch]</code></pre>
 <h2 id="seeding-the-work-prompts">Seeding the work: prompts</h2>
 <ul>
@@ -1161,6 +1161,17 @@ keys see the <a href="../reference/config.html">config reference</a>.</p>
 <li><strong><code>--no-attach</code></strong> — start (or revive) but stay in your shell; good for
   background runs. Check in later with <code>status</code> / <code>tail</code>, or attach with a plain
   <code>ffleet up</code>.</li>
+<li><strong><code>--attach</code></strong> — attach explicitly. Only needed to override a project that
+  defaults to not attaching (below), or a <code>-y</code> run; passing both flags is an
+  error.</li>
+<li><strong><code>-y</code> / <code>--yes</code></strong> — unattended mode never attaches unless you pass <code>--attach</code>
+  (or use <code>--peek</code>, which always attaches when the agent is live), so a scripted
+  or CI run can't hang on an interactive session. It overrides <code>attach = true</code>
+  and <code>ATTACH=true</code> too.</li>
+<li><strong><code>attach = false</code> in <code>ffleet.toml</code></strong> — make <em>not attaching</em> this project's
+  default, for a repo you normally drive in the background. Either flag still
+  wins per run, as does an <code>ATTACH</code> env var. See the
+  <a href="../reference/config.html#global-keys">config reference</a>.</li>
 <li><strong><code>--peek</code></strong> — a strict, side-effect-free peek: attach <strong>only if</strong> the agent is
   already live, and <strong>never</strong> relaunch it. Use it to look without risk of
   starting anything.</li>

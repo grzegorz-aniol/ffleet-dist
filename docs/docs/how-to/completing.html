@@ -658,6 +658,28 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#see-which-environments-have-landed" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        See which environments have landed
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sweep-the-landed-environments-remove-done" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sweep the landed environments (remove --done)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#the-project-registry-forge-fleet" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -910,6 +932,28 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#see-which-environments-have-landed" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        See which environments have landed
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sweep-the-landed-environments-remove-done" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sweep the landed environments (remove --done)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#the-project-registry-forge-fleet" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -955,6 +999,8 @@ you're done with a whole project — or want to uninstall — clean up the
 <a href="../reference/commands.html">command reference</a>.</p>
 <pre class="mermaid"><code>flowchart TD
     E[Environment done] --&gt;|ffleet remove SLUG| R[Worktree deleted; ffleet-created branch deleted]
+    E --&gt;|ffleet remove --done| S[Tick the landed ones; all removed in one pass]
+    S --&gt; D
     R --&gt; D{More environments in this project?}
     D --&gt;|yes| E
     D --&gt;|no| P[Project-level cleanup]
@@ -990,6 +1036,16 @@ git config. Provide credentials yourself, e.g. mount your SSH key:</p>
 git config — only <em>push</em> credentials need this. Prefer to stay fully local?
 <code>git_local_main = true</code> bases the branch on your local <code>main</code> so you can merge
 locally with no push at all.</p>
+<p><strong>Once credentials are mounted, the agent can push on its own.</strong> If you want it
+to commit but never publish, set
+<a href="../reference/config.html#git_allow_origin_writes"><code>git_allow_origin_writes = false</code></a>: it
+denies <code>git push</code>, <code>gh pr create</code>, <code>gh pr merge</code>, <code>gh release create</code>,
+<code>gh workflow run</code> and the common spellings of a mutating <code>gh api</code> call at the
+agent's own permission layer. Matching is by command prefix, so the coverage has
+edges worth reading before you rely on it — see the
+<a href="../reference/config.html#git_allow_origin_writes">caveats</a>. It pairs naturally
+with <code>git_local_main</code> but is independent of it — neither implies the other, so
+set both if you want a fully local-only environment.</p>
 <blockquote>
 <p><strong>Forge Fleet sandboxes your setup — it doesn't replace it.</strong> The real
 leverage is still your own prompts, your skills/subagents, and
@@ -1008,6 +1064,91 @@ deleted too; a branch you brought in with <code>--from</code> is left alone.</p>
 <p><code>remove</code> surfaces unpushed/uncommitted work before deleting so you don't lose it
 by surprise. This is <strong>irreversible</strong> — if you only want the container gone,
 use <a href="working.html#stop--park-it-without-losing-work"><code>ffleet stop</code></a> instead.</p>
+<p>Plain <code>remove</code> makes <strong>no network call at all</strong>: it is deliberately fast and
+offline-safe.</p>
+<h2 id="see-which-environments-have-landed">See which environments have landed</h2>
+<p><code>ffleet ls</code> has a <strong><code>PR</code></strong> column. For each environment it shows what the pull
+requests whose <em>head branch</em> is that environment's branch say about it:</p>
+<table>
+<thead>
+<tr>
+<th><code>PR</code> shows</th>
+<th>What it means</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>merged #4</code></td>
+<td>the work landed</td>
+</tr>
+<tr>
+<td><code>merged #4,#7</code></td>
+<td>it landed as a stack of pull requests</td>
+</tr>
+<tr>
+<td><code>open #9</code></td>
+<td>still in review</td>
+</tr>
+<tr>
+<td><code>—</code></td>
+<td>nothing known: no pull request on that branch, only closed ones, or the lookup could not run</td>
+</tr>
+</tbody>
+</table>
+<p>The match is on the branch, which is a first-class GitHub field — so it still
+works after the branch is deleted on merge. If the agent opened its pull request
+from a <em>sub</em>-branch instead of the environment's branch, the column reads <code>—</code>:
+the environment is shown, just never swept.</p>
+<p><strong>The lookup needs the <a href="https://cli.github.com/"><code>gh</code> CLI</a>, and <code>gh</code> owns its own
+auth.</strong> Forge Fleet never handles a token, a key or any credential for this —
+run <code>gh auth login</code> once and that is the whole setup. <code>gh</code> is <strong>optional</strong>: with
+it missing, unauthenticated, or pointed at a repo with no <code>origin</code>, the column
+simply reads <code>—</code> and everything else works exactly as before — no error, no
+warning, same exit code. Projects on
+<a href="../reference/config.html"><code>pm = "linear"</code> or <code>pm = "none"</code></a> leave the column blank
+and never invoke <code>gh</code> at all.</p>
+<h2 id="sweep-the-landed-environments-remove-done">Sweep the landed environments (<code>remove --done</code>)</h2>
+<p>When several environments have finished, <code>ffleet remove --done</code> collapses N
+teardowns into one reviewed action:</p>
+<div class="highlight"><pre><span></span><code><span class="gp">$ </span>ffleet<span class="w"> </span>remove<span class="w"> </span>--done
+<span class="go">[forge-fleet] Refreshing remote refs (git fetch --prune)</span>
+<span class="go">Remove these landed environments:</span>
+<span class="go">  [x] fix-login   [my-project-fix-login]    merged #4</span>
+<span class="go">  [x] add-export  [my-project-add-export]   merged #7,#9</span>
+<span class="go">  [ ] flaky-test  [my-project-flaky-test]   merged #11  — unsaved work: uncommitted changes</span>
+</code></pre></div>
+<p>Tick what you want gone and press enter. <strong>The checkmark is the approval</strong> —
+there is no second y/n prompt. Then a tally:</p>
+<div class="highlight"><pre><span></span><code><span class="go">  fix-login: removed</span>
+<span class="go">  add-export: removed</span>
+<span class="go">  flaky-test: skipped (uncommitted changes)</span>
+
+<span class="go">removed 2, skipped 1, failed 0</span>
+</code></pre></div>
+<p>Two independent things must both be true before an environment is offered:</p>
+<ol>
+<li><strong>it landed</strong> — at least one merged pull request on its branch, and no open
+   one;</li>
+<li><strong>nothing would be lost</strong> — the same unsaved-work check plain <code>remove</code> runs.</li>
+</ol>
+<p>A branch that is pushed but unreviewed is safe to delete yet not done; a merged
+branch with uncommitted changes is done yet not safe. An environment failing the
+second check is <strong>listed with its reason but never pre-ticked</strong> — you can still
+tick it deliberately. Every ambiguity resolves to "not swept": the worst case is
+that you clean up by hand, exactly as before.</p>
+<p>Notes:</p>
+<ul>
+<li>The sweep starts with one visible <code>git fetch --prune</code>, because the unsaved-work
+  check reads your remote-tracking refs and is otherwise only as fresh as your
+  last fetch. This is the <strong>only</strong> fetch in the teardown path; plain <code>remove</code>
+  never fetches. A failed fetch is a warning, not a stop — the check just stays
+  conservative.</li>
+<li><code>--done</code> takes no <code>SLUG</code>. It sweeps, or it removes one — not both.</li>
+<li><code>ffleet remove --done --yes</code> skips the picker and removes every environment
+  that is landed <strong>and</strong> clean. On a non-interactive stdin (CI, a pipe) <code>--yes</code>
+  is <strong>required</strong> — without it the command errors rather than acting silently.</li>
+<li>Nothing is ever removed unattended: there is no auto-removal on any trigger.</li>
+</ul>
 <h2 id="the-project-registry-forge-fleet">The project registry (<code>~/.forge-fleet</code>)</h2>
 <p>Forge Fleet tracks the projects it knows about in
 <code>~/.forge-fleet/registry.json</code>, with each project's home data under

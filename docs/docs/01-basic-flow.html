@@ -1009,10 +1009,13 @@ up:</p>
 <ul>
 <li>Give the slug on the command line: <code>ffleet up my-feature</code>.</li>
 <li><code>--no-attach</code> leaves the environment running in the background instead of
-  attaching.</li>
-<li><code>-y</code> / <code>--yes</code> skips only the image-freshness pull prompt (it warns about a
-  stale image but never pulls) — it is not a general "do everything unattended"
-  switch.</li>
+  attaching (<code>--attach</code> forces the opposite). Attaching is the default; a project
+  can flip that with <code>attach = false</code> in its <code>ffleet.toml</code>, or an <code>ATTACH</code> env
+  var — either flag still wins per run.</li>
+<li><code>-y</code> / <code>--yes</code> runs unattended: it skips the image-freshness pull prompt (it
+  warns about a stale image but never pulls) and forces <strong>no-attach</strong>, so a
+  scripted run can't hang on an interactive session. Pass <code>--attach</code> explicitly
+  if you want to attach anyway.</li>
 </ul>
 <p>Detach from an attached session any time with tmux's <strong><code>Ctrl-B</code> then <code>D</code></strong> — the
 agent keeps running. For the full set of flags, see
