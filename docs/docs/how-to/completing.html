@@ -1026,17 +1026,25 @@ do it yourself from the worktree:</p>
 <span class="gp">$ </span>gh<span class="w"> </span>pr<span class="w"> </span>create
 <span class="gp">$ </span><span class="nb">exit</span>
 </code></pre></div>
-<p><strong>Push credentials are not mounted by default.</strong> The container knows your
-<code>origin</code> URL but has <strong>no push auth</strong> — no <code>~/.ssh</code>, no <code>gh</code>/git token, no host
-git config. Provide credentials yourself, e.g. mount your SSH key:</p>
-<div class="highlight"><pre><span></span><code><span class="n">extra_mounts</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s2">"~/.ssh:/home/buddy/.ssh:ro"</span><span class="p">]</span>
+<p><strong>Push credentials are not provided by default.</strong> The container knows your
+<code>origin</code> URL but has <strong>no push auth</strong> — no SSH key, no <code>gh</code>/git token, no host
+git config. It does speak HTTPS to your remote's host
+(<a href="../reference/config.html#git_https_rewrite"><code>git_https_rewrite</code></a>, on by default),
+so all you supply is a token: create a <strong>fine-grained personal access token
+scoped to this one repository</strong> and pass it through
+<a href="../advanced/secrets.html#git-push-credentials"><code>docker_env_file</code></a>:</p>
+<div class="highlight"><pre><span></span><code># docker.env
+GITHUB_TOKEN=github_pat_…
+GH_TOKEN=github_pat_…
 </code></pre></div>
-<p>or supply a token via <a href="../advanced/secrets.html"><code>docker_env_file</code></a>. Your commit
-<strong>identity</strong> (name/email) is forwarded automatically from <code>[git]</code> or your host
-git config — only <em>push</em> credentials need this. Prefer to stay fully local?
+<p>Prefer that to mounting <code>~/.ssh</code>: a mounted key is your real, long-lived
+credential, valid for every repository it can reach and for as long as the
+environment exists. Your commit <strong>identity</strong> (name/email) is forwarded
+automatically from <code>[git]</code> or your host git config — only <em>push</em> credentials need
+this. Prefer to stay fully local?
 <code>git_local_main = true</code> bases the branch on your local <code>main</code> so you can merge
 locally with no push at all.</p>
-<p><strong>Once credentials are mounted, the agent can push on its own.</strong> If you want it
+<p><strong>Once credentials are in place, the agent can push on its own.</strong> If you want it
 to commit but never publish, set
 <a href="../reference/config.html#git_allow_origin_writes"><code>git_allow_origin_writes = false</code></a>: it
 denies <code>git push</code>, <code>gh pr create</code>, <code>gh pr merge</code>, <code>gh release create</code>,

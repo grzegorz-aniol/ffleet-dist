@@ -120,13 +120,6 @@ code {
   flex-wrap: wrap;
 }
 
-.nav-link {
-  font-family: var(--font-mono);
-  font-size: 0.9rem;
-  color: var(--text);
-}
-.nav-link:hover { color: var(--accent-bright); }
-
 /* ============================================================
    Buttons
    ============================================================ */
@@ -414,6 +407,40 @@ code {
 }
 
 /* ============================================================
+   Follow — social / docs / releases chips
+   ============================================================ */
+/* Same two-sided boundary trim as #get-started above. */
+#follow { padding-top: clamp(1rem, 2.5vw, 1.5rem); }
+.section:has(+ #follow) { padding-bottom: clamp(1.75rem, 4vw, 3rem); }
+
+.social-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.social-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  font-family: var(--font-mono);
+  font-size: 0.9rem;
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 0.55rem 1.1rem;
+  transition: border-color 0.15s ease, color 0.15s ease;
+}
+.social-link:hover { border-color: var(--accent); color: var(--accent-bright); text-decoration: none; }
+.social-link svg { flex: none; }
+
+/* Same accent tint as .card-primary */
+.social-link-primary {
+  border-color: rgba(74, 222, 128, 0.45);
+  box-shadow: 0 0 0 1px rgba(74, 222, 128, 0.12) inset;
+}
+
+/* ============================================================
    Footer
    ============================================================ */
 .site-footer {
@@ -424,7 +451,7 @@ code {
 
 .footer-grid {
   display: grid;
-  grid-template-columns: 1.4fr 1fr 1.2fr;
+  grid-template-columns: 1.4fr 1.2fr;
   gap: 2.5rem;
 }
 
@@ -433,7 +460,6 @@ code {
 .copyright { margin: 0.25rem 0; font-family: var(--font-mono); font-size: 0.85rem; color: var(--text-muted); }
 .license { margin: 0.25rem 0 0; font-size: 0.9rem; color: var(--text-muted); }
 
-.footer-links h4,
 .footer-support h4 {
   font-family: var(--font-mono);
   font-size: 0.8rem;
@@ -441,15 +467,6 @@ code {
   letter-spacing: 0.08em;
   color: var(--text-muted);
   margin: 0 0 1rem;
-}
-
-.footer-links ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 0.7rem;
 }
 
 /* ============================================================
@@ -460,12 +477,14 @@ code {
   .get-started-grid { grid-template-columns: 1fr; }
   .feature-grid { grid-template-columns: 1fr; }
   .footer-grid { grid-template-columns: 1fr; gap: 2rem; }
-  .site-header .site-nav .btn-ghost { display: none; } /* keep header compact on mobile */
+  .site-header .site-nav .nav-cta { display: none; } /* keep header compact on mobile; Docs stays */
 }
 
 @media (max-width: 480px) {
   body { font-size: 16px; }
   .terminal-body { font-size: 0.78rem; }
+  .social-row { gap: 0.5rem; }
+  .social-link { padding-inline: 0.85rem; } /* narrower chips; block padding keeps the 44px tap target */
 }
 
 /* Respect reduced-motion preferences */

@@ -559,6 +559,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#git-remotes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Git remotes
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#git-identity" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1055,6 +1066,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#git-remotes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Git remotes
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#git-identity" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1216,6 +1238,14 @@ resolution on the host, not inside the container (which has its own
 <p><code>docker_host_bind = true</code> (or <code>--docker-host-bind</code>) binds the host Docker socket
 so the agent can drive the host daemon — this is the Docker-outside-Docker setup;
 see <a href="docker-dood.html">DooD</a>.</p>
+<h2 id="git-remotes">Git remotes</h2>
+<p>The container gets no SSH key. Its init script instead rewrites git remotes to
+HTTPS in the container's own gitconfig
+(<code>url."https://&lt;host&gt;/".insteadOf "git@&lt;host&gt;:"</code>, host taken from your <code>origin</code>),
+so the agent only needs a token — see
+<a href="secrets.html#git-push-credentials">git push credentials</a>. The repository's own git
+config is never modified. Turn it off with
+<a href="../reference/config.html#git_https_rewrite"><code>git_https_rewrite = false</code></a>.</p>
 <h2 id="git-identity">Git identity</h2>
 <p>Commits made inside the container use the <code>[git]</code> identity (<code>user_name</code> /
 <code>user_email</code>) if both are set; otherwise identity falls back to your host git
@@ -1223,7 +1253,7 @@ config. Set both together or neither.</p>
 <h2 id="putting-it-together">Putting it together</h2>
 <div class="highlight"><pre><span></span><code><span class="n">image</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"ghcr.io/grzegorz-aniol/forge-fleet-python:latest"</span>
 <span class="n">uv_cache_dir</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"~/.cache/uv"</span>
-<span class="n">extra_mounts</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s2">"~/.ssh:/home/buddy/.ssh"</span><span class="p">]</span>
+<span class="n">extra_mounts</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s2">"~/.agents:/home/buddy/.agents"</span><span class="p">]</span>
 <span class="n">extra_hosts</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s2">"host.docker.internal:host-gateway"</span><span class="p">]</span>
 
 <span class="k">[claude]</span>

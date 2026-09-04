@@ -867,6 +867,17 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#git_https_rewrite" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        git_https_rewrite
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#claudeextend_system_prompt" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1040,6 +1051,17 @@
     <span class="md-ellipsis">
       
         git_allow_origin_writes
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#git_https_rewrite" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        git_https_rewrite
       
     </span>
   </a>
@@ -1224,6 +1246,12 @@ at that file.</p>
 <td>When <code>false</code>, deny the agent the outward-facing commands (<code>git push</code>, <code>gh pr create</code>, <code>gh pr merge</code>, <code>gh release create</code>, <code>gh workflow run</code>, and <code>gh api</code> with a mutating method right after <code>api</code>). Sticky per environment. See <a href="#git_allow_origin_writes">denying remote writes</a>.</td>
 </tr>
 <tr>
+<td><code>git_https_rewrite</code></td>
+<td>bool</td>
+<td><code>true</code></td>
+<td>Rewrite git remotes to HTTPS inside the container (<code>url."https://&lt;host&gt;/".insteadOf "git@&lt;host&gt;:"</code>), so the agent needs no SSH key. Written into the container's own gitconfig only — never the repository's. See <a href="#git_https_rewrite">HTTPS remotes in the container</a>.</td>
+</tr>
+<tr>
 <td><code>uv_cache_dir</code></td>
 <td>string</td>
 <td><code>~/.cache/uv</code></td>
@@ -1400,6 +1428,26 @@ the persisted value rather than resetting it to the default — dropping
 <code>git_allow_origin_writes = false</code> from <code>ffleet.toml</code> does not quietly re-open
 remote writes. To re-enable them for an existing environment, set
 <code>git_allow_origin_writes = true</code> explicitly; an explicit value always wins.</p>
+<h3 id="git_https_rewrite"><code>git_https_rewrite</code></h3>
+<p>Agent containers get no SSH key. To keep <code>git fetch</code>/<code>git push</code> working for a
+checkout whose <code>origin</code> is an SSH URL, the container's init script writes a
+rewrite into <strong>its own</strong> <code>/home/buddy/.gitconfig</code> at every start:</p>
+<div class="highlight"><pre><span></span><code><span class="k">[url "https://github.com/"]</span>
+<span class="w">    </span><span class="na">insteadOf</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">git@github.com:</span>
+<span class="w">    </span><span class="na">insteadOf</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">ssh://git@github.com/</span>
+</code></pre></div>
+<p>The host is derived from the checkout's <code>origin</code> URL, so a GitLab or Bitbucket
+remote gets its own host. The repository's git config is never touched — it is
+shared with the host and every other environment, so the container's transport
+choice must not leak into it.</p>
+<p>The rewrite only changes <em>how</em> the container reaches the remote; it mints no
+credential. Supply one yourself as a <strong>repo-scoped fine-grained token</strong> through
+<a href="#global-keys"><code>docker_env_file</code></a> — see
+<a href="../advanced/secrets.html#git-push-credentials">secrets</a>.</p>
+<p>Set <code>git_https_rewrite = false</code> to turn the rewrite off (for example when you
+deliberately mount your own SSH agent socket). Unlike
+<a href="#git_allow_origin_writes"><code>git_allow_origin_writes</code></a> it is not persisted per
+environment: every start re-reads it from your config.</p>
 <h3 id="claudeextend_system_prompt"><code>[claude].extend_system_prompt</code></h3>
 <p>With this on (the default), ffleet tells Claude a few facts about the
 environment it is running in, so it doesn't have to guess. Today there are two:
@@ -1558,6 +1606,10 @@ read straight from <code>ffleet.toml</code> and has no env-var or CLI-flag overr
 <td>deny the agent outward-facing git/gh commands when <code>false</code> (<code>true</code>/<code>false</code>); no CLI flag equivalent</td>
 </tr>
 <tr>
+<td><code>GIT_HTTPS_REWRITE</code></td>
+<td>rewrite git remotes to HTTPS inside the container (<code>true</code>/<code>false</code>); no CLI flag equivalent</td>
+</tr>
+<tr>
 <td><code>ATTACH</code></td>
 <td><code>ffleet up</code>'s attach default (<code>true</code>/<code>false</code>); <code>--attach</code> / <code>--no-attach</code> override it, and <code>-y</code> forces no-attach unless <code>--attach</code> is given</td>
 </tr>
@@ -1581,7 +1633,7 @@ CODING_AGENT=claude
 CLAUDE_DIR=~/.claude
 CODEX_DIR=~/.codex
 UV_CACHE_DIR=~/.cache/uv
-EXTRA_MOUNTS=~/.agents:/home/buddy/.agents,~/.ssh:/home/buddy/.ssh:ro
+EXTRA_MOUNTS=~/.agents:/home/buddy/.agents
 DOCKER_ENV_FILE=/path/to/docker.env
 GIT_MODE=auto
 DOCKER_HOST_BIND=false
