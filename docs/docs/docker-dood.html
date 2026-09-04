@@ -8,28 +8,28 @@
       
       
       
-        <link rel="canonical" href="https://ffleet.app/docs/advanced/docker-dood.html">
+        <link rel="canonical" href="https://ffleet.app/docs/docker-dood.html">
       
       
-        <link rel="prev" href="container-config.html">
+        <link rel="prev" href="secrets.html">
       
       
-        <link rel="next" href="secrets.html">
+        <link rel="next" href="config-precedence.html">
       
       
         
       
       
-      <link rel="icon" href="../assets/favicon.ico">
+      <link rel="icon" href="assets/favicon.ico">
       <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
     
     
       
-        <title>Advanced: Docker outside Docker (DooD) - Forge Fleet User Guide</title>
+        <title>Docker outside Docker - Forge Fleet User Guide</title>
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/main.ec1eaa64.min.css">
+      <link rel="stylesheet" href="assets/stylesheets/main.ec1eaa64.min.css">
       
       
 
@@ -48,7 +48,7 @@
       
     
     
-    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    <script>__md_scope=new URL(".",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
 
@@ -66,7 +66,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#advanced-docker-outside-docker-dood" class="md-skip">
+        <a href="#docker-outside-docker-dood" class="md-skip">
           Skip to content
         </a>
       
@@ -82,7 +82,7 @@
 
 <header class="md-header md-header--shadow" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href="../index.html" title="Forge Fleet User Guide" class="md-header__button md-logo" aria-label="Forge Fleet User Guide" data-md-component="logo">
+    <a href="index.html" title="Forge Fleet User Guide" class="md-header__button md-logo" aria-label="Forge Fleet User Guide" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
@@ -102,7 +102,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Advanced: Docker outside Docker (DooD)
+              Docker outside Docker
             
           </span>
         </div>
@@ -180,7 +180,7 @@
 
 <nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="../index.html" title="Forge Fleet User Guide" class="md-nav__button md-logo" aria-label="Forge Fleet User Guide" data-md-component="logo">
+    <a href="index.html" title="Forge Fleet User Guide" class="md-nav__button md-logo" aria-label="Forge Fleet User Guide" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
@@ -198,14 +198,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../index.html" class="md-nav__link">
+      <a href="index.html" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    Forge Fleet
+    Home
   
 
     
@@ -225,14 +225,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../00-install.html" class="md-nav__link">
+      <a href="00-install.html" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    0. Prerequisites &amp; install
+    Install
   
 
     
@@ -252,14 +252,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../01-basic-flow.html" class="md-nav__link">
+      <a href="01-basic-flow.html" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    1. Basic flow
+    Basic flow
   
 
     
@@ -279,14 +279,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../02-concepts.html" class="md-nav__link">
+      <a href="02-concepts.html" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    2. Concepts
+    Concepts
   
 
     
@@ -306,14 +306,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../troubleshooting.html" class="md-nav__link">
+      <a href="how-to/starting.html" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    Troubleshooting &amp; recovery
+    Starting an environment
   
 
     
@@ -328,68 +328,19 @@
     
       
       
-  
-  
-    
-  
-  
-  
-    
-    
-    
-    
-    
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
-      
-        
-        
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" checked>
-        
-          
-          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
-            
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Advanced
-  
-
-    
-  </span>
-  
-  
-
-            <span class="md-nav__icon md-icon"></span>
-          </label>
-        
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="true">
-          <label class="md-nav__title" for="__nav_6">
-            <span class="md-nav__icon md-icon"></span>
-            
-  
-    Advanced
-  
-
-          </label>
-          <ul class="md-nav__list" data-md-scrollfix>
-            
-              
-                
   
   
   
   
     <li class="md-nav__item">
-      <a href="config-precedence.html" class="md-nav__link">
+      <a href="how-to/working.html" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    Advanced: config precedence
+    Working with a running environment
   
 
     
@@ -401,10 +352,117 @@
     </li>
   
 
-              
-            
-              
-                
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="how-to/completing.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Completing / cleanup
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="templates.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Templates
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="coding-assistant.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Coding assistant
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="git-options.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Git options
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
   
   
   
@@ -417,7 +475,7 @@
   <span class="md-ellipsis">
     
   
-    Advanced: how the container is configured
+    Container configuration
   
 
     
@@ -429,10 +487,36 @@
     </li>
   
 
-              
-            
-              
-                
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="secrets.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Secrets & keys
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
   
   
     
@@ -454,7 +538,7 @@
   <span class="md-ellipsis">
     
   
-    Advanced: Docker outside Docker (DooD)
+    Docker outside Docker
   
 
     
@@ -472,7 +556,7 @@
   <span class="md-ellipsis">
     
   
-    Advanced: Docker outside Docker (DooD)
+    Docker outside Docker
   
 
     
@@ -570,23 +654,22 @@
     </li>
   
 
-              
-            
-              
-                
+    
+      
+      
   
   
   
   
     <li class="md-nav__item">
-      <a href="secrets.html" class="md-nav__link">
+      <a href="config-precedence.html" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    Advanced: secrets &amp; keys
+    Config precedence
   
 
     
@@ -598,23 +681,22 @@
     </li>
   
 
-              
-            
-              
-                
+    
+      
+      
   
   
   
   
     <li class="md-nav__item">
-      <a href="templates.html" class="md-nav__link">
+      <a href="troubleshooting.html" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    Advanced: templates
+    Troubleshooting
   
 
     
@@ -626,77 +708,22 @@
     </li>
   
 
-              
-            
-          </ul>
-        </nav>
-      
-    </li>
-  
-
     
       
       
-  
-  
-  
-  
-    
-    
-    
-    
-    
-    <li class="md-nav__item md-nav__item--nested">
-      
-        
-        
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
-        
-          
-          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
-            
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    How to
-  
-
-    
-  </span>
-  
-  
-
-            <span class="md-nav__icon md-icon"></span>
-          </label>
-        
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_7">
-            <span class="md-nav__icon md-icon"></span>
-            
-  
-    How to
-  
-
-          </label>
-          <ul class="md-nav__list" data-md-scrollfix>
-            
-              
-                
   
   
   
   
     <li class="md-nav__item">
-      <a href="../how-to/completing.html" class="md-nav__link">
+      <a href="reference/commands.html" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    How-to: completing &amp; cleanup
+    Command reference
   
 
     
@@ -708,23 +735,22 @@
     </li>
   
 
-              
-            
-              
-                
+    
+      
+      
   
   
   
   
     <li class="md-nav__item">
-      <a href="../how-to/starting.html" class="md-nav__link">
+      <a href="reference/config.html" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    How-to: starting an environment
+    Config reference
   
 
     
@@ -733,152 +759,6 @@
   
 
       </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../how-to/working.html" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    How-to: working with a running environment
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-          </ul>
-        </nav>
-      
-    </li>
-  
-
-    
-      
-      
-  
-  
-  
-  
-    
-    
-    
-    
-    
-    <li class="md-nav__item md-nav__item--nested">
-      
-        
-        
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8" >
-        
-          
-          <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="0">
-            
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Reference
-  
-
-    
-  </span>
-  
-  
-
-            <span class="md-nav__icon md-icon"></span>
-          </label>
-        
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_8">
-            <span class="md-nav__icon md-icon"></span>
-            
-  
-    Reference
-  
-
-          </label>
-          <ul class="md-nav__list" data-md-scrollfix>
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../reference/commands.html" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Commands
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../reference/config.html" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Config reference (ffleet.toml)
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-          </ul>
-        </nav>
-      
     </li>
   
 
@@ -992,7 +872,7 @@
 
 
 
-<h1 id="advanced-docker-outside-docker-dood">Advanced: Docker outside Docker (DooD)</h1>
+<h1 id="docker-outside-docker-dood">Docker outside Docker (DooD)</h1>
 <p>Sometimes the agent needs Docker <em>inside</em> its environment — to run
 <code>docker build</code>, spin up a test database, or run integration tests in containers.
 Forge Fleet supports this, but <strong>not</strong> the way people often assume.</p>
@@ -1033,7 +913,7 @@ host daemon and started containers are siblings rather than nested.</p>
 <p>It is merged with any <code>--append-system-prompt</code> of your own in
 <code>[claude].extra_args</code> (yours is kept, and comes last), and recomputed at each
 launch. To turn it off, set
-<a href="../reference/config.html#claudeextend_system_prompt"><code>extend_system_prompt = false</code></a>
+<a href="reference/config.html#claudeextend_system_prompt"><code>extend_system_prompt = false</code></a>
 in the <code>[claude]</code> section.</p>
 <h2 id="things-to-keep-in-mind">Things to keep in mind</h2>
 <ul>
@@ -1044,7 +924,7 @@ in the <code>[claude]</code> section.</p>
   the agent's <code>docker run</code> requests is resolved on the <strong>host</strong> filesystem, not
   inside the agent container. Mount host paths the agent can actually reach —
   see <a href="container-config.html">container configuration</a> and
-  <a href="../reference/config.html#global-keys"><code>extra_mounts</code></a>.</li>
+  <a href="reference/config.html#global-keys"><code>extra_mounts</code></a>.</li>
 <li><strong>Sibling lifetime.</strong> Containers the agent starts are independent siblings;
   they don't get cleaned up automatically when the environment is stopped or
   removed. The agent (or you) should tear them down.</li>
@@ -1052,7 +932,7 @@ in the <code>[claude]</code> section.</p>
 <h2 id="related">Related</h2>
 <ul>
 <li><a href="container-config.html">Container configuration</a> — mounts, hosts, image.</li>
-<li><a href="../reference/config.html"><code>docker_host_bind</code>, <code>extra_mounts</code>, <code>extra_hosts</code> in the config reference</a>.</li>
+<li><a href="reference/config.html"><code>docker_host_bind</code>, <code>extra_mounts</code>, <code>extra_hosts</code> in the config reference</a>.</li>
 </ul>
 
 
@@ -1103,10 +983,10 @@ in the <code>[claude]</code> section.</p>
     
       
       
-      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": [], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+      <script id="__config" type="application/json">{"annotate": null, "base": ".", "features": [], "search": "assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
-      <script src="../assets/javascripts/bundle.d7400e89.min.js"></script>
+      <script src="assets/javascripts/bundle.d7400e89.min.js"></script>
       
     
   </body>

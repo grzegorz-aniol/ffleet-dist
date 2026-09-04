@@ -8,28 +8,28 @@
       
       
       
-        <link rel="canonical" href="https://ffleet.app/docs/advanced/container-config.html">
+        <link rel="canonical" href="https://ffleet.app/docs/container-config.html">
       
       
-        <link rel="prev" href="config-precedence.html">
+        <link rel="prev" href="git-options.html">
       
       
-        <link rel="next" href="docker-dood.html">
+        <link rel="next" href="secrets.html">
       
       
         
       
       
-      <link rel="icon" href="../assets/favicon.ico">
+      <link rel="icon" href="assets/favicon.ico">
       <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
     
     
       
-        <title>Advanced: how the container is configured - Forge Fleet User Guide</title>
+        <title>Container configuration - Forge Fleet User Guide</title>
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/main.ec1eaa64.min.css">
+      <link rel="stylesheet" href="assets/stylesheets/main.ec1eaa64.min.css">
       
       
 
@@ -48,7 +48,7 @@
       
     
     
-    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    <script>__md_scope=new URL(".",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
 
@@ -66,7 +66,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#advanced-how-the-container-is-configured" class="md-skip">
+        <a href="#how-the-container-is-configured" class="md-skip">
           Skip to content
         </a>
       
@@ -82,7 +82,7 @@
 
 <header class="md-header md-header--shadow" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href="../index.html" title="Forge Fleet User Guide" class="md-header__button md-logo" aria-label="Forge Fleet User Guide" data-md-component="logo">
+    <a href="index.html" title="Forge Fleet User Guide" class="md-header__button md-logo" aria-label="Forge Fleet User Guide" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
@@ -102,7 +102,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Advanced: how the container is configured
+              Container configuration
             
           </span>
         </div>
@@ -180,7 +180,7 @@
 
 <nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="../index.html" title="Forge Fleet User Guide" class="md-nav__button md-logo" aria-label="Forge Fleet User Guide" data-md-component="logo">
+    <a href="index.html" title="Forge Fleet User Guide" class="md-nav__button md-logo" aria-label="Forge Fleet User Guide" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
@@ -198,14 +198,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../index.html" class="md-nav__link">
+      <a href="index.html" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    Forge Fleet
+    Home
   
 
     
@@ -225,14 +225,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../00-install.html" class="md-nav__link">
+      <a href="00-install.html" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    0. Prerequisites &amp; install
+    Install
   
 
     
@@ -252,14 +252,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../01-basic-flow.html" class="md-nav__link">
+      <a href="01-basic-flow.html" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    1. Basic flow
+    Basic flow
   
 
     
@@ -279,14 +279,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../02-concepts.html" class="md-nav__link">
+      <a href="02-concepts.html" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    2. Concepts
+    Concepts
   
 
     
@@ -306,14 +306,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../troubleshooting.html" class="md-nav__link">
+      <a href="how-to/starting.html" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    Troubleshooting &amp; recovery
+    Starting an environment
   
 
     
@@ -328,68 +328,19 @@
     
       
       
-  
-  
-    
-  
-  
-  
-    
-    
-    
-    
-    
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
-      
-        
-        
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" checked>
-        
-          
-          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
-            
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Advanced
-  
-
-    
-  </span>
-  
-  
-
-            <span class="md-nav__icon md-icon"></span>
-          </label>
-        
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="true">
-          <label class="md-nav__title" for="__nav_6">
-            <span class="md-nav__icon md-icon"></span>
-            
-  
-    Advanced
-  
-
-          </label>
-          <ul class="md-nav__list" data-md-scrollfix>
-            
-              
-                
   
   
   
   
     <li class="md-nav__item">
-      <a href="config-precedence.html" class="md-nav__link">
+      <a href="how-to/working.html" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    Advanced: config precedence
+    Working with a running environment
   
 
     
@@ -401,10 +352,117 @@
     </li>
   
 
-              
-            
-              
-                
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="how-to/completing.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Completing / cleanup
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="templates.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Templates
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="coding-assistant.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Coding assistant
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="git-options.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Git options
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
   
   
     
@@ -426,7 +484,7 @@
   <span class="md-ellipsis">
     
   
-    Advanced: how the container is configured
+    Container configuration
   
 
     
@@ -444,7 +502,7 @@
   <span class="md-ellipsis">
     
   
-    Advanced: how the container is configured
+    Container configuration
   
 
     
@@ -506,6 +564,23 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Volumes &amp; mounts">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#extra_mounts-your-own-bind-mounts" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        extra_mounts — your own bind mounts
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -542,6 +617,17 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#pointing-a-hostname-at-a-fixed-address" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pointing a hostname at a fixed address
+      
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -559,21 +645,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#git-remotes" class="md-nav__link">
+  <a href="#git-inside-the-container" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Git remotes
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#git-identity" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Git identity
+        Git inside the container
       
     </span>
   </a>
@@ -609,38 +684,9 @@
     </li>
   
 
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="docker-dood.html" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
     
-  
-    Advanced: Docker outside Docker (DooD)
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
+      
+      
   
   
   
@@ -653,7 +699,7 @@
   <span class="md-ellipsis">
     
   
-    Advanced: secrets &amp; keys
+    Secrets & keys
   
 
     
@@ -665,23 +711,22 @@
     </li>
   
 
-              
-            
-              
-                
+    
+      
+      
   
   
   
   
     <li class="md-nav__item">
-      <a href="templates.html" class="md-nav__link">
+      <a href="docker-dood.html" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    Advanced: templates
+    Docker outside Docker
   
 
     
@@ -693,77 +738,22 @@
     </li>
   
 
-              
-            
-          </ul>
-        </nav>
-      
-    </li>
-  
-
     
       
       
-  
-  
-  
-  
-    
-    
-    
-    
-    
-    <li class="md-nav__item md-nav__item--nested">
-      
-        
-        
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
-        
-          
-          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
-            
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    How to
-  
-
-    
-  </span>
-  
-  
-
-            <span class="md-nav__icon md-icon"></span>
-          </label>
-        
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_7">
-            <span class="md-nav__icon md-icon"></span>
-            
-  
-    How to
-  
-
-          </label>
-          <ul class="md-nav__list" data-md-scrollfix>
-            
-              
-                
   
   
   
   
     <li class="md-nav__item">
-      <a href="../how-to/completing.html" class="md-nav__link">
+      <a href="config-precedence.html" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    How-to: completing &amp; cleanup
+    Config precedence
   
 
     
@@ -775,23 +765,22 @@
     </li>
   
 
-              
-            
-              
-                
+    
+      
+      
   
   
   
   
     <li class="md-nav__item">
-      <a href="../how-to/starting.html" class="md-nav__link">
+      <a href="troubleshooting.html" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    How-to: starting an environment
+    Troubleshooting
   
 
     
@@ -803,23 +792,22 @@
     </li>
   
 
-              
-            
-              
-                
+    
+      
+      
   
   
   
   
     <li class="md-nav__item">
-      <a href="../how-to/working.html" class="md-nav__link">
+      <a href="reference/commands.html" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    How-to: working with a running environment
+    Command reference
   
 
     
@@ -831,77 +819,22 @@
     </li>
   
 
-              
-            
-          </ul>
-        </nav>
-      
-    </li>
-  
-
     
       
       
-  
-  
-  
-  
-    
-    
-    
-    
-    
-    <li class="md-nav__item md-nav__item--nested">
-      
-        
-        
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8" >
-        
-          
-          <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="0">
-            
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Reference
-  
-
-    
-  </span>
-  
-  
-
-            <span class="md-nav__icon md-icon"></span>
-          </label>
-        
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_8">
-            <span class="md-nav__icon md-icon"></span>
-            
-  
-    Reference
-  
-
-          </label>
-          <ul class="md-nav__list" data-md-scrollfix>
-            
-              
-                
   
   
   
   
     <li class="md-nav__item">
-      <a href="../reference/commands.html" class="md-nav__link">
+      <a href="reference/config.html" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    Commands
+    Config reference
   
 
     
@@ -910,42 +843,6 @@
   
 
       </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../reference/config.html" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Config reference (ffleet.toml)
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-          </ul>
-        </nav>
-      
     </li>
   
 
@@ -1013,6 +910,23 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Volumes &amp; mounts">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#extra_mounts-your-own-bind-mounts" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        extra_mounts — your own bind mounts
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -1049,6 +963,17 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#pointing-a-hostname-at-a-fixed-address" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pointing a hostname at a fixed address
+      
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -1066,21 +991,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#git-remotes" class="md-nav__link">
+  <a href="#git-inside-the-container" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Git remotes
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#git-identity" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Git identity
+        Git inside the container
       
     </span>
   </a>
@@ -1126,7 +1040,7 @@
 
 
 
-<h1 id="advanced-how-the-container-is-configured">Advanced: how the container is configured</h1>
+<h1 id="how-the-container-is-configured">How the container is configured</h1>
 <p>Each environment is a Docker container that Forge Fleet assembles from your
 <code>ffleet.toml</code> and flags. This page explains the pieces so you can tune them.</p>
 <h2 id="image">Image</h2>
@@ -1139,7 +1053,7 @@ language runtimes and tools your project needs — the agent can only use what's
 the image (plus what it installs at runtime).</p>
 <p>Because <code>image</code> is a config-derived setting, you can change it and pick it up on
 the next revive: <code>ffleet stop SLUG</code> then <code>ffleet up SLUG</code> (see
-<a href="../how-to/working.html#what-can-and-cant-change-mid-life">what can change mid-life</a>).</p>
+<a href="how-to/working.html#what-can-and-cant-change-mid-life">what can change mid-life</a>).</p>
 <h3 id="how-the-published-images-are-built">How the published images are built</h3>
 <p>The two default images are built and pushed to GHCR from the public
 <a href="https://github.com/grzegorz-aniol/ffleet-dist"><code>ffleet-dist</code></a> repo (its
@@ -1175,12 +1089,54 @@ your host user.</p>
   (see below).</li>
 <li><strong><code>uv_cache_dir</code></strong> — a shared uv cache (default <code>~/.cache/uv</code>) for faster
   Python installs across environments.</li>
-<li><strong><code>extra_mounts</code></strong> — your own bind mounts, <code>source:target[:ro|:rw]</code> (the only
-  accepted modes are <code>ro</code> and <code>rw</code>, default read-write); target is an absolute
-  container path, a relative source resolves against the repo root, <code>~</code> expands
-  to the host home. Use these for shared caches, SSH keys, etc. See
-  <a href="secrets.html">secrets</a> for when to mount vs. copy vs. env-file.</li>
+<li><strong><a href="#extra_mounts-your-own-bind-mounts"><code>extra_mounts</code></a></strong> — your own bind mounts.</li>
 </ul>
+<h3 id="extra_mounts-your-own-bind-mounts"><code>extra_mounts</code> — your own bind mounts</h3>
+<p>Each entry is <code>source:target[:ro|:rw]</code>. The target is an absolute <strong>container</strong>
+path; the source is a <strong>host</strong> path that must already exist — ffleet resolves it
+before starting the container and fails with the resolved path if it doesn't.</p>
+<div class="highlight"><pre><span></span><code><span class="n">extra_mounts</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span>
+<span class="w">    </span><span class="c1"># Read-only reference material the agent should read but never edit.</span>
+<span class="w">    </span><span class="s2">"~/notes/architecture:/home/buddy/architecture:ro"</span><span class="p">,</span>
+
+<span class="w">    </span><span class="c1"># Read-write shared cache, so every environment reuses one Go module cache.</span>
+<span class="w">    </span><span class="s2">"~/.cache/go-build:/home/buddy/.cache/go-build:rw"</span><span class="p">,</span>
+
+<span class="w">    </span><span class="c1"># `rw` is the default — this line means the same as the one above.</span>
+<span class="w">    </span><span class="s2">"~/.cache/go-build:/home/buddy/.cache/go-build"</span><span class="p">,</span>
+
+<span class="w">    </span><span class="c1"># A relative source resolves against the shell's cwd when `ffleet up` runs.</span>
+<span class="w">    </span><span class="s2">"fixtures/large-dataset:/home/buddy/dataset:ro"</span><span class="p">,</span>
+<span class="p">]</span>
+</code></pre></div>
+<p>Things worth knowing:</p>
+<ul>
+<li><strong><code>ro</code> and <code>rw</code> are the only accepted modes</strong>, and the default is read-write.
+  Anything else (<code>z</code>, <code>delegated</code>, <code>cached</code>) is rejected. Reach for <code>:ro</code> whenever
+  the agent has no business writing to the host path — it is the cheapest way to
+  stop an agent editing your real files.</li>
+<li><strong><code>~</code> expands to your host home</strong>, which keeps a source portable across
+  machines. A <strong>relative</strong> source, by contrast, is resolved against the shell's
+  current directory at the moment you run <code>ffleet up</code> — not against the repo
+  root — so the same entry breaks when you launch from a different subdirectory.
+  Prefer absolute or <code>~</code>-relative sources; keep relative ones only for a
+  directory you always launch from.</li>
+<li><strong>The container runs as <code>buddy</code> (uid/gid <code>1000</code>)</strong>, so mounts meant for the
+  agent's home belong under <code>/home/buddy/...</code>. A host directory owned by a
+  different uid will be read-only in practice regardless of the mode you ask for.</li>
+<li><strong>Shadowing works, exact duplicates don't.</strong> A target <em>nested inside</em> an
+  existing mount is layered on top of it, leaving the rest of that mount intact —
+  so <code>"~/shared-agents:/home/buddy/.claude/agents:ro"</code> shares one set of agent
+  definitions across projects without disturbing the rest of the mounted
+  <code>~/.claude</code>. Targeting the <em>exact</em> path of a built-in mount
+  (<code>/home/buddy/.claude</code> itself, the workspace root, the uv cache) instead makes
+  Docker refuse to start the container with a duplicate-mount-point error; change
+  those through their own settings (<code>[claude].dir</code>, <code>uv_cache_dir</code>).</li>
+<li><code>ffleet up</code> prints every resolved mount — extras and built-ins — while starting,
+  which is the quickest way to check what actually landed where.</li>
+</ul>
+<p>See <a href="secrets.html">secrets</a> for when to mount vs. copy vs. env-file; a mount is the
+right answer when the container should see a host path <strong>live and as-is</strong>.</p>
 <h2 id="credential-directories-authenticating-the-agent-inside">Credential directories — authenticating the agent inside</h2>
 <p>The agent must be logged in <em>inside</em> the container. Forge Fleet handles this by
 mounting the agent's host credential/config directory:</p>
@@ -1188,7 +1144,7 @@ mounting the agent's host credential/config directory:</p>
 <li><strong>Claude Code</strong> — <code>[claude].dir</code> (default <code>~/.claude</code>), plus a credential
   <code>auth</code> source (<code>auto</code> / <code>keychain</code> / <code>token</code> / <code>api-key</code> / <code>credentials-file</code> /
   <code>external</code>) that decides <em>which</em> credential ffleet injects. See the
-  <a href="../reference/config.html#claudeauth-values"><code>[claude].auth</code> table</a>.</li>
+  <a href="reference/config.html#claudeauth-values"><code>[claude].auth</code> table</a>.</li>
 <li><strong>Codex</strong> — <code>[codex].dir</code> (default <code>~/.codex</code>).</li>
 </ul>
 <p>Override the mounts per run with <code>--claude-dir</code> / <code>--codex-dir</code>, and the Claude
@@ -1234,22 +1190,34 @@ MCP server, a local API, a dev database. Two pieces must line up:</p>
 <p>Editing your <strong>host's</strong> <code>/etc/hosts</code> doesn't help here: it only changes name
 resolution on the host, not inside the container (which has its own
 <code>/etc/hosts</code>). The container-side mapping is exactly what <code>extra_hosts</code> provides.</p>
+<h3 id="pointing-a-hostname-at-a-fixed-address">Pointing a hostname at a fixed address</h3>
+<p>An address other than <code>host-gateway</code> is taken literally, which lets you pin a
+name the container would otherwise fail to resolve — an internal service on your
+VPN, or a staging host you want the agent's tests to hit:</p>
+<div class="highlight"><pre><span></span><code><span class="n">extra_hosts</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span>
+<span class="w">    </span><span class="s2">"host.docker.internal:host-gateway"</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">"api.internal.example.com:10.0.3.14"</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">"staging.example.com:203.0.113.7"</span><span class="p">,</span>
+<span class="p">]</span>
+</code></pre></div>
+<p>Entries are independent, so mix host-gateway and literal addresses freely. This
+only maps names to addresses — the container still needs a network route to
+reach them, so a VPN-only address works from a container only if the host routes
+that range.</p>
 <h2 id="host-docker-access">Host Docker access</h2>
 <p><code>docker_host_bind = true</code> (or <code>--docker-host-bind</code>) binds the host Docker socket
 so the agent can drive the host daemon — this is the Docker-outside-Docker setup;
 see <a href="docker-dood.html">DooD</a>.</p>
-<h2 id="git-remotes">Git remotes</h2>
-<p>The container gets no SSH key. Its init script instead rewrites git remotes to
-HTTPS in the container's own gitconfig
+<h2 id="git-inside-the-container">Git inside the container</h2>
+<p>The container gets <strong>no SSH key and no host git config</strong>. Its init script instead
+rewrites git remotes to HTTPS in the container's <strong>own</strong> gitconfig
 (<code>url."https://&lt;host&gt;/".insteadOf "git@&lt;host&gt;:"</code>, host taken from your <code>origin</code>),
 so the agent only needs a token — see
 <a href="secrets.html#git-push-credentials">git push credentials</a>. The repository's own git
-config is never modified. Turn it off with
-<a href="../reference/config.html#git_https_rewrite"><code>git_https_rewrite = false</code></a>.</p>
-<h2 id="git-identity">Git identity</h2>
-<p>Commits made inside the container use the <code>[git]</code> identity (<code>user_name</code> /
-<code>user_email</code>) if both are set; otherwise identity falls back to your host git
-config. Set both together or neither.</p>
+config is never modified. It also stamps in a commit identity, without which the
+container refuses to start.</p>
+<p>Both of those, along with <code>git_mode</code>, <code>--from</code> and denying the agent remote
+writes, are covered in <a href="git-options.html">git options</a>.</p>
 <h2 id="putting-it-together">Putting it together</h2>
 <div class="highlight"><pre><span></span><code><span class="n">image</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"ghcr.io/grzegorz-aniol/forge-fleet-python:latest"</span>
 <span class="n">uv_cache_dir</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"~/.cache/uv"</span>
@@ -1266,8 +1234,8 @@ config. Set both together or neither.</p>
 </code></pre></div>
 <h2 id="related">Related</h2>
 <ul>
-<li><a href="secrets.html">Secrets &amp; keys</a> · <a href="docker-dood.html">DooD</a> ·
-  <a href="../reference/config.html">Config reference</a>.</li>
+<li><a href="secrets.html">Secrets &amp; keys</a> · <a href="git-options.html">Git options</a> ·
+  <a href="docker-dood.html">DooD</a> · <a href="reference/config.html">Config reference</a>.</li>
 </ul>
 
 
@@ -1318,10 +1286,10 @@ config. Set both together or neither.</p>
     
       
       
-      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": [], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+      <script id="__config" type="application/json">{"annotate": null, "base": ".", "features": [], "search": "assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
-      <script src="../assets/javascripts/bundle.d7400e89.min.js"></script>
+      <script src="assets/javascripts/bundle.d7400e89.min.js"></script>
       
     
   </body>
