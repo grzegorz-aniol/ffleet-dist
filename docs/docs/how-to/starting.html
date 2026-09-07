@@ -411,10 +411,10 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#selecting-a-claude-code-subagent" class="md-nav__link">
+  <a href="#selecting-a-subagent" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Selecting a Claude Code subagent
+        Selecting a subagent
       
     </span>
   </a>
@@ -902,10 +902,10 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#selecting-a-claude-code-subagent" class="md-nav__link">
+  <a href="#selecting-a-subagent" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Selecting a Claude Code subagent
+        Selecting a subagent
       
     </span>
   </a>
@@ -1087,18 +1087,33 @@ subdirectory) with no worktree and no git repo required — you don't need to pa
 </code></pre></div>
 <p>The chosen agent is fixed at create time — switching agents means a new
 environment.</p>
-<h3 id="selecting-a-claude-code-subagent">Selecting a Claude Code subagent</h3>
+<h3 id="selecting-a-subagent">Selecting a subagent</h3>
 <ul>
-<li><strong><code>--subagent NAME</code></strong> — launch a specific Claude Code subagent (e.g.
-  <code>code-reviewer</code>), Claude-only. Works with or without <code>-t</code>/<code>--template</code>: it
-  no longer requires a template just to pick a subagent. If the template also
+<li><strong><code>--subagent NAME</code></strong> — launch a specific custom agent (e.g.
+  <code>code-reviewer</code>). Works with or without <code>-t</code>/<code>--template</code>: it no longer
+  requires a template just to pick a subagent. If the template also
   configures a <code>subagent</code>, <code>--subagent</code> wins and a warning is printed when the
   two differ. See <a href="../templates.html">templates</a> for the
   template-config equivalent.</li>
 </ul>
 <div class="highlight"><pre><span></span><code><span class="gp">$ </span>ffleet<span class="w"> </span>up<span class="w"> </span>my-feature<span class="w"> </span>--coding-agent<span class="w"> </span>claude<span class="w"> </span>--subagent<span class="w"> </span>code-reviewer<span class="w"> </span>-p<span class="w"> </span><span class="s2">"…"</span>
 </code></pre></div>
-<p>Like <code>--coding-agent</code>, the subagent is fixed at create time.</p>
+<p>Like <code>--coding-agent</code>, the subagent is fixed at create time (reviving an
+existing environment always ignores <code>--subagent</code>).</p>
+<p>Support differs by coding-agent:</p>
+<ul>
+<li><strong>Claude</strong> — deterministic. Translated straight into Claude Code's own
+  <code>--agent &lt;name&gt;</code> flag, so the CLI itself enforces the agent exists and is
+  used.</li>
+<li><strong>Codex</strong> — best-effort. The Codex CLI has no equivalent flag, so ffleet
+  looks up <code>NAME</code> in <code>~/.codex/agents/*.toml</code> (personal) or
+  <code>.codex/agents/*.toml</code> in the repo (project) — matched on the file's
+  <code>name</code> field, not the filename — and, once found, weaves a delegation
+  instruction into the launch prompt (or sends it into the pane on an
+  interactive launch with no prompt) asking Codex to use it. Codex decides
+  for itself whether to follow that instruction — nothing in ffleet forces
+  it, so treat it as a strong hint, not a guarantee.</li>
+</ul>
 <h2 id="git-modes">Git modes</h2>
 <p><strong><code>--git-mode auto|worktree|clone|off</code></strong> (default <code>auto</code>) decides how git is set
 up inside the container:</p>

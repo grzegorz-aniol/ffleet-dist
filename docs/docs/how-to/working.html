@@ -1096,11 +1096,12 @@ never delete metadata by hand.</p>
 <h2 id="inspecting">Inspecting</h2>
 <p>None of these change state:</p>
 <ul>
-<li><strong><code>ffleet ls</code></strong> — all environments for the project (add <code>--json</code> for scripts).</li>
+<li><strong><code>ffleet ls</code></strong> — all environments for the project (add <code>--json</code> for scripts).
+  <code>ffleet projects ls</code> widens that to every registered project.</li>
 <li><strong><code>ffleet status SLUG</code></strong> — live status: container up?, agent live/exited,
-  what the agent is doing and why we say so.</li>
-<li><strong><code>ffleet tail SLUG</code></strong> — the last lines of the agent's transcript (<code>--lines N</code>,
-  default 100).</li>
+  what the agent is doing and why we say so (add <code>--json</code> for scripts).</li>
+<li><strong><code>ffleet tail SLUG</code></strong> — the last lines of the agent's transcript
+  (<code>-n</code>/<code>--lines N</code>, default 100).</li>
 <li><strong><code>ffleet path SLUG</code></strong> — the worktree/working-directory path.</li>
 </ul>
 <h3 id="is-the-agent-still-working">Is the agent still working?</h3>
@@ -1135,6 +1136,7 @@ reports one of four states in the <code>AGENT_STATE</code> column:</p>
 </tbody>
 </table>
 <div class="highlight"><pre><span></span><code><span class="gp">$ </span>ffleet<span class="w"> </span>ls
+<span class="go">project: my-project</span>
 <span class="go">SHORT        ENV                     AGENT   CONTAINER               CONTAINER_STATE  RUNTIME  LAST_ACTIVITY              AGENT_STATE</span>
 <span class="go">-----------  ----------------------  ------  ----------------------  ---------------  -------  -------------------------  -----------</span>
 <span class="go">add-logging  my-project-add-logging  claude  my-project-add-logging  running          running  2026-08-12T09:14:22+00:00  working</span>
@@ -1142,6 +1144,13 @@ reports one of four states in the <code>AGENT_STATE</code> column:</p>
 </code></pre></div>
 <p><code>LAST_ACTIVITY</code> is when the <strong>agent</strong> last did something (its last transcript
 record), not when Forge Fleet last touched the environment.</p>
+<p>The <code>RUNTIME</code> column is the layer below: whether the <em>container</em> is up
+(<code>stopped</code>, <code>starting</code>, <code>running</code>, <code>failed</code>, <code>unknown</code>). <code>starting</code> means the
+container is up and the agent is still coming up — normally a few seconds. An
+environment that is still without an agent two minutes after its container
+started reads as <strong><code>failed</code></strong> instead: the agent never came up, or died at
+launch. Relaunch it with <code>ffleet up SLUG</code> (see
+<a href="../troubleshooting.html#an-environment-sits-at-runtime-failed">Troubleshooting</a>).</p>
 <p><code>status</code> adds the <em>why</em>: the <code>probe reason</code> behind the state, and the raw
 evidence it was derived from.</p>
 <div class="highlight"><pre><span></span><code><span class="gp">$ </span>ffleet<span class="w"> </span>status<span class="w"> </span>add-logging
@@ -1175,12 +1184,26 @@ evidence it was derived from.</p>
 </ul>
 <p>For scripts, <code>ffleet ls --json</code> carries <code>agent_state</code> plus the raw
 <code>probe_reason</code> token (<code>turn_ended</code>, <code>tool_call_pending</code>, <code>agent_thinking</code>,
-<code>agent_exited</code>, <code>runtime_not_running</code>, <code>tmux_session_missing</code>,
-<code>transcript_absent</code>, <code>transcript_unreadable</code>, <code>adapter_not_supported</code>).</p>
-<p>It also carries <code>broken_reason</code> — empty for a healthy environment, and
-<code>worktree_registration_missing</code> for one whose git registration was deleted (see
-<a href="../troubleshooting.html#environment-shows-as-broken-worktree-registration-missing">Troubleshooting</a>).
-The table prints the same information as a warning under the rows.</p>
+<code>agent_exited</code>, <code>runtime_not_running</code>, <code>runtime_starting</code>,
+<code>tmux_session_missing</code>, <code>transcript_absent</code>, <code>transcript_unreadable</code>,
+<code>adapter_not_supported</code>), alongside <code>runtime_state</code>.</p>
+<p>It also carries <code>broken_reason</code> — empty for a healthy environment, and otherwise
+one of:</p>
+<ul>
+<li><code>worktree_registration_missing</code> — the environment's git registration was
+  deleted
+  (<a href="../troubleshooting.html#environment-shows-as-broken-worktree-registration-missing">recovery</a>)</li>
+<li><code>workdir_missing</code> — an in-place environment whose working directory is gone
+  (<a href="../troubleshooting.html#environment-shows-as-broken-workdir-missing">recovery</a>)</li>
+<li><code>metadata_missing</code> — a worktree directory whose <code>session.json</code> is gone or
+  unreadable
+  (<a href="../troubleshooting.html#environment-shows-as-broken-metadata-missing">recovery</a>)</li>
+<li><code>worktree_missing</code> — a surviving container whose worktree was deleted
+  (<a href="../troubleshooting.html#environment-shows-as-broken-worktree-missing">recovery</a>)</li>
+</ul>
+<p>The table prints the same information as a warning under the rows. Broken
+environments are listed so you can see and clear them: <code>ffleet remove SLUG</code>
+tears each one down, while <code>restore</code> and <code>remove --done</code> skip them.</p>
 <p><strong>Changed in this release.</strong> Agent state used to be inferred by diffing the
 terminal 400 ms apart, and an unchanging screen was reported as
 <code>waiting for input</code>. That guess is gone, along with the <code>BLOCKED_REASON</code> column
@@ -1196,6 +1219,9 @@ and metadata</strong>. It's the safe "get this out of the way" move — reversib
 <p>Because containers run with <code>--rm</code>, there's no lingering "stopped container" — a
 stop <em>removes</em> it, and <code>up</code> rebuilds a fresh one when you come back. Your work
 lives in the worktree and the saved session, not the container.</p>
+<p><strong><code>ffleet projects stop</code></strong> does the same for every environment on the machine —
+the whole fleet parked in one command. Each one is recorded as parked, so a later
+<code>ffleet projects restore</code> leaves them down; <code>ffleet up SLUG</code> brings one back.</p>
 <p>For <strong>Claude</strong> agents, session resume is exact — it reattaches this
 environment's own last session. For <strong>Codex</strong> agents it's best-effort: Codex
 resumes the <em>most recently used</em> session (filtered to sessions started from the
@@ -1210,8 +1236,8 @@ for the mechanism and the fallback if you ever hit a mismatch.</p>
 it. Your worktrees, branches and saved sessions are untouched, but the agents
 are gone. <strong><code>ffleet restore</code></strong> brings back, in one go, every environment that
 was supposed to be running:</p>
-<div class="highlight"><pre><span></span><code><span class="gp">$ </span>ffleet<span class="w"> </span>restore<span class="w">          </span><span class="c1"># this project</span>
-<span class="gp">$ </span>ffleet<span class="w"> </span>restore<span class="w"> </span>--all<span class="w">    </span><span class="c1"># every project you've run `ffleet init` in</span>
+<div class="highlight"><pre><span></span><code><span class="gp">$ </span>ffleet<span class="w"> </span>restore<span class="w">           </span><span class="c1"># this project</span>
+<span class="gp">$ </span>ffleet<span class="w"> </span>projects<span class="w"> </span>restore<span class="w">  </span><span class="c1"># every project you've run `ffleet init` in</span>
 <span class="go">project my-app</span>
 <span class="go">  my-feature: restored</span>
 <span class="go">  spike: skipped (parked)</span>
@@ -1237,9 +1263,9 @@ was supposed to be running:</p>
 <li><strong>One failure doesn't stop the rest.</strong> Each environment is reported on its own
   line; the command exits non-zero if any of them failed.</li>
 </ul>
-<p><code>--all</code> works from any directory — it walks the projects you've registered with
-<code>ffleet init</code>, so you don't have to visit each repo. A project you never ran
-<code>ffleet init</code> in has nothing recorded to restore.</p>
+<p><code>ffleet projects restore</code> works from any directory — it walks the projects you've
+registered with <code>ffleet init</code>, so you don't have to visit each repo. A project
+you never ran <code>ffleet init</code> in has nothing recorded to restore.</p>
 <h2 id="working-inside-tmux">Working inside tmux</h2>
 <p>When you attach, you're inside a <strong>tmux</strong> session running the agent. You mostly
 just type at the agent, but a few tmux things are worth knowing:</p>

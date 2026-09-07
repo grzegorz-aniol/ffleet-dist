@@ -982,10 +982,12 @@ template.</p>
 <p>Forge Fleet fetches issue 123 via the configured <code>pm</code>, derives a slug from its
 title, renders the prompt, and starts the environment just like a normal
 <code>ffleet up</code>. From there everything is the same — attach, <code>stop</code>, <code>remove</code>, etc.</p>
-<p>The optional <code>subagent</code> key selects a subagent for these envs. It's translated to
-the coding-agent's own subagent flag and appended to its launch command — <strong>Claude
-only</strong> (<code>--agent &lt;name&gt;</code>); using it with another agent errors.</p>
-<p>The <code>--subagent NAME</code> CLI flag (see <a href="how-to/starting.html#selecting-a-claude-code-subagent">starting</a>)
+<p>The optional <code>subagent</code> key selects a subagent for these envs. On <strong>Claude</strong>,
+it's translated to a deterministic <code>--agent &lt;name&gt;</code> flag. On <strong>Codex</strong>, it's a
+best-effort delegation instruction (Codex has no equivalent flag) — see
+<a href="how-to/starting.html#selecting-a-subagent">starting</a> for how that works. Using
+it with any other coding-agent errors.</p>
+<p>The <code>--subagent NAME</code> CLI flag (see <a href="how-to/starting.html#selecting-a-subagent">starting</a>)
 is the per-invocation, template-independent equivalent — it works with or
 without <code>-t</code>. When both are set, <code>--subagent</code> always wins over the template's
 configured <code>subagent</code>; if the two differ, Forge Fleet prints a non-fatal

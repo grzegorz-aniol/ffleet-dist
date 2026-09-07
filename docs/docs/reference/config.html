@@ -1402,7 +1402,7 @@ configured <code>pm</code> source, derives the slug from the issue title, and re
 <tr>
 <td><code>subagent</code></td>
 <td>string</td>
-<td>Optional subagent for envs seeded from this template. Translated to the agent's own subagent flag (Claude only: <code>--agent &lt;name&gt;</code>; using it with another agent errors). The <code>up --subagent NAME</code> flag is the per-invocation, template-independent equivalent and overrides this key when both are set — see <a href="../how-to/starting.html#selecting-a-claude-code-subagent">starting</a>.</td>
+<td>Optional subagent for envs seeded from this template. On Claude, translated to a deterministic <code>--agent &lt;name&gt;</code> flag. On Codex, a best-effort delegation instruction woven into the launch prompt (or sent into the pane on an interactive launch) — Codex has no equivalent CLI flag, so this is not guaranteed; see <a href="../how-to/starting.html#selecting-a-subagent">starting</a>. Using it with any other coding-agent errors. The <code>up --subagent NAME</code> flag is the per-invocation, template-independent equivalent and overrides this key when both are set.</td>
 </tr>
 </tbody>
 </table>

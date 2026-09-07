@@ -543,6 +543,34 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Subagents">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#claude-a-deterministic-flag" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Claude — a deterministic flag
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#codex-a-best-effort-delegation-instruction" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Codex — a best-effort delegation instruction
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -887,6 +915,34 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Subagents">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#claude-a-deterministic-flag" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Claude — a deterministic flag
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#codex-a-best-effort-delegation-instruction" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Codex — a best-effort delegation instruction
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -1001,8 +1057,10 @@ per-run one.</p>
 adds for itself. For Claude the assembled command is:</p>
 <div class="highlight"><pre><span></span><code>&lt;cmd&gt; &lt;extra_args…&gt; --dangerously-skip-permissions -n &lt;env-name&gt; --session-id &lt;uuid&gt; [prompt]
 </code></pre></div>
-<p>and on a revive <code>--session-id &lt;uuid&gt;</code> becomes <code>--resume &lt;uuid&gt;</code>. Codex follows
-the same shape: your <code>extra_args</code> first, then ffleet's
+<p>and on a revive <code>--session-id &lt;uuid&gt;</code> becomes <code>--resume &lt;uuid&gt;</code> — unless ffleet
+finds no transcript for that session on the host, in which case it keeps
+<code>--session-id &lt;uuid&gt;</code> and the session starts fresh under the same id. Codex
+follows the same shape: your <code>extra_args</code> first, then ffleet's
 <code>-c check_for_update_on_startup=false</code>, then the rest. With a prompt that rest
 is <code>exec</code>, <code>resume --last</code> when reviving,
 <code>--dangerously-bypass-approvals-and-sandbox</code> and the prompt; without one Codex
@@ -1026,13 +1084,10 @@ they end up in a single flag with ffleet's text first and yours last.</p>
 <h2 id="subagents">Subagents</h2>
 <p>A <strong>subagent</strong> is a named agent definition the assistant itself resolves — a
 reviewer, a test-writer, a domain specialist. Forge Fleet can launch an
-environment straight into one. This is <strong>Claude-only</strong>: asking for a subagent
-with <code>--coding-agent codex</code> is an error, since Codex has no equivalent selector.</p>
+environment straight into one, on both <code>claude</code> and <code>codex</code>, though the two
+work quite differently under the hood:</p>
 <div class="highlight"><pre><span></span><code><span class="gp">$ </span>ffleet<span class="w"> </span>up<span class="w"> </span>my-feature<span class="w"> </span>--subagent<span class="w"> </span>code-reviewer<span class="w"> </span>-p<span class="w"> </span><span class="s2">"Review the diff on this branch"</span>
 </code></pre></div>
-<p><code>--subagent NAME</code> is translated into Claude's own <code>--agent NAME</code> and appended to
-<code>extra_args</code>, so it reaches the binary exactly as if you had written it there
-yourself.</p>
 <p>A template can carry the same choice, so environments seeded from it always run
 the right subagent:</p>
 <div class="highlight"><pre><span></span><code><span class="k">[templates.review]</span>
@@ -1042,10 +1097,13 @@ the right subagent:</p>
 <p><code>--subagent</code> works with or without <code>-t</code>/<code>--template</code>, and when both are set the
 flag wins — ffleet warns when the two disagree. See
 <a href="templates.html">templates</a> for the rest of the template machinery.</p>
-<p><code>--subagent</code> is a <strong>create-time flag</strong>: on an <code>ffleet up</code> that revives an
-existing environment it is ignored. What carries the choice forward is the
-<code>--agent NAME</code> pair baked into <code>extra_args</code> at create time and saved with the
-environment — the subagent has no stored setting of its own.</p>
+<p><code>--subagent</code> is a <strong>create-time flag</strong> on both agents: on an <code>ffleet up</code> that
+revives an existing environment it is ignored outright.</p>
+<h3 id="claude-a-deterministic-flag">Claude — a deterministic flag</h3>
+<p><code>--subagent NAME</code> is translated into Claude's own <code>--agent NAME</code> and appended to
+<code>extra_args</code>, so it reaches the binary exactly as if you had written it there
+yourself. That flag is what carries the choice forward — the subagent has no
+stored setting of its own.</p>
 <p>That has a consequence worth planning for: <code>extra_args</code> is re-read from your
 config on every revive, and the saved list is used only when your config
 supplies <strong>no</strong> <code>extra_args</code> at all. So an environment created with
@@ -1056,6 +1114,23 @@ rather than merging with it. If you need both, write the pair into your own
 <div class="highlight"><pre><span></span><code><span class="k">[claude]</span>
 <span class="n">extra_args</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s2">"--agent"</span><span class="p">,</span><span class="w"> </span><span class="s2">"code-reviewer"</span><span class="p">]</span>
 </code></pre></div>
+<h3 id="codex-a-best-effort-delegation-instruction">Codex — a best-effort delegation instruction</h3>
+<p>The Codex CLI has no <code>--agent</code>-equivalent flag, so ffleet cannot make Codex
+adopt a subagent the way it can Claude. Instead, at create time only, ffleet:</p>
+<ol>
+<li>looks up <code>NAME</code> in <code>~/.codex/agents/*.toml</code> (personal) and
+   <code>.codex/agents/*.toml</code> in the repo (project) — matched on the file's
+   <code>name</code> field, not the filename; a duplicate or missing name is a fail-fast
+   error, not a silent fallback;</li>
+<li>weaves a delegation instruction naming that agent into the launch prompt
+   (<code>-p "…"</code>), or, for an interactive launch with no prompt, sends the same
+   instruction into the pane right after Codex comes up.</li>
+</ol>
+<p>Codex decides for itself whether to follow that instruction — there is no
+enforcement — so treat <code>--subagent</code> on Codex as a strong hint, not a
+guarantee the way it is on Claude. Nothing is written into <code>extra_args</code> or
+saved with the environment, so there is nothing to carry forward on revive
+even in principle: it applies once, at the moment of creation.</p>
 <h2 id="what-a-stop-up-picks-up">What a <code>stop</code> + <code>up</code> picks up</h2>
 <p><code>cmd</code> and <code>extra_args</code> are <strong>config-derived</strong>: they are re-read from your config
 on every <code>ffleet up</code> and saved back, so changing them takes effect on the next
@@ -1065,8 +1140,10 @@ revive.</p>
 </code></pre></div>
 <p>The assistant is an <strong>identity</strong> setting instead — pinned when the environment
 is created, changeable only by removing it and starting fresh. The subagent is
-not stored separately: it rides along inside <code>extra_args</code>, so it follows the
-config-derived rule above (see the <a href="#subagents">subagents</a> section). See
+never stored separately either, but the two agents get there differently: on
+Claude it rides along inside <code>extra_args</code>, so it follows the config-derived
+rule above; on Codex it isn't stored at all — it's a one-time instruction
+applied only at creation (see the <a href="#subagents">subagents</a> section). See
 <a href="config-precedence.html">config precedence</a> for the full split.</p>
 <h2 id="related">Related</h2>
 <ul>

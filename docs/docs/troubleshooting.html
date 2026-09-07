@@ -670,6 +670,28 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#up-fails-with-agent-exited-immediately-after-launch" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        up fails with "agent exited immediately after launch"
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#an-environment-sits-at-runtime-failed" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        An environment sits at RUNTIME failed
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#everything-is-gone-after-a-reboot-or-a-docker-restart" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -696,6 +718,39 @@
     <span class="md-ellipsis">
       
         Environment shows as broken (worktree registration missing)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#environment-shows-as-broken-workdir-missing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Environment shows as broken (workdir missing)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#environment-shows-as-broken-metadata-missing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Environment shows as broken (metadata missing)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#environment-shows-as-broken-worktree-missing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Environment shows as broken (worktree missing)
       
     </span>
   </a>
@@ -874,6 +929,28 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#up-fails-with-agent-exited-immediately-after-launch" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        up fails with "agent exited immediately after launch"
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#an-environment-sits-at-runtime-failed" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        An environment sits at RUNTIME failed
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#everything-is-gone-after-a-reboot-or-a-docker-restart" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -900,6 +977,39 @@
     <span class="md-ellipsis">
       
         Environment shows as broken (worktree registration missing)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#environment-shows-as-broken-workdir-missing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Environment shows as broken (workdir missing)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#environment-shows-as-broken-metadata-missing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Environment shows as broken (metadata missing)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#environment-shows-as-broken-worktree-missing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Environment shows as broken (worktree missing)
       
     </span>
   </a>
@@ -1002,10 +1112,42 @@ rebuild a broken container without losing any work.</p>
 <p>Often you can skip straight to <code>ffleet up my-feature</code> — <code>up</code> detects a dead agent
 or a missing container and rebuilds. Use the explicit <code>stop</code> first when you want
 a guaranteed-clean container.</p>
+<h3 id="up-fails-with-agent-exited-immediately-after-launch"><code>up</code> fails with "agent exited immediately after launch"</h3>
+<p>The agent started but died within the first seconds, so Forge Fleet fails the
+command instead of reporting a resumed environment you cannot attach to. The
+agent's own last output is printed with the error — that line is the real cause,
+e.g. <code>No conversation found with session ID: …</code> (the saved session is gone from
+the container) or an authentication complaint.</p>
+<p>Fix what that line points at, then rebuild:</p>
+<div class="highlight"><pre><span></span><code><span class="gp">$ </span>ffleet<span class="w"> </span>stop<span class="w"> </span>my-feature<span class="w">   </span><span class="c1"># remove the container (keeps worktree and config)</span>
+<span class="gp">$ </span>ffleet<span class="w"> </span>up<span class="w">   </span>my-feature
+</code></pre></div>
+<p>If the container is still up, <code>ffleet tail my-feature</code> shows the agent's recent
+output. When a failed launch also tore the container down, the error text you
+already have is all there was.</p>
+<p>A rebuild only helps when the container was the problem. A saved session the
+agent can no longer find survives it: <code>up</code> resumes the same session id and fails
+the same way. Forge Fleet has no in-place repair for that — tear the environment
+down and create it again:</p>
+<div class="highlight"><pre><span></span><code><span class="gp">$ </span>ffleet<span class="w"> </span>remove<span class="w"> </span>my-feature<span class="w">   </span><span class="c1"># also deletes the worktree and, if ffleet created it, the branch</span>
+<span class="gp">$ </span>ffleet<span class="w"> </span>up<span class="w">     </span>my-feature<span class="w">   </span><span class="c1"># absent env -&gt; created fresh, with a new session</span>
+</code></pre></div>
+<p>Commit and push anything in the worktree you want to keep before removing it.</p>
+<h3 id="an-environment-sits-at-runtime-failed">An environment sits at <code>RUNTIME failed</code></h3>
+<p><code>failed</code> means the container is up but its agent never appeared — the launch died
+somewhere between starting the container and starting the agent. <code>ffleet status</code>
+says the same in agent terms: <code>agent state: exited</code>, <code>probe reason: agent
+exited</code>.</p>
+<div class="highlight"><pre><span></span><code><span class="gp">$ </span>ffleet<span class="w"> </span>tail<span class="w"> </span>my-feature<span class="w">   </span><span class="c1"># anything the agent managed to write before dying</span>
+<span class="gp">$ </span>ffleet<span class="w"> </span>up<span class="w">   </span>my-feature<span class="w">   </span><span class="c1"># relaunch the agent in the running container</span>
+</code></pre></div>
+<p>If <code>up</code> lands back at <code>failed</code>, rebuild the container as above (<code>stop</code> + <code>up</code>).</p>
+<p>A <code>starting</code> environment is not this case — it is still inside its launch window
+(the first two minutes) and should reach <code>running</code> in a few seconds.</p>
 <h3 id="everything-is-gone-after-a-reboot-or-a-docker-restart">Everything is gone after a reboot or a Docker restart</h3>
 <p>Containers don't survive a host restart or a Docker daemon restart — but your
 worktrees, branches and saved sessions do. Bring the agents back in one go:</p>
-<div class="highlight"><pre><span></span><code><span class="gp">$ </span>ffleet<span class="w"> </span>restore<span class="w"> </span>--all<span class="w">     </span><span class="c1"># every project; drop --all for just this one</span>
+<div class="highlight"><pre><span></span><code><span class="gp">$ </span>ffleet<span class="w"> </span>projects<span class="w"> </span>restore<span class="w">  </span><span class="c1"># every project; plain `ffleet restore` for just this one</span>
 </code></pre></div>
 <p>It revives only the environments that were supposed to be running (anything you
 parked with <code>ffleet stop</code> stays parked), sends no message and attaches nothing,
@@ -1033,9 +1175,9 @@ is in.</p>
 the table, and <code>ffleet status SLUG</code> shows a <code>broken:</code> field:</p>
 <div class="highlight"><pre><span></span><code><span class="gp">$ </span>ffleet<span class="w"> </span>ls
 <span class="go">...</span>
-<span class="go">Warning: broken environment(s) — git inside them no longer works:</span>
+<span class="go">Warning: broken environment(s):</span>
 <span class="go">  - my-project-my-feature: worktree_registration_missing</span>
-<span class="go">  Never run `git worktree prune` inside a container; see the troubleshooting guide to recover.</span>
+<span class="go">  Git no longer works inside them. Never run `git worktree prune` inside a container; see the troubleshooting guide to recover.</span>
 </code></pre></div>
 <p>Inside the container, git commands fail with something like
 <code>fatal: not a git repository</code>.</p>
@@ -1064,6 +1206,73 @@ disappears. If the environment's branch is not named after the environment, put
 its real branch in <code>HEAD</code>.</p>
 <p>If you would rather start over, <code>ffleet remove SLUG</code> and recreate — but check for
 unpushed work first.</p>
+<h3 id="environment-shows-as-broken-workdir-missing">Environment shows as broken (workdir missing)</h3>
+<p><strong>Symptom.</strong> An environment you created with <code>ffleet up --here</code>
+is listed with everything <code>unknown</code> and a <code>workdir_missing</code> warning:</p>
+<div class="highlight"><pre><span></span><code><span class="gp">$ </span>ffleet<span class="w"> </span>ls
+<span class="go">...</span>
+<span class="go">Warning: broken environment(s):</span>
+<span class="go">  - my-project-my-feature: workdir_missing</span>
+<span class="go">  Their work dir is gone; run `ffleet remove SLUG` to clear the stale record.</span>
+</code></pre></div>
+<p><code>ffleet status my-feature</code> shows the same <code>broken:</code> field and the directory the
+environment was registered for.</p>
+<p><strong>Cause.</strong> In-place environments run in a directory you chose, and Forge Fleet
+only records where it is. That directory was deleted or moved (or lives on a
+volume that is not mounted right now) — the environment's record outlived it.</p>
+<p><strong>Recovery.</strong> If the directory is only temporarily unavailable (an unmounted
+disk), mount it and the environment reports normally again — Forge Fleet never
+deletes a record on its own. Otherwise clear it:</p>
+<div class="highlight"><pre><span></span><code><span class="gp">$ </span>ffleet<span class="w"> </span>remove<span class="w"> </span>my-feature
+</code></pre></div>
+<p>That stops any leftover container, deletes the environment's metadata and drops
+it from the in-place registry. Your files are not involved — the directory is
+already gone.</p>
+<h3 id="environment-shows-as-broken-metadata-missing">Environment shows as broken (metadata missing)</h3>
+<p><strong>Symptom.</strong> A directory sits in your worktree root under an environment's name,
+but Forge Fleet cannot read a session from it:</p>
+<div class="highlight"><pre><span></span><code><span class="gp">$ </span>ffleet<span class="w"> </span>ls
+<span class="go">...</span>
+<span class="go">Warning: broken environment(s):</span>
+<span class="go">  - my-project-my-feature: metadata_missing</span>
+<span class="go">  Their ffleet metadata is gone; run `ffleet remove SLUG` to clear them, then recreate with `ffleet up`.</span>
+</code></pre></div>
+<p><strong>Cause.</strong> The environment's <code>session.json</code> was deleted, truncated or otherwise
+made unreadable — most often by a <code>git clean -fdx</code> or <code>git stash --all</code> run
+inside a pre-#105 environment, which stored its metadata in the worktree itself.
+The worktree and your work are still there; only the record of the agent session
+is gone, so <code>attach</code>, <code>tail</code> and <code>send</code> no longer have a session to talk to.</p>
+<p><strong>Recovery.</strong> Check the worktree for work you want to keep (<code>git -C
+&lt;worktree-root&gt;/&lt;env&gt; status</code>), then clear and recreate:</p>
+<div class="highlight"><pre><span></span><code><span class="gp">$ </span>ffleet<span class="w"> </span>remove<span class="w"> </span>my-feature
+<span class="gp">$ </span>ffleet<span class="w"> </span>up<span class="w"> </span>my-feature
+</code></pre></div>
+<p><code>remove</code> prompts before it acts and warns about uncommitted or unpushed work, so
+you see what is at stake first.</p>
+<p>If <code>remove</code> refuses with <em>"not registered as a worktree"</em>, the directory has also
+lost its git registration — recover that first, following
+<a href="#environment-shows-as-broken-worktree-registration-missing">worktree registration missing</a>
+above, then run <code>remove</code> again.</p>
+<h3 id="environment-shows-as-broken-worktree-missing">Environment shows as broken (worktree missing)</h3>
+<p><strong>Symptom.</strong> A container is still listed — possibly <code>running</code> — but the worktree
+it was created for is gone:</p>
+<div class="highlight"><pre><span></span><code><span class="gp">$ </span>ffleet<span class="w"> </span>ls
+<span class="go">...</span>
+<span class="go">Warning: broken environment(s):</span>
+<span class="go">  - my-project-my-feature: worktree_missing</span>
+<span class="go">  Their worktree is gone while a container survives; run `ffleet remove SLUG` to stop and clear it.</span>
+</code></pre></div>
+<p><strong>Cause.</strong> The worktree directory was deleted outside Forge Fleet (<code>rm -rf</code>, a
+<code>git worktree remove</code> on the host, a wiped scratch disk). The container mounts
+that path, so the agent inside it is working on nothing; only the container and
+Forge Fleet's own record of the environment are left.</p>
+<p><strong>Recovery.</strong> There is nothing left to repair — the worktree held the work:</p>
+<div class="highlight"><pre><span></span><code><span class="gp">$ </span>ffleet<span class="w"> </span>remove<span class="w"> </span>my-feature
+</code></pre></div>
+<p>That stops and removes the container and deletes the environment's metadata
+record. Any commits that only existed in the deleted worktree are gone with it;
+commits you had pushed are still on the remote, so <code>ffleet up my-feature --from
+&lt;branch&gt;</code> recreates a fresh environment on them.</p>
 <h3 id="container-wont-become-ready-in-time">Container won't become ready in time</h3>
 <p>First-time image pulls or heavy setup can exceed the default readiness wait.
 Raise it:</p>

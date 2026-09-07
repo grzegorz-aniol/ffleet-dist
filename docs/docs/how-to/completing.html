@@ -884,9 +884,9 @@ you're done with a whole project — or want to uninstall — clean up the
     R --&gt; D{More environments in this project?}
     D --&gt;|yes| E
     D --&gt;|no| P[Project-level cleanup]
-    P --&gt;|ffleet project ls| L[See all known projects]
-    P --&gt;|ffleet project prune| PR[Drop stale entries + their ~/.forge-fleet home dirs]
-    P --&gt;|ffleet project rm ID| RM[Delete one project's ~/.forge-fleet/ID dir + registry entry]</code></pre>
+    P --&gt;|ffleet projects ls| L[See every known project and its environments]
+    P --&gt;|ffleet projects prune| PR[Drop stale entries + their ~/.forge-fleet home dirs]
+    P --&gt;|ffleet projects rm ID| RM[Delete one project's ~/.forge-fleet/ID dir + registry entry]</code></pre>
 <h2 id="get-your-work-out-first">Get your work out first</h2>
 <p>Forge Fleet manages <em>environments</em>, not your git workflow: it <strong>never pushes
 your branch or opens a PR for you</strong>. Landing the work is your job — or the
@@ -952,6 +952,12 @@ deleted too; a branch you brought in with <code>--from</code> is left alone.</p>
 <p><code>remove</code> surfaces unpushed/uncommitted work before deleting so you don't lose it
 by surprise. This is <strong>irreversible</strong> — if you only want the container gone,
 use <a href="working.html#stop-park-it-without-losing-work"><code>ffleet stop</code></a> instead.</p>
+<p>Before stopping the container, <code>remove</code> briefly asks the agent to exit on its
+own (<code>/exit</code> for Claude Code, <code>/quit</code> for Codex), waiting a few seconds at most.
+For Claude Code this is what makes it archive the session shown on
+<a href="https://claude.ai/code">claude.ai/code</a> — otherwise you'd have to archive it by
+hand. <code>stop</code> deliberately skips this: a stopped environment is meant to come
+back, so its session is left active rather than archived.</p>
 <p>Plain <code>remove</code> makes <strong>no network call at all</strong>: it is deliberately fast and
 offline-safe.</p>
 <h2 id="see-which-environments-have-landed">See which environments have landed</h2>
@@ -1044,33 +1050,36 @@ that you clean up by hand, exactly as before.</p>
 <h2 id="the-project-registry-forge-fleet">The project registry (<code>~/.forge-fleet</code>)</h2>
 <p>Forge Fleet tracks the projects it knows about in
 <code>~/.forge-fleet/registry.json</code>, with each project's home data under
-<code>~/.forge-fleet/{id}/</code>. The <code>ffleet project</code> commands manage that registry —
+<code>~/.forge-fleet/{id}/</code>. The <code>ffleet projects</code> commands manage that registry —
 useful for multi-project cleanup and uninstalling.</p>
 <ul>
-<li><strong><code>ffleet project ls</code></strong> — list all known projects (add <code>--json</code>). Start here.</li>
+<li><strong><code>ffleet projects ls</code></strong> — every known project with its environments grouped
+  under it (add <code>--json</code>). Start here: each header carries the project's registry
+  id, which is what <code>projects rm</code> takes. Bare <code>ffleet projects</code> does the same.</li>
 </ul>
-<div class="highlight"><pre><span></span><code><span class="gp">$ </span>ffleet<span class="w"> </span>project<span class="w"> </span>ls
+<div class="highlight"><pre><span></span><code><span class="gp">$ </span>ffleet<span class="w"> </span>projects<span class="w"> </span>ls
+<span class="go">project: my-project  [my-project-1a2b3c4d]  /repos/my-project</span>
 </code></pre></div>
 <ul>
-<li><strong><code>ffleet project prune</code></strong> — remove <strong>stale</strong> registry entries and delete their
+<li><strong><code>ffleet projects prune</code></strong> — remove <strong>stale</strong> registry entries and delete their
   <code>~/.forge-fleet</code> home directories. Good housekeeping after you've deleted
   repos. Prompts first; <code>-y</code> to skip.</li>
 </ul>
-<div class="highlight"><pre><span></span><code><span class="gp">$ </span>ffleet<span class="w"> </span>project<span class="w"> </span>prune
+<div class="highlight"><pre><span></span><code><span class="gp">$ </span>ffleet<span class="w"> </span>projects<span class="w"> </span>prune
 </code></pre></div>
 <ul>
-<li><strong><code>ffleet project rm PROJECT_ID</code></strong> — permanently delete <strong>one</strong> project's
+<li><strong><code>ffleet projects rm PROJECT_ID</code></strong> — permanently delete <strong>one</strong> project's
   <code>~/.forge-fleet/{id}</code> directory and its registry entry. Prompts first; <code>-y</code> to
   skip.</li>
 </ul>
-<div class="highlight"><pre><span></span><code><span class="gp">$ </span>ffleet<span class="w"> </span>project<span class="w"> </span>rm<span class="w"> </span>my-project
+<div class="highlight"><pre><span></span><code><span class="gp">$ </span>ffleet<span class="w"> </span>projects<span class="w"> </span>rm<span class="w"> </span>my-project-1a2b3c4d
 </code></pre></div>
 <h2 id="uninstalling-forge-fleet">Uninstalling Forge Fleet</h2>
 <p>To leave no trace:</p>
 <ol>
 <li><code>ffleet remove</code> every remaining environment (or <code>ffleet ls</code> per project to
    find them).</li>
-<li><code>ffleet project prune</code>, or <code>ffleet project rm ID</code> for each project, to clear
+<li><code>ffleet projects prune</code>, or <code>ffleet projects rm ID</code> for each project, to clear
    <code>~/.forge-fleet</code>.</li>
 <li>Delete the <code>ffleet</code> binary from your <code>PATH</code>.</li>
 </ol>

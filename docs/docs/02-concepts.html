@@ -361,6 +361,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#command-scope" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Command scope
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#up-is-state-driven-not-flag-driven" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -801,6 +812,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#command-scope" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Command scope
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#up-is-state-driven-not-flag-driven" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -851,9 +873,9 @@
 
 
 <h1 id="2-concepts">2. Concepts</h1>
-<p>A short shared vocabulary. Everything in the how-to guides builds on these two
-ideas — the <strong>slug</strong> and the fact that <strong><code>up</code> is state-driven, not
-flag-driven</strong> — plus the state machine below.</p>
+<p>A short shared vocabulary. Everything in the how-to guides builds on these three
+ideas — the <strong>slug</strong>, the <strong>scope</strong> a command acts on, and the fact that <strong><code>up</code>
+is state-driven, not flag-driven</strong> — plus the state machine below.</p>
 <h2 id="the-workdir-config-file">The workdir &amp; config file</h2>
 <p>Forge Fleet keeps its per-project state under a <strong>workdir</strong>, <code>~/.forge-fleet</code> by
 default. Each project gets its own <code>ffleet.toml</code> there, written once by
@@ -884,6 +906,21 @@ safe to use in branch, worktree, and container names:</p>
 </ul>
 <p>If you type something that doesn't fit (e.g. mixed case or a trailing dash), it's
 normalized to the nearest valid form.</p>
+<h2 id="command-scope">Command scope</h2>
+<p>How much a command touches is visible in the command you type — there are no
+scope-widening flags to remember:</p>
+<div class="highlight"><pre><span></span><code>ffleet &lt;verb&gt; SLUG          one environment
+ffleet &lt;verb&gt;               the current project (the one your shell is in)
+ffleet projects &lt;verb&gt;      every project you've run `ffleet init` in
+</code></pre></div>
+<p>So <code>ffleet stop my-feature</code> parks one environment, <code>ffleet ls</code> lists the current
+project's environments (under a <code>project: &lt;name&gt;</code> header), and
+<code>ffleet projects stop</code> parks the whole machine. A verb that exists at both levels
+means the same thing at both — just wider.</p>
+<p><code>ffleet --help</code> therefore reads as "what acts here" and <code>ffleet projects --help</code>
+as "what acts everywhere". The <code>projects</code> group also owns the registry admin
+verbs, <code>projects rm ID</code> and <code>projects prune</code> — see
+<a href="how-to/completing.html">completing / cleanup</a>.</p>
 <h2 id="up-is-state-driven-not-flag-driven"><code>up</code> is state-driven, not flag-driven</h2>
 <p>This is the core mental model. <strong>The <em>same</em> command — <code>ffleet up SLUG</code> — does
 whatever the current state needs</strong>, rather than you choosing a different verb for

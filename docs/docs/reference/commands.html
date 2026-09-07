@@ -784,10 +784,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#ffleet-project" class="md-nav__link">
+  <a href="#ffleet-projects" class="md-nav__link">
     <span class="md-ellipsis">
       
-        ffleet project
+        ffleet projects
       
     </span>
   </a>
@@ -795,10 +795,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#ffleet-project-ls" class="md-nav__link">
+  <a href="#ffleet-projects-ls" class="md-nav__link">
     <span class="md-ellipsis">
       
-        ffleet project ls
+        ffleet projects ls
       
     </span>
   </a>
@@ -806,10 +806,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#ffleet-project-prune" class="md-nav__link">
+  <a href="#ffleet-projects-restore" class="md-nav__link">
     <span class="md-ellipsis">
       
-        ffleet project prune
+        ffleet projects restore
       
     </span>
   </a>
@@ -817,10 +817,32 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#ffleet-project-rm" class="md-nav__link">
+  <a href="#ffleet-projects-stop" class="md-nav__link">
     <span class="md-ellipsis">
       
-        ffleet project rm
+        ffleet projects stop
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ffleet-projects-prune" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ffleet projects prune
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ffleet-projects-rm" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ffleet projects rm
       
     </span>
   </a>
@@ -1021,10 +1043,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#ffleet-project" class="md-nav__link">
+  <a href="#ffleet-projects" class="md-nav__link">
     <span class="md-ellipsis">
       
-        ffleet project
+        ffleet projects
       
     </span>
   </a>
@@ -1032,10 +1054,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#ffleet-project-ls" class="md-nav__link">
+  <a href="#ffleet-projects-ls" class="md-nav__link">
     <span class="md-ellipsis">
       
-        ffleet project ls
+        ffleet projects ls
       
     </span>
   </a>
@@ -1043,10 +1065,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#ffleet-project-prune" class="md-nav__link">
+  <a href="#ffleet-projects-restore" class="md-nav__link">
     <span class="md-ellipsis">
       
-        ffleet project prune
+        ffleet projects restore
       
     </span>
   </a>
@@ -1054,10 +1076,32 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#ffleet-project-rm" class="md-nav__link">
+  <a href="#ffleet-projects-stop" class="md-nav__link">
     <span class="md-ellipsis">
       
-        ffleet project rm
+        ffleet projects stop
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ffleet-projects-prune" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ffleet projects prune
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ffleet-projects-rm" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ffleet projects rm
       
     </span>
   </a>
@@ -1111,7 +1155,7 @@ Available Commands:
   init        Set up ffleet.toml for the current project (home-based by default, specs/017).
   ls          List all environments for the project (add --json for machine-readable output).
   path        Print the worktree/working directory path for an environment (for cd "$(ffleet path)").
-  project     Inspect and manage the projects known to the ~/.forge-fleet registry.
+  projects    Act on every registered project: the whole-machine view and the machine-wide verbs.
   remove      Tear down an environment: stop the container, delete the worktree and (if ffleet created it) the branch.
   restore     Bring back every environment that should be running (after a host or Docker restart).
   status      Show the live status of an environment (container, runtime and agent state).
@@ -1161,7 +1205,7 @@ Flags:
       --peek                     Strict, side-effect-free peek: attach only if the agent is live, never relaunch.
   -p, --prompt string            Message: seeds a fresh session, otherwise sent to the live/revived one.
       --prompt-file string       Read the prompt from a file instead of --prompt.
-      --subagent string          Claude Code subagent to launch (e.g. code-reviewer); Claude-only. Overrides a template's configured subagent.
+      --subagent string          Custom agent to launch (e.g. code-reviewer): a deterministic --agent flag on Claude, a best-effort delegation instruction on Codex (create-only; see docs). Overrides a template's configured subagent.
   -t, --template string          Seed a fresh env from a templates.&lt;id&gt; table in ffleet.toml; SLUG is the template ref.
       --uv-cache-dir string      Host uv cache dir to mount for faster installs. (default "~/.cache/uv")
       --wait-timeout int         Seconds to wait for the container/agent to become ready. (default 300)
@@ -1180,6 +1224,9 @@ project; without either, nothing is offered and plain 'remove' still works.
 
 Usage:
   ffleet remove [SLUG] [flags]
+
+Aliases:
+  remove, rm
 
 Flags:
       --done   Sweep landed environments: pick from the ones whose pull request merged and remove them in one pass.
@@ -1204,13 +1251,12 @@ environment whose last recorded intent was 'running' and whose container is
 gone; environments you parked with 'ffleet stop' are left alone.
 
 No message is sent and nothing is attached — the agents come back idle.
-Use --all to sweep every project registered with 'ffleet init'.
+'ffleet projects restore' does the same for every registered project.
 
 Usage:
   ffleet restore [flags]
 
 Flags:
-      --all    Restore every registered project, not just the current one.
   -h, --help   help for restore
 </code></pre></div>
 <h2 id="ffleet-tail"><code>ffleet tail</code></h2>
@@ -1221,7 +1267,7 @@ Usage:
 
 Flags:
   -h, --help        help for tail
-      --lines int   Number of trailing transcript lines to print. (default 100)
+  -n, --lines int   Number of trailing transcript lines to print. (default 100)
 </code></pre></div>
 <h2 id="ffleet-ls"><code>ffleet ls</code></h2>
 <div class="highlight"><pre><span></span><code>List all environments for the project (add --json for machine-readable output).
@@ -1247,6 +1293,7 @@ Usage:
 
 Flags:
   -h, --help   help for status
+      --json   Emit machine-readable JSON.
 </code></pre></div>
 <h2 id="ffleet-path"><code>ffleet path</code></h2>
 <div class="highlight"><pre><span></span><code>Print the worktree/working directory path for an environment (for cd "$(ffleet path)").
@@ -1279,47 +1326,89 @@ Flags:
       --worktree-root string   Override the proposed worktree root.
   -y, --yes                    Accept defaults without prompting.
 </code></pre></div>
-<h2 id="ffleet-project"><code>ffleet project</code></h2>
-<div class="highlight"><pre><span></span><code>Inspect and manage the projects known to the ~/.forge-fleet registry.
+<h2 id="ffleet-projects"><code>ffleet projects</code></h2>
+<div class="highlight"><pre><span></span><code>Act on every registered project: the whole-machine view and the machine-wide verbs.
 
 Usage:
-  ffleet project [command]
+  ffleet projects [flags]
+  ffleet projects [command]
 
 Available Commands:
-  ls          List all projects known to the ~/.forge-fleet/registry.json cache.
+  ls          List every registered project with its environments grouped under it.
   prune       Remove stale registry entries and delete their ~/.forge-fleet home dirs.
+  restore     Restore every registered project's environments (machine-wide 'ffleet restore').
   rm          Permanently delete a project's ~/.forge-fleet/{id} directory and registry entry.
+  stop        Stop every environment in every registered project, keeping worktrees and metadata.
 
 Flags:
-  -h, --help   help for project
+  -h, --help   help for projects
+      --json   Emit machine-readable JSON.
 
-Use "ffleet project [command] --help" for more information about a command.
+Use "ffleet projects [command] --help" for more information about a command.
 </code></pre></div>
-<h2 id="ffleet-project-ls"><code>ffleet project ls</code></h2>
-<div class="highlight"><pre><span></span><code>List all projects known to the ~/.forge-fleet/registry.json cache.
+<h2 id="ffleet-projects-ls"><code>ffleet projects ls</code></h2>
+<div class="highlight"><pre><span></span><code>List every registered project with its environments grouped under it.
+
+This is the whole-machine picture: one header per registered project — its
+name, its registry id (the argument 'projects rm' takes) and its source
+directory — then that project's environment table. A project the registry
+cannot resolve (a stale entry, a missing ffleet.toml) is listed with the
+reason instead of a table.
+
+The PR column is blank here: pull requests are looked up in the project you
+are standing in, so run 'ffleet ls' inside a project to see them.
 
 Usage:
-  ffleet project ls [flags]
+  ffleet projects ls [flags]
 
 Flags:
   -h, --help   help for ls
       --json   Emit machine-readable JSON.
 </code></pre></div>
-<h2 id="ffleet-project-prune"><code>ffleet project prune</code></h2>
+<h2 id="ffleet-projects-restore"><code>ffleet projects restore</code></h2>
+<div class="highlight"><pre><span></span><code>Bring back every environment that should be running, in every registered
+project.
+
+Same contract as 'ffleet restore', widened: each environment whose last
+recorded intent was 'running' and whose container is gone is revived, and
+the ones you parked with 'ffleet stop' are left alone. Projects come from
+the registry, so this works from any directory.
+
+Usage:
+  ffleet projects restore [flags]
+
+Flags:
+  -h, --help   help for restore
+</code></pre></div>
+<h2 id="ffleet-projects-stop"><code>ffleet projects stop</code></h2>
+<div class="highlight"><pre><span></span><code>Park the fleet: stop every environment's container across every registered
+project, keeping the worktrees, branches and session metadata.
+
+Same contract as 'ffleet stop SLUG', widened: each environment is recorded
+as parked, so a later 'ffleet projects restore' leaves it down. Bring one
+back with 'ffleet up SLUG'.
+
+Usage:
+  ffleet projects stop [flags]
+
+Flags:
+  -h, --help   help for stop
+</code></pre></div>
+<h2 id="ffleet-projects-prune"><code>ffleet projects prune</code></h2>
 <div class="highlight"><pre><span></span><code>Remove stale registry entries and delete their ~/.forge-fleet home dirs.
 
 Usage:
-  ffleet project prune [flags]
+  ffleet projects prune [flags]
 
 Flags:
   -h, --help   help for prune
   -y, --yes    Skip the confirmation prompt.
 </code></pre></div>
-<h2 id="ffleet-project-rm"><code>ffleet project rm</code></h2>
+<h2 id="ffleet-projects-rm"><code>ffleet projects rm</code></h2>
 <div class="highlight"><pre><span></span><code>Permanently delete a project's ~/.forge-fleet/{id} directory and registry entry.
 
 Usage:
-  ffleet project rm PROJECT_ID [flags]
+  ffleet projects rm PROJECT_ID [flags]
 
 Flags:
   -h, --help   help for rm
