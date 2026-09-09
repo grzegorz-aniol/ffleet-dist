@@ -714,6 +714,17 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#a-directory-named-appeared-inside-a-worktree" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        A directory named ~ appeared inside a worktree
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#environment-shows-as-broken-worktree-registration-missing" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -973,6 +984,17 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#a-directory-named-appeared-inside-a-worktree" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        A directory named ~ appeared inside a worktree
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#environment-shows-as-broken-worktree-registration-missing" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1170,6 +1192,20 @@ offline — but if those refs are stale, it can warn about commits you have
 already pushed. Run <code>git fetch --prune</code> and re-check when a warning looks wrong.</p>
 <p>See <a href="config-precedence.html">config precedence</a> for which bucket a setting
 is in.</p>
+<h3 id="a-directory-named-appeared-inside-a-worktree">A directory named <code>~</code> appeared inside a worktree</h3>
+<p><strong>Symptom.</strong> A worktree contains a literal <code>~</code> directory, usually holding
+<code>.cache/uv</code>.</p>
+<p><strong>Cause.</strong> Older Forge Fleet versions exported <code>UV_CACHE_DIR</code> verbatim, so a
+config or dotenv value like <code>~/.cache/uv</code> reached the shell started by
+<code>ffleet goto</code> unexpanded. <code>uv</code> then treated it as a <em>relative</em> path and created
+the cache under the current directory. Current versions expand <code>~</code> before
+exporting the variable, so upgrading fixes it.</p>
+<p><strong>Fix.</strong> Upgrade Forge Fleet, then delete the stray directory — keep the quotes,
+an unquoted <code>~</code> would target your home directory:</p>
+<div class="highlight"><pre><span></span><code><span class="gp">$ </span>rm<span class="w"> </span>-rf<span class="w"> </span><span class="s1">'/path/to/worktree/~'</span>
+</code></pre></div>
+<p>Any <code>ffleet goto</code> shell you already have open still carries the old value: exit
+and re-enter it.</p>
 <h3 id="environment-shows-as-broken-worktree-registration-missing">Environment shows as broken (worktree registration missing)</h3>
 <p><strong>Symptom.</strong> <code>ffleet ls</code> still lists the environment but prints a warning under
 the table, and <code>ffleet status SLUG</code> shows a <code>broken:</code> field:</p>

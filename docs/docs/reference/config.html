@@ -1509,6 +1509,10 @@ read straight from <code>ffleet.toml</code> and has no env-var or CLI-flag overr
 </tr>
 </tbody>
 </table>
+<p>A leading <code>~</code> in <code>CLAUDE_DIR</code>, <code>CODEX_DIR</code>, <code>UV_CACHE_DIR</code> and <code>DOCKER_ENV_FILE</code>
+is expanded to your home directory at startup — these vars are exported to every
+process Forge Fleet starts, including the shell <code>ffleet goto</code> drops you into, so
+they must hold real paths.</p>
 <p>Example <code>.env.forge-fleet</code>:</p>
 <div class="highlight"><pre><span></span><code>IMAGE_NAME=forge-fleet:latest
 CODING_AGENT=claude
