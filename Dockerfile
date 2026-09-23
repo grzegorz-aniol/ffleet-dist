@@ -103,6 +103,8 @@ ENV HOME="/home/buddy"
 ENV NPM_CONFIG_PREFIX="/home/buddy/.local"
 ENV PATH="/home/buddy/.local/bin:${PATH}"
 
+ENV DISABLE_AUTOUPDATER=1
+
 RUN npm install -g @anthropic-ai/claude-code
 RUN npm install -g @openai/codex
 RUN curl -Ls https://astral.sh/uv/install.sh | sh
