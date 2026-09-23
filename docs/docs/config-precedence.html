@@ -862,9 +862,9 @@ differently on a revive/rebuild (this is stated in <code>ffleet up --help</code>
 <ul>
 <li><strong>Config-derived (refreshed every <code>up</code>)</strong> — <code>image</code>, <code>extra_mounts</code>,
   <code>extra_hosts</code>, <code>docker_env_file</code>, credential <code>auth</code>, credential dirs
-  (<code>~/.claude</code> / <code>~/.codex</code>), agent <code>cmd</code> / <code>extra_args</code>. These are re-read from
-  your current config/flags each time and <strong>saved back</strong>. Change one, then
-  <code>ffleet stop SLUG</code> + <code>ffleet up SLUG</code> to apply it.</li>
+  (<code>~/.claude</code> / <code>~/.codex</code>), agent <code>cmd</code> / <code>model</code> / <code>reasoning</code> / <code>extra_args</code>.
+  These are re-read from your current config/flags each time and <strong>saved
+  back</strong>. Change one, then <code>ffleet stop SLUG</code> + <code>ffleet up SLUG</code> to apply it.</li>
 <li><strong>Identity/continuity (fixed at create)</strong> — branch, worktree, in-place vs
   worktree mode, <code>git-mode</code>, which coding agent, and the session. These are
   pinned when the environment is first created and <strong>do not change on revive</strong>,

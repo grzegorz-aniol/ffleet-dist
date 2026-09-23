@@ -987,8 +987,8 @@
 <h1 id="controlling-the-coding-assistant">Controlling the coding assistant</h1>
 <p>Forge Fleet launches a coding assistant inside each environment's container.
 Which one it launches, which binary it invokes, and which flags that binary gets
-are all yours to shape — this page covers the three knobs (<code>--coding-agent</code>,
-<code>cmd</code>, <code>extra_args</code>) plus subagent selection.</p>
+are all yours to shape — this page covers the knobs (<code>--coding-agent</code>, <code>cmd</code>,
+<code>model</code>, <code>reasoning</code>, <code>extra_args</code>) plus subagent selection.</p>
 <h2 id="which-assistant-runs">Which assistant runs</h2>
 <p>Forge Fleet drives <strong>Claude Code</strong> and <strong>OpenAI Codex</strong>.</p>
 <div class="highlight"><pre><span></span><code><span class="gp">$ </span>ffleet<span class="w"> </span>up<span class="w"> </span>my-feature<span class="w"> </span>--coding-agent<span class="w"> </span>codex<span class="w"> </span>-p<span class="w"> </span><span class="s2">"…"</span>
@@ -1008,11 +1008,15 @@ means <code>ffleet remove SLUG</code> and starting again.</p>
 <div class="highlight"><pre><span></span><code><span class="n">default</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"claude"</span>
 
 <span class="k">[claude]</span>
-<span class="n">dir</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="s2">"~/.claude"</span>
-<span class="n">auth</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"auto"</span>
+<span class="n">dir</span><span class="w">       </span><span class="o">=</span><span class="w"> </span><span class="s2">"~/.claude"</span>
+<span class="n">auth</span><span class="w">      </span><span class="o">=</span><span class="w"> </span><span class="s2">"auto"</span>
+<span class="n">model</span><span class="w">     </span><span class="o">=</span><span class="w"> </span><span class="s2">"opus"</span>
+<span class="n">reasoning</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"high"</span>
 
 <span class="k">[codex]</span>
-<span class="n">dir</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"~/.codex"</span>
+<span class="n">dir</span><span class="w">       </span><span class="o">=</span><span class="w"> </span><span class="s2">"~/.codex"</span>
+<span class="n">model</span><span class="w">     </span><span class="o">=</span><span class="w"> </span><span class="s2">"gpt-5"</span>
+<span class="n">reasoning</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"medium"</span>
 </code></pre></div>
 <ul>
 <li><strong><code>dir</code></strong> — the host directory mounted in as the assistant's config and
@@ -1021,8 +1025,18 @@ means <code>ffleet remove SLUG</code> and starting again.</p>
   <a href="container-config.html#credential-directories-authenticating-the-agent-inside">container configuration</a>.</li>
 <li><strong><code>auth</code></strong> <em>(Claude only)</em> — which credential ffleet injects. See the
   <a href="reference/config.html#claudeauth-values"><code>[claude].auth</code> table</a>.</li>
+<li><strong><code>model</code></strong> — the model the assistant launches with. Omit it and the
+  assistant picks its own default.</li>
+<li><strong><code>reasoning</code></strong> — how hard the assistant thinks by default. The same key
+  works on both assistants; ffleet maps it onto each one's own mechanism —
+  Claude's <code>--effort</code> flag, Codex's <code>model_reasoning_effort</code> config override.</li>
 <li><strong><code>cmd</code></strong> and <strong><code>extra_args</code></strong> — the launch command itself, below.</li>
 </ul>
+<p>Both <code>model</code> and <code>reasoning</code> are opaque strings: ffleet passes them straight
+to the binary without checking them against a list of its own, so a value your
+assistant version accepts works the day it ships. Neither has a CLI flag or an
+environment variable — like <code>cmd</code> and <code>extra_args</code>, they are a per-project
+choice.</p>
 <h2 id="cmd-override-the-binary"><code>cmd</code> — override the binary</h2>
 <p>By default ffleet invokes the binary named after the section: <code>claude</code> or
 <code>codex</code>. <code>cmd</code> replaces it, which is how you run a wrapper script, a pinned
@@ -1045,28 +1059,32 @@ anything ffleet has no setting of its own for:</p>
 
 <span class="k">[codex]</span>
 <span class="n">dir</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"~/.codex"</span>
-<span class="n">extra_args</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s2">"--model"</span><span class="p">,</span><span class="w"> </span><span class="s2">"gpt-5"</span><span class="p">]</span>
+<span class="n">extra_args</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s2">"--search"</span><span class="p">]</span>
 </code></pre></div>
 <p>Each element is one argv entry, so a flag and its value are <strong>two separate
-strings</strong> — <code>["--model", "gpt-5"]</code>, never <code>["--model gpt-5"]</code>.</p>
+strings</strong> — <code>["--autocompact", "300k"]</code>, never <code>["--autocompact 300k"]</code>.</p>
 <p><code>cmd</code> and <code>extra_args</code> live in <code>ffleet.toml</code> only — there is no CLI flag and no
 environment variable for either, so they are a per-project choice rather than a
-per-run one.</p>
+per-run one. For the model and reasoning effort, prefer the dedicated keys
+above over hand-written flags here.</p>
 <h3 id="where-your-flags-land-in-the-command">Where your flags land in the command</h3>
 <p>Your <code>extra_args</code> go <strong>immediately after the binary</strong>, before every flag ffleet
-adds for itself. For Claude the assembled command is:</p>
-<div class="highlight"><pre><span></span><code>&lt;cmd&gt; &lt;extra_args…&gt; --dangerously-skip-permissions -n &lt;env-name&gt; --session-id &lt;uuid&gt; [prompt]
+adds for itself — with <code>model</code> and <code>reasoning</code>, when set, just ahead of them.
+For Claude the assembled command is:</p>
+<div class="highlight"><pre><span></span><code>&lt;cmd&gt; [--model &lt;model&gt;] [--effort &lt;reasoning&gt;] &lt;extra_args…&gt; --dangerously-skip-permissions -n &lt;env-name&gt; --session-id &lt;uuid&gt; [prompt]
 </code></pre></div>
 <p>and on a revive <code>--session-id &lt;uuid&gt;</code> becomes <code>--resume &lt;uuid&gt;</code> — unless ffleet
 finds no transcript for that session on the host, in which case it keeps
 <code>--session-id &lt;uuid&gt;</code> and the session starts fresh under the same id. Codex
-follows the same shape: your <code>extra_args</code> first, then ffleet's
-<code>-c check_for_update_on_startup=false</code>, then the rest. With a prompt that rest
-is <code>exec</code>, <code>resume --last</code> when reviving,
+follows the same shape, with <code>reasoning</code> as a config override rather than a
+flag:</p>
+<div class="highlight"><pre><span></span><code>&lt;cmd&gt; [--model &lt;model&gt;] [-c model_reasoning_effort=&lt;reasoning&gt;] &lt;extra_args…&gt; -c check_for_update_on_startup=false …
+</code></pre></div>
+<p>With a prompt the rest is <code>exec</code>, <code>resume --last</code> when reviving,
 <code>--dangerously-bypass-approvals-and-sandbox</code> and the prompt; without one Codex
 stays interactive and it is just <code>--dangerously-bypass-approvals-and-sandbox</code>
 followed by <code>resume --last</code> when reviving.</p>
-<p>Two consequences follow from that order:</p>
+<p>Three consequences follow from that order:</p>
 <ul>
 <li><strong>ffleet's own flags win a last-one-wins duel.</strong> For a flag where the last
   occurrence takes effect, putting the same flag in <code>extra_args</code> will not
@@ -1076,6 +1094,9 @@ followed by <code>resume --last</code> when reviving.</p>
   environment so <code>/resume</code>, the terminal title and the Remote Control list
   identify it — but if your <code>extra_args</code> already carry <code>-n</code>, <code>--name</code> or
   <code>--name=…</code>, ffleet leaves the name alone and adds nothing.</li>
+<li><strong><code>extra_args</code> wins over <code>model</code> / <code>reasoning</code>.</strong> Those two come first, so
+  a <code>--model</code> you write in <code>extra_args</code> yourself is the later occurrence and
+  takes effect. Set the key, or write the flag by hand — not both.</li>
 </ul>
 <p><code>--append-system-prompt</code> is merged rather than duplicated: when ffleet has
 environment notes to add (see
@@ -1132,12 +1153,19 @@ guarantee the way it is on Claude. Nothing is written into <code>extra_args</cod
 saved with the environment, so there is nothing to carry forward on revive
 even in principle: it applies once, at the moment of creation.</p>
 <h2 id="what-a-stop-up-picks-up">What a <code>stop</code> + <code>up</code> picks up</h2>
-<p><code>cmd</code> and <code>extra_args</code> are <strong>config-derived</strong>: they are re-read from your config
-on every <code>ffleet up</code> and saved back, so changing them takes effect on the next
-revive.</p>
+<p><code>cmd</code>, <code>model</code>, <code>reasoning</code> and <code>extra_args</code> are <strong>config-derived</strong>: they are
+re-read from your config on every <code>ffleet up</code> and saved back, so changing them
+takes effect on the next revive.</p>
 <div class="highlight"><pre><span></span><code><span class="gp">$ </span>ffleet<span class="w"> </span>stop<span class="w"> </span>my-feature
-<span class="gp">$ </span>ffleet<span class="w"> </span>up<span class="w"> </span>my-feature<span class="w">      </span><span class="c1"># relaunches with the new cmd / extra_args</span>
+<span class="gp">$ </span>ffleet<span class="w"> </span>up<span class="w"> </span>my-feature<span class="w">      </span><span class="c1"># relaunches with the new cmd / model / reasoning / extra_args</span>
 </code></pre></div>
+<p>The section re-read is the <strong>environment's own</strong> assistant's — <code>[claude]</code> for an
+environment running Claude, <code>[codex]</code> for one running Codex — regardless of what
+<code>--coding-agent</code>, <code>CODING_AGENT</code> or your project default say when you type
+<code>ffleet up</code>. For an environment whose assistant differs from that default, its
+own section is authoritative: ffleet prints a warning, applies that section, and
+replaces whatever <code>cmd</code>/<code>extra_args</code> were saved with the environment — so if
+your config configures none for it, it revives with none.</p>
 <p>The assistant is an <strong>identity</strong> setting instead — pinned when the environment
 is created, changeable only by removing it and starting fresh. The subagent is
 never stored separately either, but the two agents get there differently: on

@@ -1080,7 +1080,8 @@ subdirectory) with no worktree and no git repo required — you don't need to pa
   <code>claude</code>). The project default comes from <code>default</code> in <code>ffleet.toml</code>.</li>
 <li>Per-agent config lives in the <code>[claude]</code> and <code>[codex]</code> tables of <code>ffleet.toml</code>:
   the credential/config directory (<code>dir</code>), the credential <code>auth</code> source, the
-  binary (<code>cmd</code>), and your own <code>extra_args</code>. See
+  binary (<code>cmd</code>), the default <code>model</code> and reasoning effort, and your own
+  <code>extra_args</code>. See
   <a href="../coding-assistant.html">controlling the coding assistant</a>.</li>
 </ul>
 <div class="highlight"><pre><span></span><code><span class="gp">$ </span>ffleet<span class="w"> </span>up<span class="w"> </span>my-feature<span class="w"> </span>--coding-agent<span class="w"> </span>codex<span class="w"> </span>-p<span class="w"> </span><span class="s2">"…"</span>

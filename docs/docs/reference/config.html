@@ -1260,10 +1260,22 @@ see <a href="../git-options.html#commit-identity">commit identity</a>.</p>
 <td>Override the binary invoked in the container (e.g. <code>claude</code>).</td>
 </tr>
 <tr>
+<td><code>model</code></td>
+<td>string</td>
+<td>the agent's own default</td>
+<td>Model the agent launches with, passed as <code>--model &lt;value&gt;</code>. Opaque — ffleet hands it to the binary unchecked.</td>
+</tr>
+<tr>
+<td><code>reasoning</code></td>
+<td>string</td>
+<td>the agent's own default</td>
+<td>Reasoning effort. On Claude, passed as <code>--effort &lt;value&gt;</code> (<code>low</code>, <code>medium</code>, <code>high</code>, <code>xhigh</code>, <code>max</code>). On Codex, which has no flag of its own for it, injected as <code>-c model_reasoning_effort=&lt;value&gt;</code>.</td>
+</tr>
+<tr>
 <td><code>extra_args</code></td>
 <td>list</td>
 <td>—</td>
-<td>Your own arguments for the agent, placed immediately after the binary and <strong>before</strong> ffleet's own flags (e.g. <code>["--agent", "myagent"]</code>). See <a href="../coding-assistant.html#extra_args-your-own-flags">controlling the coding assistant</a>.</td>
+<td>Your own arguments for the agent, placed immediately after the binary (after <code>model</code> / <code>reasoning</code> when set) and <strong>before</strong> ffleet's own flags (e.g. <code>["--agent", "myagent"]</code>). See <a href="../coding-assistant.html#extra_args-your-own-flags">controlling the coding assistant</a>.</td>
 </tr>
 <tr>
 <td><code>extend_system_prompt</code></td>
