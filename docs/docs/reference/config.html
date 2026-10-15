@@ -1314,8 +1314,12 @@ mystery.</p>
   other. They pair naturally (a local-only base branch plus no way to publish),
   so set both if that is what you want.</li>
 </ul>
-<p>Nothing is mounted for a brand-new environment when the key is absent or <code>true</code>,
-which is the default: remote writes are allowed unless you opt out.</p>
+<p>When the key is absent or <code>true</code> (the default), no remote-write deny rules are
+installed. Codex's read-only <code>/etc/codex/requirements.toml</code> is always mounted to
+pin its SQLite databases to environment storage; setting this key to <code>false</code>
+adds deny rules to that same file and also mounts Claude's deny policy. Setting
+it back to <code>true</code> removes only the deny rules, preserving Codex SQLite isolation.
+See <a href="../container-config.html#credential-directories-authenticating-the-agent-inside">Codex storage and image compatibility</a>.</p>
 <p><strong>The setting is sticky per environment.</strong> Once an environment has been created
 or started with a value, a later start with the key absent from your config keeps
 the persisted value rather than resetting it to the default — dropping

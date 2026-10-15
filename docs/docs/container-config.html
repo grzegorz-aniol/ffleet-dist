@@ -1150,6 +1150,31 @@ mounting the agent's host credential/config directory:</p>
 <p>Override the mounts per run with <code>--claude-dir</code> / <code>--codex-dir</code>, and the Claude
 source with <code>--claude-auth</code>. The upshot: because your host login is mounted in,
 you don't re-authenticate per environment.</p>
+<p>Codex's SQLite databases have separate, persistent storage for each environment.
+That includes <code>logs_2.sqlite</code> and its <code>-wal</code> / <code>-shm</code> files, so simultaneous
+environments do not write to the host's shared log database. Credentials,
+configuration and session transcripts still use your mounted Codex directory.
+<code>ffleet stop</code> preserves the environment's database files; <code>ffleet up</code> reuses them,
+and <code>ffleet remove</code> deletes them with the environment's metadata.</p>
+<p>Forge Fleet mounts a read-only administrator policy at
+<code>/etc/codex/requirements.toml</code> that pins <code>sqlite_home</code> to the environment's
+storage. This covers managed launches and manual <code>codex</code> commands, including
+conflicting user config, <code>CODEX_SQLITE_HOME</code> and command-line arguments. No host
+Codex files are edited or migrated. Codex chooses database filenames and handles
+migrations; Forge Fleet keeps the whole directory, including sidecars.</p>
+<p>Before starting a container, Forge Fleet checks the image's real Codex offline,
+without credentials. An unsupported CLI produces an actionable error: update or
+rebuild the image and retry. Images containing their own nonempty
+<code>/etc/codex/requirements.toml</code> are rejected because Forge Fleet cannot safely
+combine arbitrary administrator policies. Extra mounts cannot replace the
+Codex policy, SQLite storage, or files within that storage. Custom <code>[codex].cmd</code> wrappers must run a
+compatible CLI that respects this policy; enterprise/cloud policy overrides
+are outside this local-image guarantee.</p>
+<p>Running containers need both the SQLite mount and policy. After upgrading
+Forge Fleet, run <code>ffleet stop &lt;slug&gt;</code> followed by <code>ffleet up &lt;slug&gt;</code> from that
+project's directory, using the environment's short name. If a managed Codex
+relaunch finds either missing or incorrect, it reports these commands. Existing
+live sessions continue until you stop them.</p>
 <blockquote>
 <p><strong>Codex resumes the most recently used session within its cwd filter, not by
 ID.</strong> Unlike Claude, the Codex CLI has no way to resume a specific session by
